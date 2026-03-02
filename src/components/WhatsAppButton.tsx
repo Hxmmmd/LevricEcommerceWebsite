@@ -10,7 +10,7 @@ interface WhatsAppButtonProps {
 
 export default function WhatsAppButton({ productName }: WhatsAppButtonProps) {
     // You can update this phone number as needed
-    const phoneNumber = '923123456789';
+    const phoneNumber = '923172240910';
 
     const handleWhatsAppRedirect = () => {
         const productUrl = typeof window !== 'undefined' ? window.location.href : '';
