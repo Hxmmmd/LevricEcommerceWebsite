@@ -179,7 +179,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                         </div>
                     ) : (
                         <div className="bg-white/5 border border-white/10 rounded-[2rem] p-12 text-center">
-                            <p className="text-gray-500 font-bold italic">No reviews yet for this product.</p>
+                            <p className="text-gray-500 font-bold italic">No reviews yet for this product for now.</p>
                         </div>
                     )}
                 </div>
