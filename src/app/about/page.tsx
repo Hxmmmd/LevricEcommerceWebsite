@@ -22,7 +22,7 @@ export default function AboutPage() {
                         transition={{ duration: 0.5 }}
                         className="text-center max-w-3xl mx-auto mb-16"
                     >
-                        <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+                        <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-linear-to-r from-white to-gray-400 bg-clip-text text-transparent">
                             Redefining Portable Power
                         </h1>
                         <p className="text-muted-foreground text-lg mb-8">
@@ -55,7 +55,7 @@ export default function AboutPage() {
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5 }}
-                            className="relative h-[300px] md:h-[400px] w-full bg-gradient-to-br from-blue-900/20 to-purple-900/20 rounded-2xl border border-white/10 overflow-hidden order-1 md:order-2"
+                            className="relative h-75 md:h-100 w-full bg-linear-to-br from-blue-900/20 to-purple-900/20 rounded-2xl border border-white/10 overflow-hidden order-1 md:order-2"
                         >
                             <Image
                                 src="/images/2.png"

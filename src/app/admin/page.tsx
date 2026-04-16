@@ -148,7 +148,7 @@ export default async function AdminDashboard({
                             products.map((product) => (
                                 <div key={product._id} className="p-4 space-y-4">
                                     <div className="flex gap-4">
-                                        <div className="relative h-20 w-20 flex-shrink-0 rounded-xl overflow-hidden bg-gray-800 border border-white/5">
+                                        <div className="relative h-20 w-20 shrink-0 rounded-xl overflow-hidden bg-gray-800 border border-white/5">
                                             <Image
                                                 src={product.images?.[0] || '/images/placeholder.jpg'}
                                                 alt={product.title}
@@ -159,7 +159,7 @@ export default async function AdminDashboard({
                                         <div className="flex-1 min-w-0 space-y-1">
                                             <div className="flex items-start justify-between gap-2">
                                                 <h3 className="font-semibold text-white truncate">{product.title}</h3>
-                                                <span className={`px-2 py-0.5 text-[8px] font-bold rounded uppercase tracking-wider flex-shrink-0 ${product.condition === 'New' ? 'bg-blue-500/20 text-blue-400' : 'bg-orange-500/20 text-orange-400'
+                                                <span className={`px-2 py-0.5 text-[8px] font-bold rounded uppercase tracking-wider shrink-0 ${product.condition === 'New' ? 'bg-blue-500/20 text-blue-400' : 'bg-orange-500/20 text-orange-400'
                                                     }`}>
                                                     {product.condition || 'New'}
                                                 </span>
@@ -182,7 +182,7 @@ export default async function AdminDashboard({
                                     <div className="flex items-center justify-between pt-2 border-t border-white/5">
                                         <div className="flex flex-col text-[10px] text-gray-500">
                                             <span>Stock: <span className="text-gray-300">{product.stock}</span></span>
-                                            <span>Rating: <span className="text-gray-300 text-yellow-500/80">★ {product.rating || 'N/A'}</span></span>
+                                            <span>Rating: <span className="text-gray-300">★ {product.rating || 'N/A'}</span></span>
                                         </div>
                                         <div className="flex items-center gap-2">
                                             <Link href={`/admin/products/${product._id}/edit`} className="flex-1">

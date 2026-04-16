@@ -22,7 +22,9 @@ export async function POST(request: NextRequest) {
 
         await user.save();
         return NextResponse.json({ message: 'User created' }, { status: 201 });
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch(error: unknown) {
+        if (error instanceof Error){
+            return NextResponse.json({ error: error.message }, { status: 500 });
+        }
     }
 }

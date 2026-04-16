@@ -29,10 +29,10 @@ export default function CartPage() {
         <main className="min-h-screen bg-[#050505] text-white flex flex-col">
             <Header />
 
-            <div className="flex-grow max-w-6xl mx-auto w-full px-6 py-6 lg:py-10 relative">
+            <div className="grow max-w-6xl mx-auto w-full px-6 py-6 lg:py-10 relative">
                 {/* Background Glows */}
-                <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none -z-10" />
-                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/5 rounded-full blur-[100px] pointer-events-none -z-10" />
+                <div className="absolute top-0 right-0 w-100 h-100 bg-blue-500/5 rounded-full blur-[100px] pointer-events-none -z-10" />
+                <div className="absolute bottom-0 left-0 w-100 h-100 bg-purple-500/5 rounded-full blur-[100px] pointer-events-none -z-10" />
 
                 <div className="flex flex-col gap-6">
                     <header className="relative py-4">
@@ -66,14 +66,14 @@ export default function CartPage() {
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="flex flex-col items-center justify-center py-20 bg-white/5 border border-white/10 rounded-[2rem] backdrop-blur-xl"
+                            className="flex flex-col items-center justify-center py-20 bg-white/5 border border-white/10 rounded-4xl backdrop-blur-xl"
                         >
                             <div className="relative mb-6">
                                 <div className="absolute inset-0 bg-blue-500/10 blur-3xl rounded-full" />
                                 <ShoppingCart className="relative h-14 w-14 text-blue-500 opacity-20" />
                             </div>
                             <h2 className="text-xl font-black tracking-tight mb-2">Your cart is empty</h2>
-                            <p className="text-gray-500 mb-8 max-w-[200px] text-center text-[11px] font-medium">Your sanctuary of style awaits. Explore our latest collections.</p>
+                            <p className="text-gray-500 mb-8 max-w-50 text-center text-[11px] font-medium">Your sanctuary of style awaits. Explore our latest collections.</p>
                             <Link href="/products">
                                 <Button className="px-7 py-4 rounded-xl bg-white text-black font-black uppercase tracking-widest hover:bg-gray-200 transition-all active:scale-95 shadow-2xl flex items-center gap-2 text-[9px]">
                                     <ArrowLeft className="w-3 h-3" /> Start Shopping
@@ -92,7 +92,7 @@ export default function CartPage() {
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, x: -50 }}
                                             transition={{ delay: idx * 0.1 }}
-                                            className="group flex flex-col md:flex-row items-center gap-4 p-4 bg-white/5 border border-white/10 rounded-[1.5rem] backdrop-blur-md"
+                                            className="group flex flex-col md:flex-row items-center gap-4 p-4 bg-white/5 border border-white/10 rounded-3xl backdrop-blur-md"
                                         >
                                             <div className="relative w-full md:w-20 h-28 md:h-20 bg-white/5 rounded-xl overflow-hidden shrink-0">
                                                 <Image
@@ -103,7 +103,7 @@ export default function CartPage() {
                                                 />
                                             </div>
 
-                                            <div className="flex-grow space-y-1 text-center md:text-left">
+                                            <div className="grow space-y-1 text-center md:text-left">
                                                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                                                     <div>
                                                         <Link href={`/products/${item.slug}`} className="text-base font-black tracking-tight hover:text-blue-500 transition-colors uppercase">
@@ -144,8 +144,8 @@ export default function CartPage() {
                                 animate={{ opacity: 1, x: 0 }}
                                 className="sticky top-20 space-y-4"
                             >
-                                <div className="bg-white/5 border border-white/10 rounded-[2rem] p-6 backdrop-blur-2xl shadow-2xl relative overflow-hidden">
-                                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/[0.05] to-transparent pointer-events-none" />
+                                <div className="bg-white/5 border border-white/10 rounded-4xl p-6 backdrop-blur-2xl shadow-2xl relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-full h-full bg-linear-to-br from-white/5 to-transparent pointer-events-none" />
 
                                     <h2 className="text-lg font-black tracking-tighter uppercase mb-1">Order Summary</h2>
                                     <p className="text-[8px] font-black uppercase tracking-widest text-blue-500 mb-5 flex items-center gap-2">
@@ -205,7 +205,7 @@ export default function CartPage() {
                                     </div>
                                     <div className="space-y-0.5 text-left">
                                         <p className="text-[9px] font-black uppercase tracking-widest">Premium Rewards</p>
-                                        <p className="text-[7.5px] text-gray-600 leading-tight">You'll earn <span className="text-white">{(itemsPrice * 10).toFixed(0)}</span> points.</p>
+                                        <p className="text-[7.5px] text-gray-600 leading-tight">You&apos;ll earn <span className="text-white">{(itemsPrice * 10).toFixed(0)}</span> points.</p>
                                     </div>
                                 </div>
                             </motion.div>

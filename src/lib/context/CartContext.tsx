@@ -4,7 +4,7 @@ import { createContext, useContext, useState, useEffect, useRef, useCallback, us
 import { useSession } from 'next-auth/react';
 import { syncCart, getCart } from '@/lib/actions/cart';
 
-type CartItem = {
+export type CartItem = {
     _id: string;
     title: string; // Renamed from name
     slug: string;
@@ -13,6 +13,16 @@ type CartItem = {
     qty: number;
     stock: number; // Renamed from countInStock
 };
+export type CheckoutItemtype = {
+    _id: string,
+    name: string,
+    image: string,
+    price: string,
+    qty: number,
+    product: string
+}
+
+
 
 type CartContextType = {
     items: CartItem[];

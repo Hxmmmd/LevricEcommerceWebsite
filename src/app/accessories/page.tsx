@@ -36,7 +36,7 @@ export default async function AccessoriesPage() {
                             <span>/</span>
                             <span className="text-white">Accessories</span>
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-bold mb-2 tracking-tight bg-gradient-to-br from-white to-gray-500 bg-clip-text text-transparent">
+                        <h1 className="text-4xl md:text-5xl font-bold mb-2 tracking-tight bg-linear-to-br from-white to-gray-500 bg-clip-text text-transparent">
                             Accessories
                         </h1>
                         <p className="text-muted-foreground text-lg">

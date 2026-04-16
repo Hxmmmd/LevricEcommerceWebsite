@@ -2,7 +2,7 @@
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { useCart } from '@/lib/context/CartContext';
+import { useCart, CartItem, CheckoutItemtype } from '@/lib/context/CartContext';
 import { Button } from '@/components/ui/Button';
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -13,12 +13,12 @@ import { motion } from 'framer-motion';
 import FullScreenLoader from '@/components/ui/FullScreenLoader';
 
 export default function CheckoutPage() {
-    const { items: cartItems, itemsPrice: cartItemsPrice, clearCart } = useCart();
+    const { items: cartItems, clearCart } = useCart();
     const router = useRouter();
     const searchParams = useSearchParams();
     const productSlug = searchParams.get('product');
 
-    const [checkoutItems, setCheckoutItems] = useState<any[]>([]);
+    const [checkoutItems, setCheckoutItems] = useState<CheckoutItemtype[]>([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [loading, setLoading] = useState(false);
     const [orderSuccess, setOrderSuccess] = useState(false);
@@ -63,7 +63,7 @@ export default function CheckoutPage() {
                         setStaleError(true);
                     } else {
                         const validItems = cartItems.map(item => {
-                            const dbProd = dbProducts.find((p: any) => p._id === item._id);
+                            const dbProd = dbProducts.find((p: CartItem) => p._id === item._id);
                             const price = dbProd.discount > 0 ? dbProd.price * (1 - dbProd.discount / 100) : dbProd.price;
                             return {
                                 ...item,
@@ -112,8 +112,10 @@ export default function CheckoutPage() {
             setTimeout(() => {
                 router.push('/');
             }, 3000);
-        } catch (err: any) {
-            alert(err.message || 'Failed to place order');
+        } catch (err: unknown) {
+            if (err instanceof Error){
+                alert(err.message || 'Failed to place order');
+            }
         } finally {
             setLoading(false);
         }
@@ -156,8 +158,9 @@ export default function CheckoutPage() {
                 <Header />
                 <div className="flex-1 flex flex-col items-center justify-center p-6 md:p-12 relative overflow-hidden">
                     {/* Decorative Background Elements */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none" />
-                    <div className="absolute top-1/4 right-0 w-[300px] h-[300px] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-blue-600/20 rounded-full blur-[120px] pointer-events-none" />
+
+                    <div className="absolute top-1/4 right-0 w-75 h-75 bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" />
 
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -182,11 +185,11 @@ export default function CheckoutPage() {
                         </div>
 
                         <div className="space-y-3">
-                            <h1 className="text-3xl md:text-5xl font-black tracking-tight bg-gradient-to-b from-white to-gray-400 bg-clip-text text-transparent italic">
+                            <h1 className="text-3xl md:text-5xl font-black tracking-tight bg-linear-to-b from-white to-gray-400 bg-clip-text text-transparent italic">
                                 ORDER PLACED!
                             </h1>
                             <p className="text-gray-400 text-sm md:text-lg leading-relaxed font-medium">
-                                Thank you for your purchase. We've received your order and our wizards are preparing it for delivery.
+                                Thank you for your purchase. We&apos;ve received your order and our wizards are preparing it for delivery.
                             </p>
                         </div>
 
@@ -340,10 +343,10 @@ export default function CheckoutPage() {
                                 <ShoppingBag className="w-5 h-5 md:w-6 md:h-6" />
                                 Bag Details
                             </h2>
-                            <div className="space-y-4 mb-8 max-h-[250px] md:max-h-[300px] overflow-y-auto pr-2 scrollbar-hide">
+                            <div className="space-y-4 mb-8 max-h-62.5 md:max-h-75 overflow-y-auto pr-2 scrollbar-hide">
                                 {checkoutItems.map((item, idx) => (
                                     <div key={idx} className="flex gap-3 md:gap-4 items-center">
-                                        <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-xl overflow-hidden bg-black/5 flex-shrink-0">
+                                        <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-xl overflow-hidden bg-black/5 shrink-0">
                                             <Image src={item.image} alt={item.name} fill className="object-cover" />
                                         </div>
                                         <div className="flex-1 min-w-0">

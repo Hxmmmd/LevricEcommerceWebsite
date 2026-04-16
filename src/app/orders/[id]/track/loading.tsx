@@ -4,7 +4,7 @@ export default function OrderTrackingLoading() {
             {/* Header placeholder */}
             <div className="h-16 border-b border-white/5 bg-black/60 backdrop-blur-md" />
 
-            <div className="flex-grow max-w-4xl mx-auto w-full px-6 py-12">
+            <div className="grow max-w-4xl mx-auto w-full px-6 py-12">
                 <div className="h-10 bg-white/10 rounded w-48 mb-8 animate-pulse" />
 
                 <div className="space-y-8">
@@ -57,7 +57,7 @@ export default function OrderTrackingLoading() {
                         {/* Sidebar Skeleton */}
                         <div className="space-y-6">
                             <div className="h-6 bg-white/10 rounded w-32 animate-pulse" />
-                            <div className="bg-white/5 border border-white/10 rounded-[2rem] p-6 space-y-6 animate-pulse">
+                            <div className="bg-white/5 border border-white/10 rounded-4xl p-6 space-y-6 animate-pulse">
                                 <div className="space-y-4">
                                     <div className="h-16 bg-white/10 rounded" />
                                     <div className="h-16 bg-white/10 rounded" />

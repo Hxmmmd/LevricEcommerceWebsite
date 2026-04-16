@@ -8,7 +8,6 @@ import { Package, Truck, CheckCircle2, Clock, MapPin, ChevronLeft, Box, ShieldCh
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { cn } from '@/lib/utils';
 
 export default function OrderTrackingPage() {
     const { id } = useParams();
@@ -63,7 +62,7 @@ export default function OrderTrackingPage() {
         <main className="min-h-screen bg-[#050505] text-white flex flex-col">
             <Header />
 
-            <div className="flex-grow max-w-4xl mx-auto w-full px-6 py-12">
+            <div className="grow max-w-4xl mx-auto w-full px-6 py-12">
                 <Link href="/orders" className="inline-flex items-center gap-2 text-gray-500 hover:text-white transition-all mb-8 group">
                     <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                     <span className="text-xs font-black uppercase tracking-widest">Back to My Orders</span>
@@ -188,7 +187,7 @@ export default function OrderTrackingPage() {
                             <h2 className="text-xl font-black tracking-tight flex items-center gap-3">
                                 <ShieldCheck className="w-5 h-5 text-blue-500" /> Details
                             </h2>
-                            <div className="bg-white/5 border border-white/10 rounded-[2rem] p-6 space-y-6">
+                            <div className="bg-white/5 border border-white/10 rounded-4xl p-6 space-y-6">
                                 <div className="space-y-4">
                                     <div className="flex items-start gap-3">
                                         <MapPin className="w-4 h-4 text-gray-500 mt-1" />

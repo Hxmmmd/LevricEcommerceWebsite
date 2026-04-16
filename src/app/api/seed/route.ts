@@ -25,7 +25,9 @@ export async function GET(request: NextRequest) {
         await Product.insertMany(data.products);
 
         return NextResponse.json({ message: 'Database seeded successfully' });
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (error: unknown) {
+        if (error instanceof Error){
+            return NextResponse.json({ error: error.message }, { status: 500 });
+        }
     }
 }

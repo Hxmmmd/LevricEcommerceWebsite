@@ -40,15 +40,17 @@ export default function LoginPage() {
                 }
                 router.refresh();
             }
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            if (err instanceof Error){
+                setError(err.message);
+            }
         }
     };
 
     return (
         <main className="min-h-screen bg-background text-foreground flex flex-col">
             <Header />
-            <div className="flex-grow flex items-center justify-center p-4">
+            <div className="grow flex items-center justify-center p-4">
                 <div className="w-full max-w-md space-y-8 p-8 border border-white/10 rounded-[2.5rem] bg-white/5 backdrop-blur-md relative overflow-hidden group">
                     {/* Glowing background effect */}
                     <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-600/10 blur-[100px] rounded-full group-hover:bg-blue-600/20 transition-all duration-700" />
@@ -119,7 +121,7 @@ export default function LoginPage() {
                     </form>
 
                     <div className="relative text-center text-sm pt-4 border-t border-white/5">
-                        <span className="text-muted-foreground font-medium">Don't have an account? </span>
+                        <span className="text-muted-foreground font-medium">Don&apos;t have an account? </span>
                         <Link href="/register" className="text-white hover:text-blue-400 underline font-black transition-colors">
                             Sign Up
                         </Link>
