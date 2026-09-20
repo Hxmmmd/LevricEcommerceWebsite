@@ -9,6 +9,8 @@ const ProductSchema = new mongoose.Schema({
     rating: { type: Number, default: 0 },
     numReviews: { type: Number, default: 0 },
     numSales: { type: Number, default: 0 },
+    viewCount: { type: Number, default: 0 },
+    addToCartCount: { type: Number, default: 0 },
     stock: { type: Number, required: true, default: 0 }, // Renamed from countInStock
     description: { type: String, required: true },
     isFeatured: { type: Boolean, default: false },

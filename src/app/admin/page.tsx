@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
-import { getProducts, deleteProduct, getDeliverySettings, updateDeliverySettings } from '@/lib/actions/admin';
+import { getProducts, deleteProduct, getDeliverySettings, updateDeliverySettings, getAdminAnalytics, updateInventory } from '@/lib/actions/admin';
 import { Plus, Edit, Trash2, ShoppingBag } from 'lucide-react';
 import Image from 'next/image';
 import Search from '@/components/Search';
@@ -15,7 +15,7 @@ export default async function AdminDashboard({
     searchParams: Promise<{ q?: string, condition?: string, category?: string, minPrice?: string, maxPrice?: string }>
 }) {
     const params = await searchParams;
-    const [products, deliverySettings] = await Promise.all([
+    const [products, deliverySettings, analytics, dayAnalytics, weekAnalytics, yearAnalytics] = await Promise.all([
         getProducts({
         query: params.q,
         condition: params.condition,
@@ -23,11 +23,22 @@ export default async function AdminDashboard({
         minPrice: params.minPrice,
         maxPrice: params.maxPrice
         }),
-        getDeliverySettings()
+        getDeliverySettings(),
+        getAdminAnalytics('month'),
+        getAdminAnalytics('day'),
+        getAdminAnalytics('week'),
+        getAdminAnalytics('year')
     ]);
 
     return (
         <div className="min-w-0 space-y-6 sm:space-y-8">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {[['Sales today', `$${dayAnalytics.sales.total.toFixed(2)}`], ['Sales this week', `$${weekAnalytics.sales.total.toFixed(2)}`], ['Sales this month', `$${analytics.sales.total.toFixed(2)}`], ['Sales this year', `$${yearAnalytics.sales.total.toFixed(2)}`], ['New visitors', analytics.visitors]].map(([label, value]) => <div key={String(label)} className="rounded-2xl border border-border bg-card p-4"><p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">{label}</p><p className="mt-2 text-2xl font-black text-foreground">{value}</p></div>)}
+            </div>
+            <div className="rounded-2xl border border-border bg-card p-5 sm:p-6">
+                <div className="mb-4"><p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-500">Product performance</p><h2 className="mt-1 text-lg font-bold text-foreground">Views, add-to-cart, and sales</h2></div>
+                <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">{analytics.products.slice(0, 5).map((product: any) => <div key={product._id} className="rounded-xl border border-border bg-muted/30 p-3"><p className="truncate text-sm font-semibold text-foreground">{product.title}</p><p className="mt-2 text-xs text-muted-foreground">Views {product.viewCount || 0} · Cart {product.addToCartCount || 0}</p><p className="text-xs text-muted-foreground">Sold {product.numSales || 0}</p></div>)}</div>
+            </div>
             <div className="rounded-2xl border border-border bg-card p-5 sm:p-6">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                     <div><p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-500">Checkout settings</p><h2 className="mt-1 text-lg font-bold text-foreground">Cash on delivery fee</h2><p className="mt-1 text-sm text-muted-foreground">Customers using COD pay this fee. Card payments stay free.</p></div>
@@ -123,9 +134,9 @@ export default async function AdminDashboard({
                                                     <span>${product.price}</span>
                                                 )}
                                             </td>
-                                            <td className="p-4 text-sm text-gray-400">
-                                                Stock: {product.stock} <br />
-                                                Rating: {product.rating || 'N/A'}
+                                            <td className="p-4 text-sm text-muted-foreground">
+                                                <form action={async (formData) => { 'use server'; await updateInventory(product._id, Number(formData.get('stock'))); }} className="flex items-center gap-2"><label className="sr-only" htmlFor={`stock-${product._id}`}>Stock for {product.title}</label><input id={`stock-${product._id}`} name="stock" type="number" min="0" step="1" defaultValue={product.stock} className="h-8 w-20 rounded-lg border border-input bg-background px-2 text-foreground" /><Button type="submit" variant="outline" size="sm" className="h-8">Save</Button></form>
+                                                <span className="mt-1 block">Rating: {product.rating || 'N/A'}</span>
                                             </td>
                                             <td className="p-4 text-right">
                                                 <div className="flex items-center justify-end gap-2">

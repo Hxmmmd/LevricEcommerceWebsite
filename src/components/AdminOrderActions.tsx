@@ -19,8 +19,8 @@ export default function AdminOrderActions({
     const [loadingAction, setLoadingAction] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
-    const trackingStates = ['Processing', 'Packing', 'Shipped', 'Out for Delivery', 'Delivered'];
-    const isTerminal = status === 'Cancelled' || status === 'Rejected' || status === 'Delivered';
+    const trackingStates = ['Processing', 'Packing', 'Shipped', 'Out for Delivery', 'Delivered', 'Returned', 'Archived'];
+    const isTerminal = status === 'Cancelled' || status === 'Rejected' || status === 'Archived';
 
     const handleAction = async (actionFn: () => Promise<any>, actionName: string) => {
         setLoadingAction(actionName);

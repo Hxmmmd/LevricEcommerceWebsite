@@ -11,6 +11,7 @@ import User from '@/models/User';
 import { auth } from '@/lib/auth';
 import bcrypt from 'bcryptjs';
 import DeliverySettings from '@/models/DeliverySettings';
+import AnalyticsEvent from '@/models/AnalyticsEvent';
 
 export async function getDeliverySettings() {
     await dbConnect();
@@ -267,10 +268,39 @@ export async function deleteProduct(id: string) {
     revalidatePath('/products');
 }
 
+export async function getAdminAnalytics(period: 'day' | 'week' | 'month' | 'year' = 'month') {
+    await dbConnect();
+    const now = new Date();
+    const start = new Date(now);
+    if (period === 'day') start.setDate(now.getDate() - 1);
+    if (period === 'week') start.setDate(now.getDate() - 7);
+    if (period === 'month') start.setMonth(now.getMonth() - 1);
+    if (period === 'year') start.setFullYear(now.getFullYear() - 1);
+    const [sales, visitors, products] = await Promise.all([
+        Order.aggregate([{ $match: { createdAt: { $gte: start }, status: { $nin: ['Cancelled', 'Rejected', 'Returned'] } } }, { $group: { _id: null, total: { $sum: '$totalAmount' }, orders: { $sum: 1 }, units: { $sum: { $sum: '$items.quantity' } } } }]),
+        AnalyticsEvent.distinct('visitorId', { type: 'visit', createdAt: { $gte: start } }).then((ids) => ids.filter(Boolean).length),
+        Product.find({}).select('title stock viewCount addToCartCount numSales').sort({ viewCount: -1 }).limit(10).lean()
+    ]);
+    return { period, sales: sales[0] || { total: 0, orders: 0, units: 0 }, visitors, products: JSON.parse(JSON.stringify(products)) };
+}
+
+export async function updateInventory(id: string, stock: number) {
+    if (!Number.isInteger(stock) || stock < 0) throw new Error('Stock must be a whole number of 0 or more.');
+    await dbConnect();
+    await Product.findByIdAndUpdate(id, { stock });
+    revalidatePath('/admin');
+    revalidatePath('/products');
+    return { success: true };
+}
+
 export async function getOrders() {
     const { unstable_noStore: noStore } = await import('next/cache');
     noStore();
     await dbConnect();
+
+    const archiveBefore = new Date();
+    archiveBefore.setDate(archiveBefore.getDate() - 14);
+    await Order.updateMany({ status: 'Delivered', deliveredAt: { $lte: archiveBefore } }, { $set: { status: 'Archived' } });
 
     const orders = await Order.find({
         status: { $nin: ['Cancelled', 'Rejected'] }
@@ -280,6 +310,8 @@ export async function getOrders() {
         .sort({ createdAt: -1 })
         .lean();
 
+    const statusOrder = ['Processing', 'Packing', 'Shipped', 'Out for Delivery', 'Delivered', 'Returned', 'Archived'];
+    orders.sort((a: any, b: any) => (statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status)) || (new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()));
     return JSON.parse(JSON.stringify(orders));
 }
 

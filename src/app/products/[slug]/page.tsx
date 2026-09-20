@@ -12,6 +12,7 @@ import BuyNowButton from '@/components/BuyNowButton';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import SizeChart from '@/components/SizeChart';
+import ProductAnalyticsTracker from '@/components/ProductAnalyticsTracker';
 
 import { Metadata, ResolvingMetadata } from 'next';
 
@@ -70,6 +71,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     return (
         <main className="min-h-screen bg-background">
             <Header />
+            <ProductAnalyticsTracker productId={product._id} />
             <div className="container px-4 md:px-6 py-12">
                 <div className="grid md:grid-cols-2 gap-12">
                     {/* Product Image */}

@@ -19,7 +19,7 @@ const OrderSchema = new mongoose.Schema({
         type: String,
         required: true,
         default: 'Processing',
-        enum: ['Processing', 'Packing', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled', 'Rejected']
+        enum: ['Processing', 'Packing', 'Shipped', 'Out for Delivery', 'Delivered', 'Returned', 'Archived', 'Cancelled', 'Rejected']
     },
 
     // Keeping address and payment info as it's essential for an order, even if not in the simplified diagram

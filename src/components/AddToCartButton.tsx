@@ -30,6 +30,7 @@ export default function AddToCartButton({ product }: { product: any }) {
                 alert('Sorry. Product is out of stock');
                 return;
             }
+            void fetch('/api/analytics', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'add_to_cart', productId: product._id, path: window.location.pathname }) }).catch(() => undefined);
             addToCart({
                 _id: product._id,
                 title: product.title, // Renamed from name

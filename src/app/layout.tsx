@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { Providers } from "@/components/Providers";
 import ThemeProvider from "@/components/ThemeProvider";
 import TopLoadingBar from "@/components/TopLoadingBar";
+import AnalyticsTracker from "@/components/AnalyticsTracker";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -60,6 +61,7 @@ export default function RootLayout({
             <body suppressHydrationWarning className={clsx(inter.className, "min-h-screen flex flex-col")}>
                 <ThemeProvider>
                     <TopLoadingBar />
+                    <AnalyticsTracker />
                     <Providers>
                         <div className="flex-grow">
                             {children}
