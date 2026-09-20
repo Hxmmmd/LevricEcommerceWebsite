@@ -12,6 +12,7 @@ const OrderSchema = new mongoose.Schema({
         // Use population for display to ensure data consistency with Products.
     }],
     totalAmount: { type: Number, required: true }, // Renamed from totalPrice
+    shippingPrice: { type: Number, default: 0 },
 
     // Status enum as primary state
     status: {

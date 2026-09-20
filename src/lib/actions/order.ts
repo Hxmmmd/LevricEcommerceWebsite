@@ -8,6 +8,7 @@ import { revalidatePath, unstable_noStore as noStore } from 'next/cache';
 import { auth } from '@/lib/auth';
 import User from '@/models/User';
 import bcrypt from 'bcryptjs';
+import DeliverySettings from '@/models/DeliverySettings';
 
 export async function getProductBySlug(slug: string) {
     noStore();
@@ -25,6 +26,12 @@ export async function getProductBySlug(slug: string) {
         name: product.title,
         countInStock: product.stock
     };
+}
+
+export async function getCheckoutSettings() {
+    await dbConnect();
+    const settings = await DeliverySettings.findOne().sort({ createdAt: 1 }).lean();
+    return { cashOnDeliveryFee: settings?.cashOnDeliveryFee ?? 10 };
 }
 
 export async function createOrder(orderData: any) {
@@ -69,14 +76,20 @@ export async function createOrder(orderData: any) {
         await product.save();
     }
 
+    const settings = await DeliverySettings.findOne().sort({ createdAt: 1 }).lean();
+    const cashOnDeliveryFee = settings?.cashOnDeliveryFee ?? 10;
+    const paymentMethod = orderData.paymentMethod === 'Cash on Delivery' ? 'Cash on Delivery' : 'Credit Card';
+    const shippingPrice = paymentMethod === 'Cash on Delivery' ? cashOnDeliveryFee : 0;
+
     const order = new Order({
         userId: session.user.id, // Renamed from user
         items: orderItems, // Renamed from orderItems
         shippingAddress: orderData.shippingAddress,
-        paymentMethod: orderData.paymentMethod,
+        paymentMethod,
         paymentStatus: 'Pending', // Explicitly set default
         isPaid: false, // Default false
-        totalAmount: totalItemsPrice, // Renamed from totalPrice
+        shippingPrice,
+        totalAmount: totalItemsPrice + shippingPrice,
         status: 'Processing',
         trackingHistory: [{
             status: 'Processing',

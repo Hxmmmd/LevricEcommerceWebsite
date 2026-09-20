@@ -6,7 +6,7 @@ import { useCart, CartItem, CheckoutItemtype } from '@/lib/context/CartContext';
 import { Button } from '@/components/ui/Button';
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { getProductBySlug, createOrder, validateProducts } from '@/lib/actions/order';
+import { getProductBySlug, createOrder, validateProducts, getCheckoutSettings } from '@/lib/actions/order';
 import { ShoppingBag, Truck, CreditCard, ChevronRight, Loader2, CheckCircle2, AlertTriangle } from 'lucide-react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -23,6 +23,8 @@ export default function CheckoutPage() {
     const [loading, setLoading] = useState(false);
     const [orderSuccess, setOrderSuccess] = useState(false);
     const [staleError, setStaleError] = useState(false);
+    const [paymentMethod, setPaymentMethod] = useState<'Credit Card' | 'Cash on Delivery'>('Credit Card');
+    const [deliveryFee, setDeliveryFee] = useState(10);
 
     const [isInitializing, setIsInitializing] = useState(true);
 
@@ -36,6 +38,8 @@ export default function CheckoutPage() {
     });
 
     useEffect(() => {
+        getCheckoutSettings().then((settings) => setDeliveryFee(settings.cashOnDeliveryFee)).catch(() => undefined);
+
         const initCheckout = async () => {
             setIsInitializing(true);
             try {
@@ -99,11 +103,11 @@ export default function CheckoutPage() {
             await createOrder({
                 orderItems: checkoutItems,
                 shippingAddress: shipping,
-                paymentMethod: 'Credit Card', // Static for demo
+                paymentMethod,
                 itemsPrice: totalPrice,
-                shippingPrice: 0,
+                shippingPrice: paymentMethod === 'Cash on Delivery' ? deliveryFee : 0,
                 taxPrice: 0,
-                totalPrice: totalPrice,
+                totalPrice: totalPrice + (paymentMethod === 'Cash on Delivery' ? deliveryFee : 0),
             });
 
             setOrderSuccess(true);
@@ -315,7 +319,7 @@ export default function CheckoutPage() {
 
                                     <div className="grid md:grid-cols-2 gap-4">
                                         <div className="relative group cursor-pointer">
-                                            <input type="radio" name="payment" defaultChecked className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+                                            <input type="radio" name="payment" value="Credit Card" checked={paymentMethod === 'Credit Card'} onChange={() => setPaymentMethod('Credit Card')} className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0" />
                                             <div className="flex items-center justify-between rounded-2xl border border-primary/50 bg-primary/5 p-4 transition-colors group-hover:bg-primary/10">
                                                 <div className="flex items-center gap-3">
                                                     <div className="w-4 h-4 rounded-full border-4 border-blue-500" />
@@ -324,10 +328,14 @@ export default function CheckoutPage() {
                                                 <span className="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Fastest</span>
                                             </div>
                                         </div>
-                                        <div className="relative group cursor-not-allowed opacity-50">
-                                            <div className="flex items-center gap-3 rounded-2xl border border-border bg-muted/40 p-4">
-                                                <div className="w-4 h-4 rounded-full border-2 border-white/10" />
-                                                <span className="font-semibold text-gray-500">Cash on Delivery</span>
+                                        <div className={`relative group cursor-pointer ${paymentMethod === 'Cash on Delivery' ? 'ring-2 ring-primary/30' : ''}`}>
+                                            <input type="radio" name="payment" value="Cash on Delivery" checked={paymentMethod === 'Cash on Delivery'} onChange={() => setPaymentMethod('Cash on Delivery')} className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0" />
+                                            <div className="flex items-center justify-between gap-3 rounded-2xl border border-border bg-muted/40 p-4 transition-colors group-hover:bg-accent/60">
+                                                <div className="flex items-center gap-3">
+                                                    <div className={`h-4 w-4 rounded-full border-4 ${paymentMethod === 'Cash on Delivery' ? 'border-primary' : 'border-muted-foreground/30'}`} />
+                                                    <span className="font-semibold text-foreground">Cash on Delivery</span>
+                                                </div>
+                                                <span className="text-right text-[10px] font-bold uppercase tracking-wide text-amber-500">+${deliveryFee.toFixed(2)} fee</span>
                                             </div>
                                         </div>
                                     </div>
@@ -364,11 +372,11 @@ export default function CheckoutPage() {
                                 </div>
                                 <div className="flex justify-between text-sm font-medium">
                                     <span className="text-gray-500">Shipping</span>
-                                    <span className="text-green-600 font-bold uppercase tracking-tighter">Free</span>
+                                    <span className={paymentMethod === 'Cash on Delivery' ? 'font-bold uppercase tracking-tighter text-amber-500' : 'font-bold uppercase tracking-tighter text-green-600'}>{paymentMethod === 'Cash on Delivery' ? `$${deliveryFee.toFixed(2)}` : 'Free'}</span>
                                 </div>
                                 <div className="flex justify-between text-xl font-black pt-2">
                                     <span>Total</span>
-                                    <span>${totalPrice.toFixed(2)}</span>
+                                    <span>${(totalPrice + (paymentMethod === 'Cash on Delivery' ? deliveryFee : 0)).toFixed(2)}</span>
                                 </div>
                             </div>
 

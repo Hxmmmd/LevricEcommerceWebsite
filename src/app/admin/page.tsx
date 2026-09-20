@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
-import { getProducts, deleteProduct } from '@/lib/actions/admin';
+import { getProducts, deleteProduct, getDeliverySettings, updateDeliverySettings } from '@/lib/actions/admin';
 import { Plus, Edit, Trash2, ShoppingBag } from 'lucide-react';
 import Image from 'next/image';
 import Search from '@/components/Search';
@@ -15,16 +15,29 @@ export default async function AdminDashboard({
     searchParams: Promise<{ q?: string, condition?: string, category?: string, minPrice?: string, maxPrice?: string }>
 }) {
     const params = await searchParams;
-    const products = await getProducts({
+    const [products, deliverySettings] = await Promise.all([
+        getProducts({
         query: params.q,
         condition: params.condition,
         category: params.category,
         minPrice: params.minPrice,
         maxPrice: params.maxPrice
-    });
+        }),
+        getDeliverySettings()
+    ]);
 
     return (
         <div className="min-w-0 space-y-6 sm:space-y-8">
+            <div className="rounded-2xl border border-border bg-card p-5 sm:p-6">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                    <div><p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-500">Checkout settings</p><h2 className="mt-1 text-lg font-bold text-foreground">Cash on delivery fee</h2><p className="mt-1 text-sm text-muted-foreground">Customers using COD pay this fee. Card payments stay free.</p></div>
+                    <form action={updateDeliverySettings} className="flex w-full max-w-sm items-end gap-2">
+                        <label className="min-w-0 flex-1"><span className="mb-2 block text-xs font-medium text-muted-foreground">Fee in USD</span><input name="cashOnDeliveryFee" type="number" min="0" max="10000" step="0.01" defaultValue={deliverySettings.cashOnDeliveryFee} className="h-11 w-full rounded-xl border border-input bg-background px-3 text-foreground outline-none focus:ring-2 focus:ring-ring/40" /></label>
+                        <Button type="submit" className="h-11 rounded-xl">Save fee</Button>
+                    </form>
+                </div>
+            </div>
+
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">Products Management</h1>
 

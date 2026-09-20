@@ -10,6 +10,24 @@ import Order from '@/models/Order';
 import User from '@/models/User';
 import { auth } from '@/lib/auth';
 import bcrypt from 'bcryptjs';
+import DeliverySettings from '@/models/DeliverySettings';
+
+export async function getDeliverySettings() {
+    await dbConnect();
+    const settings = await DeliverySettings.findOne().sort({ createdAt: 1 }).lean();
+    return { cashOnDeliveryFee: settings?.cashOnDeliveryFee ?? 10 };
+}
+
+export async function updateDeliverySettings(formData: FormData) {
+    const session = await auth();
+    if (!session?.user || session.user.role !== 'admin') throw new Error('Unauthorized');
+    const fee = Number(formData.get('cashOnDeliveryFee'));
+    if (!Number.isFinite(fee) || fee < 0 || fee > 10000) throw new Error('Enter a valid delivery charge');
+    await dbConnect();
+    await DeliverySettings.findOneAndUpdate({}, { cashOnDeliveryFee: Math.round(fee * 100) / 100 }, { upsert: true, new: true, setDefaultsOnInsert: true });
+    revalidatePath('/checkout');
+    revalidatePath('/admin');
+}
 
 export async function getProducts(params: { query?: string, condition?: string, category?: string, minPrice?: string, maxPrice?: string } = {}) {
     await dbConnect();
