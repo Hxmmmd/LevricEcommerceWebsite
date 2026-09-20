@@ -45,6 +45,7 @@ export default function ProfilePage() {
     const [userToDelete, setUserToDelete] = useState<any>(null);
     const [confirmAdminPassword, setConfirmAdminPassword] = useState('');
     const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
+    const [userSearch, setUserSearch] = useState('');
 
     useEffect(() => {
         setMounted(true);
@@ -586,7 +587,18 @@ export default function ProfilePage() {
                                             </span>
                                         </div>
 
-                                        <div className="w-full max-h-[460px] space-y-2 overflow-y-auto pr-0 scrollbar-thin sm:pr-1">
+                                        <div className="relative mb-4">
+                                            <input
+                                                type="search"
+                                                value={userSearch}
+                                                onChange={(event) => setUserSearch(event.target.value)}
+                                                placeholder="Search by name or email..."
+                                                aria-label="Search system users"
+                                                className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                                            />
+                                        </div>
+
+                                        <div className="w-full max-h-[460px] space-y-2 overflow-y-auto overscroll-contain pr-0 scrollbar-thin sm:pr-1">
                                             {isListLoading ? (
                                                 <div className="space-y-2">
                                                     {[1, 2, 3].map((i) => (
@@ -600,8 +612,16 @@ export default function ProfilePage() {
                                                 </div>
                                             ) : adminList.length === 0 ? (
                                                 <p className="py-8 text-center text-xs italic text-muted-foreground">No users found.</p>
+                                            ) : adminList.filter((adm) => {
+                                                const query = userSearch.trim().toLowerCase();
+                                                return !query || adm.name?.toLowerCase().includes(query) || adm.email?.toLowerCase().includes(query);
+                                            }).length === 0 ? (
+                                                <p className="py-8 text-center text-xs italic text-muted-foreground">No users match your search.</p>
                                             ) : (
-                                                adminList.map((adm) => (
+                                                adminList.filter((adm) => {
+                                                    const query = userSearch.trim().toLowerCase();
+                                                    return !query || adm.name?.toLowerCase().includes(query) || adm.email?.toLowerCase().includes(query);
+                                                }).map((adm) => (
                                                     <div key={adm._id} className="group flex min-h-[76px] w-full items-center gap-3 rounded-2xl border border-border bg-muted/35 px-3 py-3 transition-colors hover:bg-accent/60 sm:px-4">
                                                         <div className={cn(
                                                             "flex size-11 shrink-0 items-center justify-center rounded-full",
