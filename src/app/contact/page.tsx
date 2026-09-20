@@ -76,8 +76,8 @@ export default function ContactPage() {
                                     <div className="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <ExternalLink className="w-3 h-3 text-white/50" />
                                     </div>
-                                    <div className="w-9 h-9 rounded-lg bg-linear-to-br from-gray-900 to-black flex items-center justify-center mb-4 shadow-lg shadow-black/20 group-hover:scale-110 transition-transform duration-300 border border-white/10">
-                                        <TikTokIcon className="w-5 h-5 text-white" />
+                                    <div className="mb-4 flex size-9 items-center justify-center rounded-lg border border-border bg-muted text-foreground shadow-sm shadow-black/10 transition-transform duration-300 group-hover:scale-110">
+                                        <TikTokIcon className="size-5" />
                                     </div>
                                     <h3 className="mb-0.5 text-sm font-black uppercase tracking-tight text-foreground">TikTok</h3>
                                     <p className="text-muted-foreground text-[10px] mb-2 font-medium">Watch our latest unboxings and tech reviews.</p>
