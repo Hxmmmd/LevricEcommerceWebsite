@@ -48,7 +48,10 @@ const ProductCard = React.memo(({ product }: { product: Product }) => {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3 }}
             viewport={{ once: true }}
-            className="group relative rounded-xl border border-white/5 bg-white/5 p-3 backdrop-blur-sm transition-colors hover:bg-white/10 overflow-hidden h-full flex flex-col"
+            whileHover={{ y: -5 }}
+            whileTap={{ scale: 0.985 }}
+            transition={{ type: 'spring', stiffness: 320, damping: 24 }}
+            className="interactive-lift group relative flex h-full flex-col overflow-hidden rounded-xl border border-white/5 bg-white/5 p-3 backdrop-blur-sm"
         >
             <Link href={`/products/${product.slug}`} className="block relative aspect-square overflow-hidden rounded-lg bg-white/5">
                 {/* Badges */}

@@ -51,8 +51,8 @@ export default function Header() {
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-[#09090b]">
-            <div className="container mx-auto px-4 md:px-6">
-                <div className="flex h-16 items-center justify-start gap-8">
+            <div className="container mx-auto px-3 sm:px-4 md:px-6">
+                <div className="flex min-h-16 items-center justify-start gap-2 sm:gap-4 md:gap-8">
                     {/* Back Button */}
                     <Button
                         variant="ghost"
@@ -75,7 +75,7 @@ export default function Header() {
                                 key={link.href}
                                 href={link.href}
                                 className={cn(
-                                    'text-sm font-medium transition-colors hover:text-white relative',
+                                    'group relative text-sm font-medium transition-colors duration-200 hover:text-white',
                                     pathname === link.href ? 'text-white' : 'text-gray-400'
                                 )}
                             >
@@ -172,7 +172,7 @@ export default function Header() {
                         transition={{ duration: 0.2 }}
                         className="md:hidden border-t border-white/5 bg-[#09090b] overflow-visible"
                     >
-                        <div className="px-4 py-3">
+                        <div className="px-3 py-3 sm:px-4">
                             <Search isAdmin={isAdmin} />
                         </div>
                     </motion.div>
@@ -213,7 +213,7 @@ export default function Header() {
                                         href={link.href}
                                         onClick={() => setIsOpen(false)}
                                         className={cn(
-                                            'block px-4 py-3 rounded-lg text-base font-medium transition',
+                                            'block rounded-lg px-4 py-3 text-base font-medium transition duration-200 active:scale-[0.98]',
                                             pathname === link.href
                                                 ? 'bg-white/10 text-white'
                                                 : 'text-gray-400 hover:bg-white/5 hover:text-white'
