@@ -253,8 +253,8 @@ export default function ProfilePage() {
         <main className="min-h-screen bg-background text-foreground flex flex-col">
             <Header />
 
-            <div className="mx-auto flex w-full max-w-6xl flex-grow px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
-                <header className="space-y-2 mb-10">
+            <div className="mx-auto flex w-full max-w-6xl flex-grow flex-col px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+                <header className="mb-8 w-full space-y-2 sm:mb-10">
                     <div className="flex items-center gap-3 text-blue-500 font-black uppercase tracking-[0.3em] text-[10px] mb-2">
                         <Settings className="w-3 h-3" /> Account Settings
                     </div>
