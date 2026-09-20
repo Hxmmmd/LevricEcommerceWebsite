@@ -41,7 +41,7 @@ const FilterControls = ({
                         onClick={() => setSort(opt.value)}
                         className={`text-left px-4 py-2 rounded-xl text-[11px] font-medium transition-all border ${sort === opt.value
                             ? 'bg-blue-600 border-blue-500 text-white shadow-sm'
-                            : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+                            : 'bg-muted/60 border-border text-muted-foreground hover:bg-accent hover:text-foreground'
                             }`}
                     >
                         {opt.label}
@@ -61,7 +61,7 @@ const FilterControls = ({
                         value={minPrice}
                         onChange={(e) => setMinPrice(e.target.value.replace(/[^0-9.]/g, ''))}
                         placeholder="Min"
-                        className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all"
+                        className="w-full bg-background border border-input rounded-lg px-3 py-1.5 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all"
                     />
                 </div>
                 <div className="space-y-1">
@@ -71,7 +71,7 @@ const FilterControls = ({
                         value={maxPrice}
                         onChange={(e) => setMaxPrice(e.target.value.replace(/[^0-9.]/g, ''))}
                         placeholder="Max"
-                        className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all"
+                        className="w-full bg-background border border-input rounded-lg px-3 py-1.5 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all"
                     />
                 </div>
             </div>
@@ -88,7 +88,7 @@ const FilterControls = ({
                         onClick={() => setCondition(condition === cond ? '' : cond)}
                         className={`px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all border ${condition === cond
                             ? 'bg-blue-600/10 border-blue-500/50 text-blue-400 shadow-sm'
-                            : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+                            : 'bg-muted/60 border-border text-muted-foreground hover:bg-accent hover:text-foreground'
                             }`}
                     >
                         {cond}
@@ -183,7 +183,7 @@ export default function ProductFilters() {
             <div className="lg:hidden mb-4">
                 <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className="w-full flex items-center justify-between bg-white/5 border border-white/10 rounded-xl p-3 text-white font-medium text-sm transition-all active:scale-[0.98]"
+                    className="w-full flex items-center justify-between bg-card border border-border rounded-xl p-3 text-foreground font-medium text-sm shadow-sm transition-all active:scale-[0.98]"
                 >
                     <div className="flex items-center gap-2">
                         <Sliders className="w-4 h-4 text-blue-400" />
@@ -194,8 +194,8 @@ export default function ProductFilters() {
             </div>
 
             {/* Main Filters Container */}
-            <div className={`hidden lg:block bg-white/5 border border-white/10 rounded-xl p-4 h-fit sticky top-24 backdrop-blur-sm`}>
-                <div className="flex items-center gap-2 text-white font-bold text-sm border-b border-white/5 pb-3 mb-4">
+            <div className={`hidden lg:block bg-card border border-border rounded-2xl p-4 h-fit sticky top-24 shadow-sm`}>
+                <div className="flex items-center gap-2 text-foreground font-bold text-sm border-b border-border pb-3 mb-4">
                     <Sliders className="w-4 h-4 text-blue-400" />
                     Filters
                 </div>
