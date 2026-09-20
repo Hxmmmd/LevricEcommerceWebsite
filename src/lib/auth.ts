@@ -18,11 +18,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             async authorize(credentials) {
                 await dbConnect();
 
-                if (!credentials?.email || !credentials?.password) return null;
+                const email = String(credentials?.email || '').trim().toLowerCase();
+                const password = String(credentials?.password || '');
+                if (!email || !password) return null;
 
-                const user = await User.findOne({ email: credentials.email });
+                const user = await User.findOne({ email: email });
 
-                if (user && bcrypt.compareSync(credentials.password as string, user.password)) {
+                if (user && await bcrypt.compare(password, user.password)) {
                     return {
                         id: user._id.toString(),
                         name: user.name,

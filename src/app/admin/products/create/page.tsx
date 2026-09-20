@@ -202,15 +202,15 @@ export default function CreateProductPage() {
     }
 
     return (
-        <div className="max-w-6xl mx-auto space-y-6 md:space-y-8 pb-20 px-4 md:px-0">
+        <div className="mx-auto w-full max-w-7xl space-y-6 pb-20 sm:space-y-8">
             <div className="flex items-center gap-2 md:gap-4 mt-4 md:mt-0">
                 <Link href="/admin" className={cn(buttonVariants('ghost', 'icon'), "h-9 w-9 md:h-10 md:w-10")}>
                     <ChevronLeft className="w-5 h-5" />
                 </Link>
-                <h1 className="text-2xl md:text-3xl font-bold text-white">Create New Product</h1>
+                <div><p className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600">Catalog</p><h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Create new product</h1><p className="mt-1 text-sm text-muted-foreground">Add a product to your storefront with clear pricing, inventory, and media details.</p></div>
             </div>
 
-            <div className="flex items-center gap-4 border-b border-white/10 pb-1">
+            <div className="flex w-full max-w-md items-center gap-1 rounded-xl border border-border bg-muted/50 p-1">
                 <button
                     onClick={() => setActiveTab('edit')}
                     className={cn(
@@ -234,29 +234,29 @@ export default function CreateProductPage() {
             <div className="min-h-[600px] relative">
                 {/* Form Side - Kept mounted to prevent state loss */}
                 <div className={cn(activeTab !== 'edit' && "hidden")}>
-                    <form onSubmit={handleSubmit} className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 space-y-6 animate-in fade-in duration-300">
+                    <form onSubmit={handleSubmit} className="space-y-8 rounded-2xl border border-border bg-card p-4 shadow-sm animate-in fade-in duration-300 sm:p-6 lg:p-8">
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-400">Title</label>
+                                <label className="text-sm font-semibold text-foreground">Title</label>
                                 <input
                                     name="title"
                                     required
                                     type="text"
                                     onChange={handleInputChange}
-                                    className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full bg-background border border-input rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500"
                                     placeholder="Product Title"
                                     value={previewData.title}
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-400">Category</label>
+                                <label className="text-sm font-semibold text-foreground">Category</label>
                                 <input
                                     name="category"
                                     required
                                     type="text"
                                     value={previewData.category}
                                     onChange={handleInputChange}
-                                    className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full bg-background border border-input rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500"
                                     placeholder="e.g. Laptops"
                                 />
                             </div>
@@ -264,7 +264,7 @@ export default function CreateProductPage() {
 
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-400">Price ($)</label>
+                                <label className="text-sm font-semibold text-foreground">Price ($)</label>
                                 <input
                                     name="price"
                                     required
@@ -273,12 +273,12 @@ export default function CreateProductPage() {
                                     min="0.01"
                                     value={previewData.price || ''}
                                     onChange={handleInputChange}
-                                    className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full bg-background border border-input rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500"
                                     placeholder="99.99"
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-400">Discount (%)</label>
+                                <label className="text-sm font-semibold text-foreground">Discount (%)</label>
                                 <input
                                     name="discount"
                                     type="number"
@@ -287,7 +287,7 @@ export default function CreateProductPage() {
                                     max="100"
                                     value={previewData.discount || ''}
                                     onChange={handleInputChange}
-                                    className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full bg-background border border-input rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500"
                                     placeholder="0"
                                 />
                             </div>
@@ -324,7 +324,7 @@ export default function CreateProductPage() {
 
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-400">Stock</label>
+                                <label className="text-sm font-semibold text-foreground">Stock</label>
                                 <input
                                     name="stock"
                                     required
@@ -333,12 +333,12 @@ export default function CreateProductPage() {
                                     step="1"
                                     value={previewData.stock || ''}
                                     onChange={handleInputChange}
-                                    className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full bg-background border border-input rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500"
                                     placeholder="0"
                                 />
                             </div>
                             <div className="space-y-3">
-                                <label className="text-sm font-medium text-gray-400">Condition</label>
+                                <label className="text-sm font-semibold text-foreground">Condition</label>
                                 <div className="flex items-center space-x-6 h-12">
                                     <label className="flex items-center space-x-2 cursor-pointer group">
                                         <input
@@ -368,7 +368,7 @@ export default function CreateProductPage() {
 
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="space-y-4">
-                                <label className="text-sm font-medium text-gray-400">Main Product Image (Upload or URL)</label>
+                                <label className="text-sm font-semibold text-foreground">Main Product Image (Upload or URL)</label>
                                 <div className="space-y-2">
                                     <input name="imageFile" type="file" onChange={handleFileChange} accept="image/*" className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2 text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500/10 file:text-blue-400 hover:file:bg-blue-500/20" />
                                     <input
@@ -388,7 +388,7 @@ export default function CreateProductPage() {
                                 </div>
                             </div>
                             <div className="space-y-4">
-                                <label className="text-sm font-medium text-gray-400">Additional Gallery Images (Comma URLs)</label>
+                                <label className="text-sm font-semibold text-foreground">Additional Gallery Images (Comma URLs)</label>
                                 <textarea
                                     value={managedImages.slice(1).join(', ')}
                                     name="images"
@@ -397,7 +397,7 @@ export default function CreateProductPage() {
                                         const urls = e.target.value.split(',').map(s => s.trim()).filter(Boolean);
                                         setManagedImages([managedImages[0], ...urls].filter(Boolean));
                                     }}
-                                    className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs font-mono scrollbar-thin scrollbar-thumb-white/10"
+                                    className="w-full bg-background border border-input rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 text-xs font-mono scrollbar-thin scrollbar-thumb-white/10"
                                     placeholder="url1, url2, url3..."
                                 />
                             </div>
@@ -406,7 +406,7 @@ export default function CreateProductPage() {
                         {/* Visual Image Manager */}
                         {managedImages.length > 0 && (
                             <div className="space-y-3">
-                                <label className="text-sm font-medium text-gray-400">Selected Images (Select to remove)</label>
+                                <label className="text-sm font-semibold text-foreground">Selected Images (Select to remove)</label>
                                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
                                     {managedImages.map((img, idx) => (
                                         <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border border-white/10 group bg-black/40">
@@ -445,14 +445,14 @@ export default function CreateProductPage() {
                         )}
 
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-400">Description (Markdown Supported)</label>
+                            <label className="text-sm font-semibold text-foreground">Description (Markdown Supported)</label>
                             <textarea
                                 name="description"
                                 required
                                 rows={8}
                                 value={previewData.description}
                                 onChange={handleInputChange}
-                                className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
+                                className="w-full bg-background border border-input rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 font-mono text-sm"
                                 placeholder="Use Markdown: **bold**, - lists, # headings..."
                             />
                         </div>
@@ -476,7 +476,7 @@ export default function CreateProductPage() {
                                 <Eye className="w-4 h-4 text-blue-400" />
                                 Card Preview
                             </div>
-                            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm flex justify-center shadow-2xl">
+                            <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 flex justify-center shadow-sm">
                                 <div className="w-full max-w-[300px]">
                                     <ProductCard
                                         product={{
@@ -501,7 +501,7 @@ export default function CreateProductPage() {
                                 <Eye className="w-4 h-4 text-green-400" />
                                 Full Description Preview
                             </div>
-                            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm min-h-[400px] shadow-2xl">
+                            <div className="bg-card border border-border rounded-2xl p-5 sm:p-8 min-h-[300px] shadow-sm">
                                 <div className="prose prose-invert max-w-none">
                                     {previewData.description ? (
                                         <ReactMarkdown remarkPlugins={[remarkGfm]}>

@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mail, Lock, User, ShieldCheck, ArrowRight, Loader2, Eye, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { signIn } from 'next-auth/react';
+import { getCsrfToken, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 interface AuthModalProps {
@@ -62,10 +62,12 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
 
         try {
             if (mode === 'login') {
+                const csrfToken = await getCsrfToken();
                 const res = await signIn('credentials', {
                     redirect: false,
-                    email,
+                    email: email.trim().toLowerCase(),
                     password,
+                    ...(csrfToken ? { csrfToken } : {}),
                 });
 
                 if (res?.error) {
@@ -90,10 +92,12 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
 
                 if (res.ok) {
                     // Auto login after registration
+                    const csrfToken = await getCsrfToken();
                     await signIn('credentials', {
                         redirect: false,
-                        email,
+                        email: email.trim().toLowerCase(),
                         password,
+                        ...(csrfToken ? { csrfToken } : {}),
                     });
                     onSuccess?.();
                     onClose();
