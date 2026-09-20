@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
 
 type Theme = 'dark' | 'light';
@@ -14,7 +14,6 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>('dark');
-  const transitionInProgress = useRef(false);
 
   useEffect(() => {
     const savedTheme = window.localStorage.getItem('levric-theme');
@@ -24,31 +23,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const toggleTheme = () => {
-    if (transitionInProgress.current) return;
-
     setTheme((currentTheme) => {
       const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      const applyTheme = () => {
-        document.documentElement.classList.toggle('light', nextTheme === 'light');
-        window.localStorage.setItem('levric-theme', nextTheme);
-      };
-
-      const viewTransitionDocument = document as Document & {
-        startViewTransition?: (update: () => void) => {
-          finished: Promise<void>;
-        };
-      };
-
-      if (viewTransitionDocument.startViewTransition) {
-        transitionInProgress.current = true;
-        const transition = viewTransitionDocument.startViewTransition(applyTheme);
-        transition.finished.catch(() => undefined).finally(() => {
-          transitionInProgress.current = false;
-        });
-      } else {
-        applyTheme();
-      }
-
+      document.documentElement.classList.toggle('light', nextTheme === 'light');
+      window.localStorage.setItem('levric-theme', nextTheme);
       return nextTheme;
     });
   };
