@@ -45,11 +45,12 @@ export default async function AdminOrdersPage() {
                                                     <User className="w-4 h-4 text-gray-500" />
                                                     <span className="font-bold text-sm">{order.userId?.name || 'Guest'}</span>
                                                 </div>
-                                                <p className="text-xs text-gray-500 pl-6">{order.userId?.email}</p>
+                                                <p className="pl-6 text-xs text-muted-foreground">{order.shippingAddress.phone || order.userId?.email}</p>
+                                                {order.shippingAddress.email && <p className="pl-6 text-xs text-muted-foreground">{order.shippingAddress.email}</p>}
                                             </div>
-                                            <div className="flex items-start gap-2 text-gray-500">
-                                                <MapPin className="w-3.5 h-3.5 mt-0.5" />
-                                                <p className="text-[10px] uppercase font-bold tracking-wider">{order.shippingAddress.city}, {order.shippingAddress.country}</p>
+                                            <div className="flex items-start gap-2 text-muted-foreground">
+                                                <MapPin className="mt-0.5 h-3.5 w-3.5" />
+                                                <div className="space-y-1"><p className="text-[10px] font-bold uppercase tracking-wider">{order.shippingAddress.address}{order.shippingAddress.apartment ? `, ${order.shippingAddress.apartment}` : ''}</p><p className="text-[10px] font-bold uppercase tracking-wider">{order.shippingAddress.city}{order.shippingAddress.postalCode ? `, ${order.shippingAddress.postalCode}` : ''}, {order.shippingAddress.country}</p>{order.shippingAddress.alternatePhone && <p className="text-[10px] font-bold uppercase tracking-wider">Alt: {order.shippingAddress.alternatePhone}</p>}</div>
                                             </div>
                                         </div>
 
@@ -67,9 +68,10 @@ export default async function AdminOrdersPage() {
                                                     </div>
                                                 )}
                                             </div>
-                                            <p className="text-[10px] text-gray-500 mt-2 font-black uppercase tracking-widest">
-                                                {order.items.length} item{order.items.length > 1 ? 's' : ''} • <span className="text-white">${order.totalAmount.toFixed(2)}</span>
+                                            <p className="mt-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+                                                {order.items.length} item{order.items.length > 1 ? 's' : ''} • <span className="text-foreground">${order.totalAmount.toFixed(2)}</span>
                                             </p>
+                                            {order.shippingPrice > 0 && <p className="mt-1 text-[10px] font-bold uppercase tracking-widest text-amber-500">COD delivery fee: ${order.shippingPrice.toFixed(2)}</p>}
                                         </div>
 
                                         {/* Actions & Status */}

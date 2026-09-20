@@ -76,6 +76,12 @@ export async function createOrder(orderData: any) {
         await product.save();
     }
 
+    const shippingAddress = orderData.shippingAddress || {};
+    const phonePattern = /^03\d{9}$/;
+    if (!phonePattern.test(String(shippingAddress.phone || ''))) throw new Error('A valid Pakistani phone number is required.');
+    if (!shippingAddress.firstName || !shippingAddress.lastName || !shippingAddress.address || !shippingAddress.city) throw new Error('Please complete all required delivery fields.');
+    if (shippingAddress.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(shippingAddress.email)) throw new Error('Please enter a valid email address.');
+
     const settings = await DeliverySettings.findOne().sort({ createdAt: 1 }).lean();
     const cashOnDeliveryFee = settings?.cashOnDeliveryFee ?? 10;
     const paymentMethod = orderData.paymentMethod === 'Cash on Delivery' ? 'Cash on Delivery' : 'Credit Card';
@@ -84,7 +90,14 @@ export async function createOrder(orderData: any) {
     const order = new Order({
         userId: session.user.id, // Renamed from user
         items: orderItems, // Renamed from orderItems
-        shippingAddress: orderData.shippingAddress,
+        shippingAddress: {
+            ...shippingAddress,
+            fullName: `${shippingAddress.firstName} ${shippingAddress.lastName}`.trim(),
+            email: shippingAddress.email || '',
+            apartment: shippingAddress.apartment || '',
+            postalCode: shippingAddress.postalCode || '',
+            alternatePhone: shippingAddress.alternatePhone || ''
+        },
         paymentMethod,
         paymentStatus: 'Pending', // Explicitly set default
         isPaid: false, // Default false

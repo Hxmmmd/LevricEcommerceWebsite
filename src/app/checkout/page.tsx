@@ -30,12 +30,19 @@ export default function CheckoutPage() {
 
     // Form states
     const [shipping, setShipping] = useState({
-        fullName: '',
+        phone: '',
+        firstName: '',
+        lastName: '',
+        email: '',
         address: '',
+        apartment: '',
         city: '',
         postalCode: '',
+        alternatePhone: '',
         country: 'Pakistan'
     });
+    const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+    const [submitError, setSubmitError] = useState('');
 
     useEffect(() => {
         getCheckoutSettings().then((settings) => setDeliveryFee(settings.cashOnDeliveryFee)).catch(() => undefined);
@@ -91,18 +98,36 @@ export default function CheckoutPage() {
         initCheckout();
     }, [productSlug, cartItems]);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setShipping({ ...shipping, [e.target.name]: e.target.value });
     };
 
     const handlePlaceOrder = async (e: React.FormEvent) => {
         e.preventDefault();
+        setSubmitError('');
+        const errors: Record<string, string> = {};
+        const phonePattern = /^03\d{9}$/;
+        if (!phonePattern.test(shipping.phone)) errors.phone = 'Enter a valid 11-digit Pakistani mobile number.';
+        if (!shipping.firstName.trim()) errors.firstName = 'First name is required.';
+        if (!shipping.lastName.trim()) errors.lastName = 'Last name is required.';
+        if (shipping.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(shipping.email)) errors.email = 'Enter a valid email address.';
+        if (!shipping.address.trim()) errors.address = 'Address is required.';
+        if (!shipping.city.trim()) errors.city = 'Select or enter a city.';
+        if (shipping.alternatePhone && !phonePattern.test(shipping.alternatePhone)) errors.alternatePhone = 'Enter a valid 11-digit mobile number.';
+        if (Object.keys(errors).length) {
+            setFormErrors(errors);
+            return;
+        }
+        setFormErrors({});
         setLoading(true);
 
         try {
             await createOrder({
                 orderItems: checkoutItems,
-                shippingAddress: shipping,
+                shippingAddress: {
+                    ...shipping,
+                    fullName: `${shipping.firstName.trim()} ${shipping.lastName.trim()}`
+                },
                 paymentMethod,
                 itemsPrice: totalPrice,
                 shippingPrice: paymentMethod === 'Cash on Delivery' ? deliveryFee : 0,
@@ -117,9 +142,7 @@ export default function CheckoutPage() {
                 router.push('/');
             }, 3000);
         } catch (err: unknown) {
-            if (err instanceof Error){
-                alert(err.message || 'Failed to place order');
-            }
+            setSubmitError(err instanceof Error ? err.message : 'Failed to place order. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -262,51 +285,30 @@ export default function CheckoutPage() {
                                     <h2 className="text-xl md:text-2xl font-bold text-foreground tracking-tight">Shipping Information</h2>
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-                                    <div className="md:col-span-2 space-y-2">
-                                        <label className="text-[10px] md:text-xs font-semibold text-gray-500 uppercase tracking-widest pl-1">Full Name</label>
-                                        <input
-                                            name="fullName"
-                                            required
-                                            value={shipping.fullName}
-                                            onChange={handleInputChange}
-                                            className="h-12 w-full rounded-xl border border-input bg-background px-4 text-base font-medium text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/40 sm:h-14"
-                                            placeholder="Enter your full name"
-                                        />
-                                    </div>
-                                    <div className="md:col-span-2 space-y-2">
-                                        <label className="text-[10px] md:text-xs font-semibold text-gray-500 uppercase tracking-widest pl-1">Street Address</label>
-                                        <input
-                                            name="address"
-                                            required
-                                            value={shipping.address}
-                                            onChange={handleInputChange}
-                                            className="h-12 w-full rounded-xl border border-input bg-background px-4 text-base font-medium text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/40 sm:h-14"
-                                            placeholder="123 Luxury St, Apt 4B"
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] md:text-xs font-semibold text-gray-500 uppercase tracking-widest pl-1">City</label>
-                                        <input
-                                            name="city"
-                                            required
-                                            value={shipping.city}
-                                            onChange={handleInputChange}
-                                            className="h-12 w-full rounded-xl border border-input bg-background px-4 text-base font-medium text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/40 sm:h-14"
-                                            placeholder="Karachi"
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] md:text-xs font-semibold text-gray-500 uppercase tracking-widest pl-1">Postal Code</label>
-                                        <input
-                                            name="postalCode"
-                                            required
-                                            value={shipping.postalCode}
-                                            onChange={handleInputChange}
-                                            className="h-12 w-full rounded-xl border border-input bg-background px-4 text-base font-medium text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/40 sm:h-14"
-                                            placeholder="74000"
-                                        />
-                                    </div>
+                                <div className="space-y-8">
+                                    <section className="space-y-5">
+                                        <div><p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Contact details</p><h3 className="mt-1 text-lg font-bold">Who should we deliver to?</h3></div>
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-medium">Phone number <span className="text-destructive">*</span></label>
+                                            <div className="flex rounded-xl border border-input bg-background focus-within:ring-2 focus-within:ring-ring/40">
+                                                <span className="flex items-center gap-2 border-r border-input px-4 text-sm font-medium text-muted-foreground"><span className="flex size-6 items-center justify-center rounded-full bg-green-700 text-[10px] text-white">PK</span>+92</span>
+                                                <input name="phone" inputMode="numeric" value={shipping.phone} onChange={handleInputChange} placeholder="03001234567" className="h-14 min-w-0 flex-1 bg-transparent px-4 text-base text-foreground outline-none placeholder:text-muted-foreground" />
+                                            </div>
+                                            {formErrors.phone && <p className="text-xs text-destructive">{formErrors.phone}</p>}
+                                        </div>
+                                        <div className="grid gap-5 sm:grid-cols-2">
+                                            {(['firstName', 'lastName'] as const).map((field) => <div key={field} className="space-y-2"><label className="text-sm font-medium">{field === 'firstName' ? 'First name' : 'Last name'} <span className="text-destructive">*</span></label><input name={field} value={shipping[field]} onChange={handleInputChange} placeholder={field === 'firstName' ? 'First name' : 'Last name'} className="h-14 w-full rounded-xl border border-input bg-background px-4 text-base text-foreground outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring/40" />{formErrors[field] && <p className="text-xs text-destructive">{formErrors[field]}</p>}</div>)}
+                                        </div>
+                                        <div className="space-y-2"><label className="text-sm font-medium">Email address <span className="text-muted-foreground">(optional)</span></label><input name="email" type="email" value={shipping.email} onChange={handleInputChange} placeholder="name@example.com" className="h-14 w-full rounded-xl border border-input bg-background px-4 text-base text-foreground outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring/40" />{formErrors.email && <p className="text-xs text-destructive">{formErrors.email}</p>}</div>
+                                    </section>
+                                    <section className="space-y-5 border-t border-border pt-7">
+                                        <div><p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Shipping address</p><h3 className="mt-1 text-lg font-bold">Where should we deliver?</h3></div>
+                                        <div className="space-y-2"><label className="text-sm font-medium">Address <span className="text-destructive">*</span></label><input name="address" value={shipping.address} onChange={handleInputChange} placeholder="House number, street number, area" className="h-14 w-full rounded-xl border border-input bg-background px-4 text-base text-foreground outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring/40" />{formErrors.address && <p className="text-xs text-destructive">{formErrors.address}</p>}</div>
+                                        <div className="space-y-2"><label className="text-sm font-medium">Apt, suite, unit, building <span className="text-muted-foreground">(optional)</span></label><input name="apartment" value={shipping.apartment} onChange={handleInputChange} placeholder="Apartment, suite, unit, building" className="h-14 w-full rounded-xl border border-input bg-background px-4 text-base text-foreground outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring/40" /></div>
+                                        <div className="grid gap-5 sm:grid-cols-[1.2fr_.8fr]"><div className="space-y-2"><label className="text-sm font-medium">City <span className="text-destructive">*</span></label><select name="city" value={shipping.city} onChange={handleInputChange} className="h-14 w-full rounded-xl border border-input bg-background px-4 text-base text-foreground outline-none focus:ring-2 focus:ring-ring/40"><option value="">Select city</option>{['Karachi', 'Lahore', 'Islamabad', 'Rawalpindi', 'Faisalabad', 'Peshawar', 'Quetta'].map((city) => <option key={city} value={city}>{city}</option>)}</select>{formErrors.city && <p className="text-xs text-destructive">{formErrors.city}</p>}</div><div className="space-y-2"><label className="text-sm font-medium">Zip <span className="text-muted-foreground">(optional)</span></label><input name="postalCode" inputMode="numeric" value={shipping.postalCode} onChange={handleInputChange} placeholder="Enter zip" className="h-14 w-full rounded-xl border border-input bg-background px-4 text-base text-foreground outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring/40" /></div></div>
+                                        <div className="space-y-2"><label className="text-sm font-medium">Alternate phone for delivery <span className="text-muted-foreground">(optional)</span></label><input name="alternatePhone" inputMode="numeric" value={shipping.alternatePhone} onChange={handleInputChange} placeholder="03001234567" className="h-14 w-full rounded-xl border border-input bg-background px-4 text-base text-foreground outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring/40" />{formErrors.alternatePhone && <p className="text-xs text-destructive">{formErrors.alternatePhone}</p>}</div>
+                                    </section>
+                                    {submitError && <div role="alert" className="rounded-xl border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">{submitError}</div>}
                                 </div>
 
                                 <div className="pt-6 border-t border-white/5">

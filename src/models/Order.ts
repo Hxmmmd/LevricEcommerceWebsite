@@ -25,9 +25,15 @@ const OrderSchema = new mongoose.Schema({
     // Keeping address and payment info as it's essential for an order, even if not in the simplified diagram
     shippingAddress: {
         fullName: { type: String, required: true },
+        phone: { type: String, required: true },
+        firstName: { type: String, required: true },
+        lastName: { type: String, required: true },
+        email: { type: String, default: '' },
         address: { type: String, required: true },
+        apartment: { type: String, default: '' },
         city: { type: String, required: true },
-        postalCode: { type: String, required: true },
+        postalCode: { type: String, default: '' },
+        alternatePhone: { type: String, default: '' },
         country: { type: String, required: true },
     },
     paymentMethod: { type: String, required: true },
