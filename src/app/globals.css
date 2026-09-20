@@ -91,23 +91,50 @@ html.light {
   }
 
   * {
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent-blue) transparent;
+    scrollbar-width: auto;
+    scrollbar-color: #697386 #0b0b0e;
   }
 
   *::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 11px;
+    height: 11px;
   }
 
   *::-webkit-scrollbar-track {
-    background: transparent;
+    background: #0b0b0e;
   }
 
   *::-webkit-scrollbar-thumb {
-    border: 2px solid transparent;
+    min-height: 44px;
+    border: 3px solid #0b0b0e;
     border-radius: 999px;
-    background: linear-gradient(var(--accent-blue), var(--accent-violet)) padding-box;
+    background: #697386;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: #9aa5b7;
+  }
+
+  *::-webkit-scrollbar-corner {
+    background: #0b0b0e;
+  }
+
+  html.light * {
+    scrollbar-color: #9ca3af #eef0f4;
+  }
+
+  html.light *::-webkit-scrollbar-track,
+  html.light *::-webkit-scrollbar-corner {
+    background: #eef0f4;
+  }
+
+  html.light *::-webkit-scrollbar-thumb {
+    border-color: #eef0f4;
+    background: #9ca3af;
+  }
+
+  html.light *::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
   }
 
   body {
