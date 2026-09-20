@@ -140,6 +140,40 @@ html.light {
     background: #6b7280;
   }
 
+  /* Keep legacy dark utility classes readable when light mode is active. */
+  html.light [class*="text-white"]:not([class*="bg-"]) {
+    color: var(--foreground) !important;
+  }
+
+  html.light [class*="text-gray-400"],
+  html.light [class*="text-gray-500"],
+  html.light [class*="text-gray-600"] {
+    color: var(--muted-foreground) !important;
+  }
+
+  html.light [class*="bg-white/5"],
+  html.light [class*="bg-white/10"] {
+    background-color: var(--surface-soft) !important;
+  }
+
+  html.light [class*="border-white"] {
+    border-color: var(--border) !important;
+  }
+
+  html.light [class*="bg-[#09090b]"],
+  html.light [class*="bg-[#0A0A0A]"],
+  html.light [class*="bg-[#0c0c0e]"] {
+    background-color: var(--card) !important;
+  }
+
+  html.light [class*="bg-black/"] {
+    background-color: rgb(15 23 42 / 0.28) !important;
+  }
+
+  html.light [class*="hover:bg-white"]:hover {
+    background-color: var(--accent) !important;
+  }
+
   body {
     background-color: var(--background);
     color: var(--foreground);
