@@ -245,7 +245,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
             <div className="min-h-[600px] relative">
                 {/* Form Side - Kept mounted to prevent state loss */}
                 <div className={cn(activeTab !== 'edit' && "hidden")}>
-                    <form onSubmit={handleSubmit} className="bg-white/5 border border-white/10 rounded-2xl p-5 md:p-8 space-y-6 shadow-2xl animate-in fade-in duration-300">
+                    <form onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-4 sm:p-6 lg:p-8 space-y-6 shadow-sm animate-in fade-in duration-300">
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="space-y-2">
                                 <label className="text-sm font-medium text-gray-400">Title</label>
@@ -423,7 +423,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                                 <Eye className="w-4 h-4 text-blue-400" />
                                 Card Preview
                             </div>
-                            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm flex justify-center shadow-2xl">
+                            <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 flex justify-center shadow-sm">
                                 <div className="w-full max-w-[300px]">
                                     <ProductCard
                                         product={{
@@ -448,7 +448,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                                 <Eye className="w-4 h-4 text-green-400" />
                                 Full Description Preview
                             </div>
-                            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm min-h-[400px] shadow-2xl">
+                            <div className="bg-card border border-border rounded-2xl p-5 sm:p-8 min-h-[300px] shadow-sm">
                                 <div className="prose prose-invert max-w-none">
                                     {previewData.description ? (
                                         <ReactMarkdown remarkPlugins={[remarkGfm]}>

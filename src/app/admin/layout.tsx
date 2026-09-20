@@ -17,7 +17,7 @@ export default async function AdminLayout({
     return (
         <div className="min-h-screen bg-background flex flex-col">
             <Header />
-            <main className="flex-1 container mx-auto px-4 py-8">
+            <main className="container mx-auto min-w-0 flex-1 px-3 py-5 sm:px-5 sm:py-8 lg:px-8">
                 {children}
             </main>
         </div>

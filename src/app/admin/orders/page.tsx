@@ -12,7 +12,7 @@ export default async function AdminOrdersPage() {
         const trackingStates = ['Processing', 'Packing', 'Shipped', 'Out for Delivery', 'Delivered'];
 
         return (
-            <div className="space-y-8 p-6 lg:p-12 min-h-screen bg-[#050505]">
+            <div className="min-h-screen space-y-6 bg-background p-4 sm:space-y-8 sm:p-6 lg:p-10">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 max-w-7xl mx-auto">
                     <div className="space-y-1">
                         <Link href="/admin" className="flex items-center gap-2 text-xs text-gray-500 hover:text-white transition-colors mb-2">
@@ -25,15 +25,15 @@ export default async function AdminOrdersPage() {
 
                 <div className="max-w-7xl mx-auto">
                     {orders.length === 0 ? (
-                        <div className="text-center py-40 bg-white/5 border border-white/10 rounded-[2rem] backdrop-blur-sm">
+                        <div className="text-center py-40 bg-card border border-border rounded-2xl shadow-sm">
                             <Package className="w-16 h-16 mx-auto mb-4 opacity-10 text-white" />
                             <h2 className="text-xl font-medium text-gray-400">No orders found yet.</h2>
                         </div>
                     ) : (
                         <div className="grid gap-6">
                             {orders.map((order: any) => (
-                                <div key={order._id} className={`bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden backdrop-blur-md hover:border-white/20 transition-all group ${(order.isCancelled || order.isRejected) ? 'opacity-60 grayscale-[0.5]' : ''}`}>
-                                    <div className="p-6 md:p-8 grid md:grid-cols-12 gap-8 items-center">
+                                <div key={order._id} className={`bg-card border border-border rounded-2xl overflow-hidden shadow-sm hover:border-blue-300 transition-all group ${(order.isCancelled || order.isRejected) ? 'opacity-60 grayscale-[0.5]' : ''}`}>
+                                    <div className="grid items-start gap-6 p-4 sm:p-6 md:grid-cols-12 md:items-center md:p-8">
                                         {/* Order Info */}
                                         <div className="md:col-span-3 space-y-4">
                                             <div className="space-y-1">

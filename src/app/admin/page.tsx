@@ -24,7 +24,7 @@ export default async function AdminDashboard({
     });
 
     return (
-        <div className="space-y-8">
+        <div className="min-w-0 space-y-6 sm:space-y-8">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">Products Management</h1>
 
@@ -33,9 +33,9 @@ export default async function AdminDashboard({
                         <Search isAdmin className="w-full" />
                     </div>
 
-                    <div className="flex items-center gap-2 w-full sm:w-auto">
+                    <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto">
                         <Link href="/admin/orders" className="flex-1 sm:flex-initial">
-                            <Button variant="outline" className="w-full flex items-center justify-center gap-2 border-white/10 hover:bg-white/5 text-sm">
+                            <Button variant="outline" className="w-full flex items-center justify-center gap-2 border-border hover:bg-accent text-sm">
                                 <ShoppingBag className="w-4 h-4" /> <span className="sm:hidden lg:inline">Orders</span><span className="hidden sm:inline lg:hidden">Orders</span>
                             </Button>
                         </Link>
@@ -81,7 +81,7 @@ export default async function AdminDashboard({
                                     </tr>
                                 ) : (
                                     products.map((product) => (
-                                        <tr key={product._id} className="hover:bg-white/5 transition-colors">
+                                        <tr key={product._id} className="hover:bg-accent/50 transition-colors">
                                             <td className="p-4">
                                                 <div className="relative h-12 w-12 rounded-lg overflow-hidden bg-gray-800">
                                                     <Image
@@ -186,7 +186,7 @@ export default async function AdminDashboard({
                                         </div>
                                         <div className="flex items-center gap-2">
                                             <Link href={`/admin/products/${product._id}/edit`} className="flex-1">
-                                                <Button variant="outline" size="sm" className="h-9 px-4 border-white/10 text-xs hover:bg-white/5 w-full">
+                                                <Button variant="outline" size="sm" className="h-9 px-4 border-white/10 text-xs hover:bg-accent/50 w-full">
                                                     <Edit className="w-3.5 h-3.5 mr-2" /> Edit
                                                 </Button>
                                             </Link>
