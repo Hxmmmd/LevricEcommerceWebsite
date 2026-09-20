@@ -125,7 +125,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={onClose}
-                    className="absolute inset-0 bg-black/80 backdrop-blur-xl"
+                    className="absolute inset-0 bg-black/65 backdrop-blur-xl"
                 />
 
                 {/* Modal Container */}
@@ -133,7 +133,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
                     initial={{ scale: 0.9, opacity: 0, y: 20 }}
                     animate={{ scale: 1, opacity: 1, y: 0 }}
                     exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                    className="relative w-full max-w-[420px] bg-[#09090b] border border-white/10 rounded-3xl p-8 shadow-2xl flex flex-col justify-center overflow-hidden group"
+                    className="relative w-full max-w-[420px] overflow-hidden rounded-3xl border border-border bg-card p-6 text-card-foreground shadow-2xl sm:p-8"
                 >
                     {/* Glowing background effect */}
                     <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-600/20 blur-[100px] rounded-full group-hover:bg-blue-600/30 transition-all duration-700" />
@@ -141,17 +141,17 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
 
                     <button
                         onClick={onClose}
-                        className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5 z-20"
+                        className="absolute right-5 top-5 z-20 rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                     >
                         <X className="w-5 h-5" />
                     </button>
 
                     <div className="relative space-y-6 z-10">
                         <div className="text-center space-y-2">
-                            <h2 className="text-3xl font-black tracking-tighter text-white">
+                            <h2 className="text-3xl font-black tracking-tighter text-foreground">
                                 {mode === 'selection' ? 'Choose Access' : mode === 'login' ? 'Welcome Back' : 'Get Started'}
                             </h2>
-                            <p className="text-sm text-gray-400 font-medium">
+                            <p className="text-sm font-medium text-muted-foreground">
                                 {mode === 'selection' ? 'Select your preferred login method' : mode === 'login' ? 'Sign in to place your order' : 'Create an account to continue'}
                             </p>
                         </div>
@@ -183,13 +183,13 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
                                     </button>
 
                                     <div className="relative py-4">
-                                        <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/5"></div></div>
-                                        <div className="relative flex justify-center text-xs uppercase"><span className="bg-[#09090b] px-3 text-gray-500 font-bold tracking-widest">Or</span></div>
+                                        <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border"></div></div>
+                                        <div className="relative flex justify-center text-xs uppercase"><span className="bg-card px-3 font-bold tracking-widest text-muted-foreground">Or</span></div>
                                     </div>
 
                                     <button
                                         onClick={() => setMode('login')}
-                                        className="w-full flex items-center justify-center gap-3 bg-white/5 border border-white/10 text-white hover:bg-white/10 py-4 rounded-xl font-bold transition-all active:scale-[0.98]"
+                                        className="w-full flex items-center justify-center gap-3 rounded-xl border border-border bg-muted/60 py-4 font-bold text-foreground transition-all hover:bg-accent active:scale-[0.98]"
                                     >
                                         <Mail className="w-5 h-5 text-blue-500" />
                                         Continue with Email
@@ -217,7 +217,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
                                                     placeholder="Your Name"
                                                     required
                                                     autoComplete="off"
-                                                    className="w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-xl py-3 pl-10 pr-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-medium"
+                                                    className="w-full rounded-xl border border-input bg-background/70 py-3 pl-10 pr-4 text-sm font-medium text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/50 transition-all"
                                                 />
                                             </div>
                                         </div>
@@ -238,7 +238,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
                                                 placeholder="Email Address"
                                                 required
                                                 autoComplete="off"
-                                                className="w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-xl py-3 pl-10 pr-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-medium"
+                                                className="w-full rounded-xl border border-input bg-background/70 py-3 pl-10 pr-4 text-sm font-medium text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/50 transition-all"
                                             />
                                         </div>
                                     </div>
@@ -258,12 +258,12 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
                                                 placeholder="Password"
                                                 required
                                                 autoComplete={mode === 'register' ? "new-password" : "current-password"}
-                                                className="w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-xl py-3 pl-10 pr-12 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-medium"
+                                                className="w-full rounded-xl border border-input bg-background/70 py-3 pl-10 pr-12 text-sm font-medium text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/50 transition-all"
                                             />
                                             <button
                                                 type="button"
                                                 onClick={() => setShowPassword(!showPassword)}
-                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-500 transition-colors"
+                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-primary"
                                             >
                                                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                                             </button>
@@ -286,7 +286,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
                                                         if (step === 3 && criteriaMet >= 4) isActive = true;
                                                         if (step === 4 && criteriaMet >= 5) isActive = true;
 
-                                                        let colorClass = 'bg-white/10';
+                                                        let colorClass = 'bg-muted';
                                                         if (isActive) {
                                                             if (criteriaMet <= 2) colorClass = 'bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]';
                                                             else if (criteriaMet === 3) colorClass = 'bg-yellow-500 shadow-[0_0_10px_rgba(234,179,8,0.5)]';
@@ -304,7 +304,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
                                                 </div>
 
                                                 <div className="flex justify-between items-center">
-                                                    <p className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-500">Security Strength</p>
+                                                    <p className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground">Security Strength</p>
                                                     {(() => {
                                                         const criteriaMet = [
                                                             password.length >= 8,
@@ -331,7 +331,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
                                     <Button
                                         type="submit"
                                         disabled={loading}
-                                        className="w-full bg-white text-black hover:bg-gray-200 py-6 rounded-xl font-black text-base shadow-lg shadow-white/5 disabled:opacity-50"
+                                        className="w-full rounded-xl bg-primary py-6 text-base font-black text-primary-foreground shadow-lg shadow-primary/10 hover:bg-primary/90 disabled:opacity-50"
                                     >
                                         {loading ? (
                                             <Loader2 className="w-5 h-5 animate-spin" />
@@ -347,7 +347,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
                                         <button
                                             type="button"
                                             onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
-                                            className="text-sm text-gray-400 hover:text-white transition-colors font-medium"
+                                            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
                                         >
                                             {mode === 'login'
                                                 ? "Don't have an account? Sign Up"
