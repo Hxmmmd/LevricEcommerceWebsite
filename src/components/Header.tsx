@@ -12,6 +12,7 @@ import Search from '@/components/Search';
 import { useSession, signOut } from 'next-auth/react';
 import { useCart } from '@/lib/context/CartContext';
 import { useAuthModal } from '@/lib/context/AuthModalContext';
+import { ThemeToggle } from '@/components/ThemeProvider';
 
 export default function Header() {
     const { items } = useCart();
@@ -50,7 +51,7 @@ export default function Header() {
     }, [session?.user?.isAdmin]);
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-[#09090b]">
+        <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-xl">
             <div className="container mx-auto px-3 sm:px-4 md:px-6">
                 <div className="flex min-h-16 items-center justify-start gap-2 sm:gap-4 md:gap-8">
                     {/* Back Button */}
@@ -92,7 +93,8 @@ export default function Header() {
                     )}
 
                     {/* Icons */}
-                    <div className="flex items-center ml-auto space-x-1 sm:space-x-2">
+                    <div className="ml-auto flex items-center gap-1 sm:gap-2">
+                        <ThemeToggle />
                         {status === 'authenticated' && !isAdmin && (
                             <>
                                 {/* Hidden on mobile, moved to drawer */}
@@ -132,7 +134,7 @@ export default function Header() {
                                 className="text-gray-400 hover:text-white px-2 sm:px-4"
                             >
                                 <User className="h-5 w-5 sm:mr-2" />
-                                <span className="text-sm font-semibold">Login</span>
+                                <span className="hidden text-sm font-semibold sm:inline">Login</span>
                             </Button>
                         )}
 
@@ -170,7 +172,7 @@ export default function Header() {
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        className="md:hidden border-t border-white/5 bg-[#09090b] overflow-visible"
+                        className="md:hidden overflow-visible border-t border-border bg-background"
                     >
                         <div className="px-3 py-3 sm:px-4">
                             <Search isAdmin={isAdmin} />
@@ -193,11 +195,11 @@ export default function Header() {
 
                         {/* Drawer */}
                         <motion.div
-                            initial={{ x: '-100%' }}
+                            initial={{ x: '100%' }}
                             animate={{ x: 0 }}
-                            exit={{ x: '-100%' }}
+                            exit={{ x: '100%' }}
                             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                            className="fixed top-0 left-0 h-screen min-h-screen w-[85%] max-w-sm bg-[#09090b] z-[100] border-r border-white/10 shadow-2xl flex flex-col"
+                            className="fixed right-0 top-0 z-[100] flex h-screen min-h-screen w-[85%] max-w-sm flex-col border-l border-border bg-background shadow-2xl"
                         >
                             <div className="flex items-center justify-between p-6 border-b border-white/5">
                                 <span className="text-xl font-bold text-white">Menu</span>

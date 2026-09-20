@@ -59,6 +59,26 @@
   --radius: 0.75rem;
 }
 
+html.light {
+  --background: #f6f7fb;
+  --foreground: #18181b;
+  --card: #ffffff;
+  --card-foreground: #18181b;
+  --popover: #ffffff;
+  --popover-foreground: #18181b;
+  --primary: #18181b;
+  --primary-foreground: #ffffff;
+  --secondary: #e4e4e7;
+  --secondary-foreground: #18181b;
+  --muted: #e4e4e7;
+  --muted-foreground: #52525b;
+  --accent: #e4e4e7;
+  --accent-foreground: #18181b;
+  --border: #d4d4d8;
+  --input: #d4d4d8;
+  --surface-elevated: #ffffff;
+  --surface-soft: rgba(24, 24, 27, 0.06);
+}
 
 @layer base {
   * {
@@ -68,6 +88,26 @@
 
   html {
     scroll-behavior: smooth;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-blue) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background: linear-gradient(var(--accent-blue), var(--accent-violet)) padding-box;
   }
 
   body {
