@@ -192,7 +192,7 @@ export default function Header() {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setIsOpen(false)}
-                            className="fixed inset-0 bg-black/60 backdrop-blur-md z-[55]"
+                            className="fixed inset-0 z-[90] bg-black/60 backdrop-blur-md"
                         />
 
                         {/* Drawer */}
@@ -201,7 +201,7 @@ export default function Header() {
                             animate={{ x: 0 }}
                             exit={{ x: '100%' }}
                             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                            className="fixed right-0 top-0 z-[100] flex h-screen min-h-screen w-[85%] max-w-sm flex-col border-l border-border bg-background shadow-2xl"
+                            className="fixed inset-y-0 right-0 z-[100] flex h-dvh min-h-dvh w-full flex-col overflow-hidden border-l border-border bg-background shadow-2xl sm:w-[85%] sm:max-w-sm"
                         >
                             <div className="flex items-center justify-between border-b border-border p-5">
                                 <div>
@@ -218,7 +218,7 @@ export default function Header() {
                                 </button>
                             </div>
 
-                            <div className="flex-1 overflow-y-auto p-4 space-y-1">
+                            <div className="min-h-0 flex-1 space-y-1 overflow-y-auto overscroll-contain p-4">
                                 {links.map((link) => (
                                     <Link
                                         key={link.href}
