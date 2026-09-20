@@ -115,7 +115,7 @@ export default function MyOrdersPage() {
     };
 
     return (
-        <main className="min-h-screen bg-[#050505] text-white flex flex-col">
+        <main className="flex min-h-screen flex-col bg-background text-foreground">
             <Header />
 
             <div className="flex-grow max-w-5xl mx-auto w-full px-6 py-12">
@@ -124,10 +124,10 @@ export default function MyOrdersPage() {
                         <Package className="w-4 h-4" /> Order Tracking
                     </div>
                     <h1 className="text-5xl font-black tracking-tighter">My Orders</h1>
-                    <p className="text-gray-400">Track your deliveries and view order history.</p>
+                    <p className="text-muted-foreground">Track your deliveries and view order history.</p>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-                        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md">
+                        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
                             <div className="text-[10px] font-black uppercase text-gray-500 tracking-widest mb-1">Total Orders</div>
                             <div className="text-3xl font-black">{orders.length}</div>
                         </div>
@@ -143,12 +143,12 @@ export default function MyOrdersPage() {
                 </header>
 
                 {orders.length === 0 ? (
-                    <div className="bg-white/5 border border-white/10 rounded-[2.5rem] p-20 text-center backdrop-blur-md">
+                    <div className="rounded-[2.5rem] border border-border bg-card p-8 text-center shadow-sm sm:p-20">
                         <ShoppingBag className="w-16 h-16 text-gray-700 mx-auto mb-6" />
                         <h2 className="text-2xl font-black mb-2">No orders found</h2>
                         <p className="text-gray-500 mb-8 font-medium">You haven&apos;t placed any orders yet.</p>
                         <Link href="/products">
-                            <button className="px-8 py-3 rounded-full bg-white text-black font-black uppercase tracking-widest hover:bg-gray-200 transition-all">
+                            <button className="rounded-full bg-primary px-8 py-3 font-black uppercase tracking-widest text-primary-foreground transition-all hover:bg-primary/90">
                                 Start Shopping
                             </button>
                         </Link>
@@ -168,7 +168,7 @@ export default function MyOrdersPage() {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: idx * 0.1 }}
                                     key={order._id}
-                                    className={`bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden backdrop-blur-md hover:border-white/20 transition-all group ${isCancelled || isRejected ? 'opacity-60 grayscale-[0.5]' : ''}`}
+                                    className={`group overflow-hidden rounded-[2rem] border border-border bg-card shadow-sm transition-all hover:border-primary/40 ${isCancelled || isRejected ? 'opacity-60 grayscale-[0.5]' : ''}`}
                                 >
                                     <div className="p-6 md:p-8 flex flex-col md:flex-row gap-8">
                                         <div className="flex-grow space-y-4">
@@ -215,7 +215,7 @@ export default function MyOrdersPage() {
                                                     ))}
                                                 </div>
 
-                                                <div className="bg-black/40 rounded-2xl p-4 space-y-3">
+                                                <div className="space-y-3 rounded-2xl border border-border bg-muted/40 p-4">
                                                     <div className="flex items-start gap-3">
                                                         <MapPin className="w-4 h-4 text-gray-600 mt-0.5" />
                                                         <div className="text-xs space-y-1">
@@ -224,7 +224,7 @@ export default function MyOrdersPage() {
                                                             <p className="text-gray-500">{order.shippingAddress.address}, {order.shippingAddress.city}</p>
                                                         </div>
                                                     </div>
-                                                    <div className="pt-3 border-t border-white/5 flex justify-between items-center">
+                                                    <div className="pt-3 border-t border-border flex justify-between items-center">
                                                         <span className="text-[10px] font-black uppercase text-gray-500 tracking-widest">Total Paid</span>
                                                         <span className="text-lg font-black text-blue-500">${order.totalAmount.toFixed(2)}</span>
                                                     </div>
