@@ -55,8 +55,8 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body className={clsx(inter.className, "min-h-screen flex flex-col")}>
+        <html lang="en" suppressHydrationWarning>
+            <body suppressHydrationWarning className={clsx(inter.className, "min-h-screen flex flex-col")}>
                 <ThemeProvider>
                     <Providers>
                         <div className="flex-grow">
