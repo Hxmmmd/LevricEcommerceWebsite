@@ -78,6 +78,7 @@ export default function CreateProductPage() {
     });
 
     const [managedImages, setManagedImages] = useState<string[]>([]);
+    const [discountExpiryEnabled, setDiscountExpiryEnabled] = useState(false);
     const totalImages = managedImages.length;
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -134,6 +135,21 @@ export default function CreateProductPage() {
         if (totalImages > 5) {
             setError(`You have selected ${totalImages} images. Maximum allowed is 5.`);
             return;
+        }
+
+        if (previewData.discount > 0 && !discountExpiryEnabled) {
+            setError('Please enable an expiry date and time for discounted products.');
+            return;
+        }
+
+        if (discountExpiryEnabled) {
+            const form = event.currentTarget;
+            const expiryDate = (form.elements.namedItem('discountExpiryDate') as HTMLInputElement)?.value;
+            const expiryTime = (form.elements.namedItem('discountExpiryTime') as HTMLInputElement)?.value;
+            if (!expiryDate || !expiryTime || new Date(`${expiryDate}T${expiryTime}`) <= new Date()) {
+                setError('Discount expiry must be a future date and time.');
+                return;
+            }
         }
 
         setSubmitting(true);
@@ -254,6 +270,7 @@ export default function CreateProductPage() {
                                     required
                                     type="number"
                                     step="0.01"
+                                    min="0.01"
                                     value={previewData.price || ''}
                                     onChange={handleInputChange}
                                     className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -266,6 +283,8 @@ export default function CreateProductPage() {
                                     name="discount"
                                     type="number"
                                     step="1"
+                                    min="0"
+                                    max="100"
                                     value={previewData.discount || ''}
                                     onChange={handleInputChange}
                                     className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -274,16 +293,34 @@ export default function CreateProductPage() {
                             </div>
                         </div>
 
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-400">Expiry Date</label>
-                                <input name="discountExpiryDate" type="date" className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        {previewData.discount > 0 && (
+                            <div className="space-y-4 rounded-xl border border-blue-500/30 bg-blue-500/5 p-4">
+                                <label className="flex cursor-pointer items-start gap-3">
+                                    <input
+                                        type="checkbox"
+                                        checked={discountExpiryEnabled}
+                                        onChange={(event) => setDiscountExpiryEnabled(event.target.checked)}
+                                        className="mt-1 size-4 accent-blue-500"
+                                    />
+                                    <span>
+                                        <span className="block text-sm font-semibold text-foreground">Set discount expiry</span>
+                                        <span className="block text-xs text-muted-foreground">Choose when this discount should stop applying.</span>
+                                    </span>
+                                </label>
+                                {discountExpiryEnabled && (
+                                    <div className="grid gap-4 sm:grid-cols-2">
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-medium text-muted-foreground">Expiry date <span className="text-red-400">*</span></label>
+                                            <input name="discountExpiryDate" required type="date" min={new Date().toISOString().split('T')[0]} className="w-full rounded-lg border border-input bg-background px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-medium text-muted-foreground">Expiry time <span className="text-red-400">*</span></label>
+                                            <input name="discountExpiryTime" required type="time" className="w-full rounded-lg border border-input bg-background px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                        </div>
+                                    </div>
+                                )}
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-400">Expiry Time</label>
-                                <input name="discountExpiryTime" type="time" className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                            </div>
-                        </div>
+                        )}
 
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="space-y-2">
@@ -292,6 +329,8 @@ export default function CreateProductPage() {
                                     name="stock"
                                     required
                                     type="number"
+                                    min="0"
+                                    step="1"
                                     value={previewData.stock || ''}
                                     onChange={handleInputChange}
                                     className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
