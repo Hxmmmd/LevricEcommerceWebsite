@@ -44,17 +44,17 @@ export default function AdminOrderActions({
     if (status === 'Cancelled' || status === 'Rejected') return null;
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-5">
             {/* Tracking Status Updates */}
             <div className="space-y-2">
                 <p className="text-[9px] font-black text-gray-500 uppercase tracking-widest pl-1">Update Status to:</p>
-                <div className="flex flex-wrap gap-1">
+                <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
                     {trackingStates.map((state) => (
                         <button
                             key={state}
                             onClick={() => handleAction(() => updateTrackingStatus(orderId, state), `tracking-${state}`)}
                             disabled={status === state || !!loadingAction || isTerminal}
-                            className={`px-3 py-1 rounded-lg text-[8px] font-black uppercase tracking-tighter transition-all border ${status === state
+                            className={`min-h-9 rounded-xl border px-3 py-2 text-[9px] font-black uppercase tracking-tight transition-all ${status === state
                                 ? 'bg-blue-600 border-blue-500 text-white'
                                 : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:text-white disabled:opacity-30'
                                 }`}
