@@ -511,7 +511,7 @@ export default function ProfilePage() {
                                     <p className="text-muted-foreground text-sm">Create admins and manage all users in the system.</p>
                                 </header>
 
-                                <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(300px,380px)_minmax(0,1fr)] xl:gap-6">
+                                <div className="grid w-full min-w-0 grid-cols-1 gap-5 xl:grid-cols-[minmax(300px,380px)_minmax(0,1fr)] xl:gap-6">
                                     {/* Create New Admin Form */}
                                     <div className="min-w-0 rounded-3xl border border-border bg-card p-4 shadow-sm space-y-6 sm:p-6 lg:p-8">
                                         <div className="flex items-center gap-3 mb-2">
@@ -570,20 +570,20 @@ export default function ProfilePage() {
                                     </div>
 
                                     {/* All Users List */}
-                                    <div className="min-w-0 rounded-3xl border border-border bg-card p-4 shadow-sm flex flex-col sm:p-6 lg:p-8">
+                                    <div className="w-full min-w-0 overflow-hidden rounded-3xl border border-border bg-card p-4 shadow-sm flex flex-col sm:p-6 lg:p-8">
                                         <div className="flex flex-wrap items-center justify-between gap-3 mb-6 sm:mb-8">
                                             <div className="flex items-center gap-3">
                                                 <div className="p-2 bg-purple-500/10 rounded-xl">
                                                     <Users className="w-4 h-4 text-purple-500" />
                                                 </div>
-                                                <h3 className="font-black uppercase tracking-widest text-xs text-white">System Users</h3>
+                                                <h3 className="text-sm font-black uppercase tracking-[0.16em] text-foreground sm:text-xs">System Users</h3>
                                             </div>
                                             <span className="text-[10px] font-black bg-white/5 px-3 py-1 rounded-full text-gray-500">
                                                 {adminList.length} Total
                                             </span>
                                         </div>
 
-                                        <div className="max-h-[500px] space-y-3 overflow-y-auto pr-0 scrollbar-thin sm:pr-2">
+                                        <div className="w-full max-h-[500px] space-y-3 overflow-y-auto pr-0 scrollbar-thin sm:pr-2">
                                             {isListLoading ? (
                                                 <div className="space-y-3">
                                                     {[1, 2, 3].map((i) => (
@@ -593,13 +593,13 @@ export default function ProfilePage() {
                                             ) : listError ? (
                                                 <div className="text-center py-10 space-y-3">
                                                     <p className="text-red-500 text-xs font-bold uppercase tracking-widest">{listError}</p>
-                                                    <Button type="button" onClick={fetchUsers} variant="outline" size="sm" className="border-white/10 text-[10px] h-8">Try Again</Button>
+                                                    <Button type="button" onClick={fetchUsers} variant="outline" size="sm" className="border-border text-[10px] h-8">Try Again</Button>
                                                 </div>
                                             ) : adminList.length === 0 ? (
                                                 <p className="text-center text-gray-600 py-10 text-xs italic">No users found in the system.</p>
                                             ) : (
                                                 adminList.map((adm) => (
-                                                    <div key={adm._id} className="flex min-w-0 flex-col gap-4 rounded-2xl border border-border bg-muted/40 p-4 transition-all hover:bg-accent/50 sm:flex-row sm:items-center sm:justify-between sm:gap-0 group">
+                                                    <div key={adm._id} className="flex w-full min-w-0 flex-col gap-3 rounded-2xl border border-border bg-muted/40 p-4 transition-all hover:bg-accent/50 sm:flex-row sm:items-center sm:justify-between sm:gap-4 group">
                                                         <div className="flex items-center gap-3 min-w-0">
                                                             <div className={cn(
                                                                 "h-10 w-10 rounded-full flex items-center justify-center shrink-0",
