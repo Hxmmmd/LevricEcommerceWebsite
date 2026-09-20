@@ -570,67 +570,62 @@ export default function ProfilePage() {
                                     </div>
 
                                     {/* All Users List */}
-                                    <div className="w-full min-w-0 overflow-hidden rounded-3xl border border-border bg-card p-4 shadow-sm flex flex-col sm:p-6 lg:p-8">
-                                        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 sm:mb-8">
-                                            <div className="flex items-center gap-3">
-                                                <div className="p-2 bg-purple-500/10 rounded-xl">
-                                                    <Users className="w-4 h-4 text-purple-500" />
+                                    <div className="w-full min-w-0 overflow-hidden rounded-3xl border border-border bg-card p-4 shadow-sm sm:p-6 lg:p-7">
+                                        <div className="mb-5 flex items-center justify-between gap-3 border-b border-border pb-5">
+                                            <div className="flex min-w-0 items-center gap-3">
+                                                <div className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-purple-500/10 text-purple-500">
+                                                    <Users className="size-5" />
                                                 </div>
-                                                <h3 className="text-sm font-black uppercase tracking-[0.16em] text-foreground sm:text-xs">System Users</h3>
+                                                <div className="min-w-0">
+                                                    <h3 className="truncate text-sm font-black uppercase tracking-[0.14em] text-foreground">System users</h3>
+                                                    <p className="mt-0.5 text-xs text-muted-foreground">Manage account access</p>
+                                                </div>
                                             </div>
-                                            <span className="text-[10px] font-black bg-white/5 px-3 py-1 rounded-full text-gray-500">
-                                                {adminList.length} Total
+                                            <span className="shrink-0 rounded-full bg-muted px-3 py-1.5 text-xs font-bold text-muted-foreground">
+                                                {adminList.length} <span className="hidden sm:inline">total</span>
                                             </span>
                                         </div>
 
-                                        <div className="w-full max-h-[500px] space-y-3 overflow-y-auto pr-0 scrollbar-thin sm:pr-2">
+                                        <div className="w-full max-h-[460px] space-y-2 overflow-y-auto pr-0 scrollbar-thin sm:pr-1">
                                             {isListLoading ? (
-                                                <div className="space-y-3">
+                                                <div className="space-y-2">
                                                     {[1, 2, 3].map((i) => (
-                                                        <div key={i} className="h-20 w-full bg-white/5 animate-pulse rounded-2xl" />
+                                                        <div key={i} className="h-[76px] w-full animate-pulse rounded-2xl bg-muted" />
                                                     ))}
                                                 </div>
                                             ) : listError ? (
-                                                <div className="text-center py-10 space-y-3">
-                                                    <p className="text-red-500 text-xs font-bold uppercase tracking-widest">{listError}</p>
-                                                    <Button type="button" onClick={fetchUsers} variant="outline" size="sm" className="border-border text-[10px] h-8">Try Again</Button>
+                                                <div className="space-y-3 py-8 text-center">
+                                                    <p className="text-xs font-bold uppercase tracking-widest text-red-500">{listError}</p>
+                                                    <Button type="button" onClick={fetchUsers} variant="outline" size="sm" className="h-8 border-border text-[10px]">Try again</Button>
                                                 </div>
                                             ) : adminList.length === 0 ? (
-                                                <p className="text-center text-gray-600 py-10 text-xs italic">No users found in the system.</p>
+                                                <p className="py-8 text-center text-xs italic text-muted-foreground">No users found.</p>
                                             ) : (
                                                 adminList.map((adm) => (
-                                                    <div key={adm._id} className="flex w-full min-w-0 flex-col gap-3 rounded-2xl border border-border bg-muted/40 p-4 transition-all hover:bg-accent/50 sm:flex-row sm:items-center sm:justify-between sm:gap-4 group">
-                                                        <div className="flex items-center gap-3 min-w-0">
-                                                            <div className={cn(
-                                                                "h-10 w-10 rounded-full flex items-center justify-center shrink-0",
-                                                                adm.role === 'admin' ? "bg-blue-500/10 text-blue-500" : "bg-gray-500/10 text-gray-400"
-                                                            )}>
-                                                                {adm.role === 'admin' ? <ShieldCheck className="w-5 h-5" /> : <User className="w-5 h-5" />}
-                                                            </div>
-                                                            <div className="min-w-0">
-                                                                <div className="flex items-center gap-2">
-                                                                    <p className="text-xs font-black text-foreground truncate">{adm.name}</p>
-                                                                    <span className={cn(
-                                                                        "text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded",
-                                                                        adm.role === 'admin' ? "bg-blue-500/20 text-blue-400" : "bg-white/5 text-gray-500"
-                                                                    )}>
-                                                                        {adm.role}
-                                                                    </span>
-                                                                </div>
-                                                                <p className="text-[10px] text-gray-500 truncate font-mono">{adm.email}</p>
-                                                            </div>
+                                                    <div key={adm._id} className="group flex min-h-[76px] w-full items-center gap-3 rounded-2xl border border-border bg-muted/35 px-3 py-3 transition-colors hover:bg-accent/60 sm:px-4">
+                                                        <div className={cn(
+                                                            "flex size-11 shrink-0 items-center justify-center rounded-full",
+                                                            adm.role === 'admin' ? "bg-blue-500/10 text-blue-500" : "bg-muted text-muted-foreground"
+                                                        )}>
+                                                            {adm.role === 'admin' ? <ShieldCheck className="size-5" /> : <User className="size-5" />}
                                                         </div>
-
-                                                        <div className="flex items-center justify-end gap-3 border-t sm:border-0 pt-3 sm:pt-0 border-white/5">
+                                                        <div className="min-w-0 flex-1">
+                                                            <div className="flex min-w-0 items-center gap-2">
+                                                                <p className="min-w-0 flex-1 truncate text-sm font-bold text-foreground">{adm.name}</p>
+                                                                <span className={cn(
+                                                                    "shrink-0 rounded-full px-2 py-1 text-[9px] font-black uppercase tracking-wider",
+                                                                    adm.role === 'admin' ? "bg-blue-500/15 text-blue-500" : "bg-muted text-muted-foreground"
+                                                                )}>{adm.role}</span>
+                                                            </div>
+                                                            <p className="mt-1 truncate text-xs text-muted-foreground">{adm.email}</p>
+                                                        </div>
+                                                        <div className="shrink-0">
                                                             {session.user.id !== adm._id ? (
-                                                                <button
-                                                                    onClick={() => initiateDeleteUser(adm)}
-                                                                    className="flex items-center gap-2 px-3 py-2 rounded-xl bg-red-500/5 text-red-500/40 hover:text-red-500 hover:bg-red-500/10 transition-all text-[10px] font-black uppercase tracking-widest sm:opacity-0 sm:group-hover:opacity-100"
-                                                                >
-                                                                    <Trash2 className="w-3.5 h-3.5" /> <span className="sm:hidden lg:inline">Delete Account</span>
+                                                                <button aria-label={`Delete ${adm.name}`} onClick={() => initiateDeleteUser(adm)} className="flex size-9 items-center justify-center rounded-xl text-muted-foreground transition-colors hover:bg-red-500/10 hover:text-red-500 sm:opacity-0 sm:group-hover:opacity-100">
+                                                                    <Trash2 className="size-4" />
                                                                 </button>
                                                             ) : (
-                                                                <span className="text-[8px] font-black uppercase tracking-widest text-blue-500/50 px-3 py-1 bg-blue-500/5 rounded-full ring-1 ring-blue-500/20">Active Session</span>
+                                                                <span className="hidden rounded-full border border-blue-500/20 bg-blue-500/10 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-blue-500 sm:inline-flex">Active</span>
                                                             )}
                                                         </div>
                                                     </div>
