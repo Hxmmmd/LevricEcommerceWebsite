@@ -122,6 +122,11 @@ html.light {
   }
 }
 
+@keyframes top-loading {
+  0% { transform: translateX(-140%); }
+  100% { transform: translateX(420%); }
+}
+
 @layer base {
   * {
     border-color: var(--border);
