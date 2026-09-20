@@ -262,7 +262,7 @@ export default function ProfilePage() {
                     <p className="text-muted-foreground">Manage your private information and security.</p>
                 </header>
 
-                <div className="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-10 items-start">
+                <div className="grid min-w-0 gap-6 xl:grid-cols-[minmax(0,1fr)_320px] xl:gap-10 items-start">
                     {/* Main Settings Area */}
                     <div className="space-y-12">
 
@@ -486,7 +486,7 @@ export default function ProfilePage() {
                                         <Button
                                             type="submit"
                                             disabled={loading || isValidating}
-                                            className="px-24 py-3 rounded-xl bg-white text-black font-black uppercase tracking-widest hover:bg-gray-200 shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 text-[10px]"
+                                            className="w-full px-6 py-3 rounded-xl bg-primary text-primary-foreground sm:w-auto sm:px-10 font-black uppercase tracking-widest hover:bg-gray-200 shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 text-[10px]"
                                         >
                                             {(loading || isValidating) ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Check className="w-4 h-4" /> Save Changes</>}
                                         </Button>
@@ -507,13 +507,13 @@ export default function ProfilePage() {
                                     <div className="flex items-center gap-3 text-purple-500 font-black uppercase tracking-[0.3em] text-[10px] mb-2">
                                         <ShieldAlert className="w-3 h-3" /> System Control
                                     </div>
-                                    <h2 className="text-3xl font-black tracking-tighter">System Management</h2>
-                                    <p className="text-gray-400 text-sm">Create admins and manage all users in the system.</p>
+                                    <h2 className="text-3xl font-black tracking-tight text-foreground sm:text-4xl">System Management</h2>
+                                    <p className="text-muted-foreground text-sm">Create admins and manage all users in the system.</p>
                                 </header>
 
-                                <div className="grid min-w-0 gap-5 lg:grid-cols-[minmax(280px,360px)_minmax(0,1fr)] lg:gap-6">
+                                <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(300px,380px)_minmax(0,1fr)] xl:gap-6">
                                     {/* Create New Admin Form */}
-                                    <div className="bg-white/5 border border-white/10 rounded-[2.5rem] p-6 md:p-8 backdrop-blur-md space-y-6 h-fit shrink-0">
+                                    <div className="min-w-0 rounded-3xl border border-border bg-card p-4 shadow-sm space-y-6 sm:p-6 lg:p-8">
                                         <div className="flex items-center gap-3 mb-2">
                                             <div className="p-2 bg-blue-500/10 rounded-xl">
                                                 <UserPlus className="w-4 h-4 text-blue-500" />
@@ -529,7 +529,7 @@ export default function ProfilePage() {
                                                     required
                                                     value={adminFormState.name}
                                                     onChange={e => setAdminFormState({ ...adminFormState, name: e.target.value })}
-                                                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
+                                                    className="w-full bg-background border border-input rounded-2xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/30 transition-all sm:px-6 sm:py-4"
                                                     placeholder="Admin Name"
                                                 />
                                             </div>
@@ -540,7 +540,7 @@ export default function ProfilePage() {
                                                     required
                                                     value={adminFormState.email}
                                                     onChange={e => setAdminFormState({ ...adminFormState, email: e.target.value })}
-                                                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-mono"
+                                                    className="w-full bg-background border border-input rounded-2xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/30 transition-all sm:px-6 sm:py-4 font-mono"
                                                     placeholder="admin@example.com"
                                                 />
                                             </div>
@@ -551,7 +551,7 @@ export default function ProfilePage() {
                                                     required
                                                     value={adminFormState.password}
                                                     onChange={e => setAdminFormState({ ...adminFormState, password: e.target.value })}
-                                                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
+                                                    className="w-full bg-background border border-input rounded-2xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/30 transition-all sm:px-6 sm:py-4"
                                                     placeholder="••••••••"
                                                 />
                                             </div>
@@ -570,8 +570,8 @@ export default function ProfilePage() {
                                     </div>
 
                                     {/* All Users List */}
-                                    <div className="bg-white/5 border border-white/10 rounded-[2.5rem] p-6 md:p-8 backdrop-blur-md flex flex-col min-w-0">
-                                        <div className="flex items-center justify-between mb-8">
+                                    <div className="min-w-0 rounded-3xl border border-border bg-card p-4 shadow-sm flex flex-col sm:p-6 lg:p-8">
+                                        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 sm:mb-8">
                                             <div className="flex items-center gap-3">
                                                 <div className="p-2 bg-purple-500/10 rounded-xl">
                                                     <Users className="w-4 h-4 text-purple-500" />
