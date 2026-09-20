@@ -232,11 +232,11 @@ export default function CheckoutPage() {
     }
 
     return (
-        <main className="min-h-screen bg-[#050505] text-foreground">
+        <main className="min-h-screen w-full overflow-x-hidden bg-background text-foreground">
             <Header />
-            <div className="container px-4 md:px-6 py-6 md:py-12 max-w-6xl mx-auto">
+            <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-12">
                 {/* Breadcrumbs */}
-                <div className="flex items-center gap-2 text-xs text-gray-500 mb-8 border-b border-white/5 pb-4">
+                <div className="mb-8 flex items-center gap-2 border-b border-border pb-4 text-xs text-muted-foreground sm:mb-10">
                     <span>Shop</span>
                     <ChevronRight className="w-3 h-3" />
                     <span>Cart</span>
@@ -244,18 +244,18 @@ export default function CheckoutPage() {
                     <span className="text-white font-medium">Checkout</span>
                 </div>
 
-                <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                <div className="grid items-start gap-6 lg:grid-cols-12 lg:gap-8 xl:gap-10">
                     {/* Left: Shipping & Payment */}
-                    <div className="lg:col-span-7 xl:col-span-8 space-y-8">
+                    <div className="space-y-6 lg:col-span-7 xl:col-span-8">
                         <form onSubmit={handlePlaceOrder} id="checkout-form">
-                            <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-5 md:p-8 space-y-8 backdrop-blur-sm relative overflow-hidden group">
+                            <div className="relative space-y-8 overflow-hidden rounded-3xl border border-border bg-card p-5 shadow-sm sm:p-7 lg:p-8">
                                 <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-blue-600/10 transition-colors" />
 
-                                <div className="flex items-center gap-4 border-b border-white/5 pb-6">
+                                <div className="flex items-center gap-4 border-b border-border pb-6">
                                     <div className="p-2.5 md:p-3 bg-blue-600/10 rounded-xl text-blue-500">
                                         <Truck className="w-5 h-5 md:w-6 md:h-6" />
                                     </div>
-                                    <h2 className="text-xl md:text-2xl font-bold text-white tracking-tight">Shipping Information</h2>
+                                    <h2 className="text-xl md:text-2xl font-bold text-foreground tracking-tight">Shipping Information</h2>
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
@@ -266,7 +266,7 @@ export default function CheckoutPage() {
                                             required
                                             value={shipping.fullName}
                                             onChange={handleInputChange}
-                                            className="w-full h-12 md:h-14 bg-black/40 border border-white/10 rounded-xl px-4 text-base text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-gray-700 font-medium"
+                                            className="h-12 w-full rounded-xl border border-input bg-background px-4 text-base font-medium text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/40 sm:h-14"
                                             placeholder="Enter your full name"
                                         />
                                     </div>
@@ -277,7 +277,7 @@ export default function CheckoutPage() {
                                             required
                                             value={shipping.address}
                                             onChange={handleInputChange}
-                                            className="w-full h-12 md:h-14 bg-black/40 border border-white/10 rounded-xl px-4 text-base text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-gray-700 font-medium"
+                                            className="h-12 w-full rounded-xl border border-input bg-background px-4 text-base font-medium text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/40 sm:h-14"
                                             placeholder="123 Luxury St, Apt 4B"
                                         />
                                     </div>
@@ -288,7 +288,7 @@ export default function CheckoutPage() {
                                             required
                                             value={shipping.city}
                                             onChange={handleInputChange}
-                                            className="w-full h-12 md:h-14 bg-black/40 border border-white/10 rounded-xl px-4 text-base text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-gray-700 font-medium"
+                                            className="h-12 w-full rounded-xl border border-input bg-background px-4 text-base font-medium text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/40 sm:h-14"
                                             placeholder="Karachi"
                                         />
                                     </div>
@@ -299,7 +299,7 @@ export default function CheckoutPage() {
                                             required
                                             value={shipping.postalCode}
                                             onChange={handleInputChange}
-                                            className="w-full h-12 md:h-14 bg-black/40 border border-white/10 rounded-xl px-4 text-base text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-gray-700 font-medium"
+                                            className="h-12 w-full rounded-xl border border-input bg-background px-4 text-base font-medium text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/40 sm:h-14"
                                             placeholder="74000"
                                         />
                                     </div>
@@ -310,22 +310,22 @@ export default function CheckoutPage() {
                                         <div className="p-2 md:p-2.5 bg-blue-600/10 rounded-xl text-blue-500">
                                             <CreditCard className="w-5 h-5 md:w-6 md:h-6" />
                                         </div>
-                                        <h2 className="text-xl md:text-2xl font-bold text-white tracking-tight">Payment Method</h2>
+                                        <h2 className="text-xl md:text-2xl font-bold text-foreground tracking-tight">Payment Method</h2>
                                     </div>
 
                                     <div className="grid md:grid-cols-2 gap-4">
                                         <div className="relative group cursor-pointer">
                                             <input type="radio" name="payment" defaultChecked className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-                                            <div className="border border-blue-500/50 bg-blue-500/5 p-4 rounded-2xl flex items-center justify-between group-hover:bg-blue-500/10 transition-colors">
+                                            <div className="flex items-center justify-between rounded-2xl border border-primary/50 bg-primary/5 p-4 transition-colors group-hover:bg-primary/10">
                                                 <div className="flex items-center gap-3">
                                                     <div className="w-4 h-4 rounded-full border-4 border-blue-500" />
-                                                    <span className="font-semibold text-white">Credit Card</span>
+                                                    <span className="font-semibold text-foreground">Credit Card</span>
                                                 </div>
                                                 <span className="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Fastest</span>
                                             </div>
                                         </div>
                                         <div className="relative group cursor-not-allowed opacity-50">
-                                            <div className="border border-white/5 bg-white/5 p-4 rounded-2xl flex items-center gap-3">
+                                            <div className="flex items-center gap-3 rounded-2xl border border-border bg-muted/40 p-4">
                                                 <div className="w-4 h-4 rounded-full border-2 border-white/10" />
                                                 <span className="font-semibold text-gray-500">Cash on Delivery</span>
                                             </div>
@@ -337,8 +337,8 @@ export default function CheckoutPage() {
                     </div>
 
                     {/* Right: Summary Box */}
-                    <div className="lg:col-span-5 xl:col-span-4 lg:sticky lg:top-24 mt-8 lg:mt-0">
-                        <div className="bg-white text-black rounded-3xl p-6 md:p-8 shadow-2xl shadow-blue-500/10">
+                    <div className="mt-6 lg:col-span-5 lg:mt-0 xl:col-span-4 lg:sticky lg:top-24">
+                        <div className="rounded-3xl border border-border bg-card p-5 text-card-foreground shadow-xl shadow-primary/5 sm:p-7">
                             <h2 className="text-xl md:text-2xl font-black mb-6 flex items-center gap-2">
                                 <ShoppingBag className="w-5 h-5 md:w-6 md:h-6" />
                                 Bag Details
@@ -351,13 +351,13 @@ export default function CheckoutPage() {
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <p className="font-bold text-xs md:text-sm truncate">{item.name}</p>
-                                            <p className="text-[10px] md:text-xs text-gray-500 font-medium">Qty: {item.qty} | ${item.price}</p>
+                                            <p className="text-[10px] md:text-xs text-muted-foreground font-medium">Qty: {item.qty} | ${item.price}</p>
                                         </div>
                                     </div>
                                 ))}
                             </div>
 
-                            <div className="space-y-4 border-t border-black/5 pt-6">
+                            <div className="space-y-4 border-t border-border pt-6">
                                 <div className="flex justify-between text-sm font-medium">
                                     <span className="text-gray-500">Subtotal</span>
                                     <span>${totalPrice.toFixed(2)}</span>
@@ -375,7 +375,7 @@ export default function CheckoutPage() {
                             <Button
                                 type="submit"
                                 form="checkout-form"
-                                className="w-full h-14 md:h-16 rounded-2xl bg-black text-white hover:bg-gray-800 transition-all font-bold text-base md:text-lg mt-8 flex items-center justify-center gap-3 group"
+                                className="mt-8 flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-primary text-base font-bold text-primary-foreground transition-all hover:bg-primary/90 group sm:h-16 sm:text-lg"
                                 disabled={loading}
                             >
                                 {loading ? (
