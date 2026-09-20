@@ -250,24 +250,24 @@ export default function ProfilePage() {
     };
 
     return (
-        <main className="min-h-screen bg-[#050505] text-white flex flex-col">
+        <main className="min-h-screen bg-background text-foreground flex flex-col">
             <Header />
 
-            <div className="flex-grow max-w-5xl mx-auto w-full px-6 py-8 lg:py-10">
+            <div className="mx-auto flex w-full max-w-6xl flex-grow px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
                 <header className="space-y-2 mb-10">
                     <div className="flex items-center gap-3 text-blue-500 font-black uppercase tracking-[0.3em] text-[10px] mb-2">
                         <Settings className="w-3 h-3" /> Account Settings
                     </div>
-                    <h1 className="text-5xl font-black tracking-tighter">Your Profile</h1>
-                    <p className="text-gray-400">Manage your private information and security.</p>
+                    <h1 className="text-4xl font-black tracking-tight text-foreground sm:text-5xl">Your Profile</h1>
+                    <p className="text-muted-foreground">Manage your private information and security.</p>
                 </header>
 
-                <div className="grid lg:grid-cols-[1fr_350px] gap-12 items-start">
+                <div className="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-10 items-start">
                     {/* Main Settings Area */}
                     <div className="space-y-12">
 
                         <form onSubmit={handlePreValidation} className="space-y-8">
-                            <div className="bg-white/5 border border-white/10 rounded-[2.5rem] p-8 backdrop-blur-md space-y-6">
+                            <div className="bg-card border border-border rounded-3xl p-4 shadow-sm sm:p-6 lg:p-8 space-y-6">
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div className="space-y-3">
                                         <div className="flex items-center justify-between pl-1">
@@ -298,7 +298,7 @@ export default function ProfilePage() {
                                                 value={name}
                                                 disabled={!isEditingName}
                                                 onChange={(e) => setName(e.target.value)}
-                                                className={`w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-medium ${!isEditingName ? 'opacity-50 cursor-not-allowed' : 'opacity-100'}`}
+                                                className={`w-full bg-background border border-input rounded-2xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground sm:px-6 sm:py-4 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-medium ${!isEditingName ? 'opacity-50 cursor-not-allowed' : 'opacity-100'}`}
                                                 placeholder="Full Name"
                                             />
                                             <User className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600" />
@@ -318,14 +318,14 @@ export default function ProfilePage() {
                                                 type="email"
                                                 value={session.user.email || ''}
                                                 disabled
-                                                className="w-full bg-black/40 border border-white/5 rounded-2xl px-6 py-4 text-sm font-medium cursor-not-allowed"
+                                                className="w-full bg-muted border border-border rounded-2xl px-4 py-3 text-sm font-medium text-muted-foreground cursor-not-allowed sm:px-6 sm:py-4"
                                             />
                                             <Mail className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-700" />
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="space-y-3 pt-3 border-t border-white/5">
+                                <div className="space-y-3 pt-3 border-t border-border">
                                     <div className="flex items-center justify-between pl-1">
                                         <label htmlFor="newPassword" className="text-[10px] font-black uppercase text-gray-500 tracking-widest">Update Password</label>
                                         {!isEditingPassword ? (
@@ -361,7 +361,7 @@ export default function ProfilePage() {
                                                         data-lpignore="true"
                                                         autoFocus
                                                         onChange={(e) => setOldPassword(e.target.value)}
-                                                        className="w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-medium pr-12"
+                                                        className="w-full bg-background border border-input rounded-2xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground sm:px-6 sm:py-4 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-medium pr-12"
                                                         placeholder="Enter current password"
                                                         required
                                                     />
@@ -393,7 +393,7 @@ export default function ProfilePage() {
                                                     autoComplete="new-password"
                                                     disabled={!isEditingPassword}
                                                     onChange={(e) => setPassword(e.target.value)}
-                                                    className={`w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-medium pr-12 ${!isEditingPassword ? 'opacity-50 cursor-not-allowed' : 'opacity-100'}`}
+                                                    className={`w-full bg-background border border-input rounded-2xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground sm:px-6 sm:py-4 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-medium pr-12 ${!isEditingPassword ? 'opacity-50 cursor-not-allowed' : 'opacity-100'}`}
                                                     placeholder={isEditingPassword ? "New Password" : "••••••••"}
                                                     required={isEditingPassword}
                                                 />
@@ -477,7 +477,7 @@ export default function ProfilePage() {
                                 </div>
 
                                 {/* Footer actions inside the main div */}
-                                <div className="flex flex-col items-center gap-2 pt-2 border-t border-white/5">
+                                <div className="flex flex-col items-center gap-2 pt-2 border-t border-border">
                                     <div className="flex flex-col items-center gap-1 text-center">
                                         {success && <div className="flex items-center gap-2 text-green-500 text-xs font-bold animate-in fade-in slide-in-from-top-2"><CheckCircle2 className="w-4 h-4" /> {success}</div>}
                                         {error && !isEditingPassword && <div className="text-red-500 text-xs font-bold animate-in fade-in slide-in-from-top-2">{error}</div>}
@@ -511,7 +511,7 @@ export default function ProfilePage() {
                                     <p className="text-gray-400 text-sm">Create admins and manage all users in the system.</p>
                                 </header>
 
-                                <div className="grid lg:grid-cols-[400px_1fr] gap-8">
+                                <div className="grid min-w-0 gap-5 lg:grid-cols-[minmax(280px,360px)_minmax(0,1fr)] lg:gap-6">
                                     {/* Create New Admin Form */}
                                     <div className="bg-white/5 border border-white/10 rounded-[2.5rem] p-6 md:p-8 backdrop-blur-md space-y-6 h-fit shrink-0">
                                         <div className="flex items-center gap-3 mb-2">
@@ -583,7 +583,7 @@ export default function ProfilePage() {
                                             </span>
                                         </div>
 
-                                        <div className="space-y-3 overflow-y-auto max-h-[500px] pr-2 scrollbar-thin scrollbar-thumb-white/10">
+                                        <div className="max-h-[500px] space-y-3 overflow-y-auto pr-0 scrollbar-thin sm:pr-2">
                                             {isListLoading ? (
                                                 <div className="space-y-3">
                                                     {[1, 2, 3].map((i) => (
@@ -599,7 +599,7 @@ export default function ProfilePage() {
                                                 <p className="text-center text-gray-600 py-10 text-xs italic">No users found in the system.</p>
                                             ) : (
                                                 adminList.map((adm) => (
-                                                    <div key={adm._id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-white/5 border border-white/5 rounded-2xl transition-all hover:bg-white/[0.08] group gap-4 sm:gap-0">
+                                                    <div key={adm._id} className="flex min-w-0 flex-col gap-4 rounded-2xl border border-border bg-muted/40 p-4 transition-all hover:bg-accent/50 sm:flex-row sm:items-center sm:justify-between sm:gap-0 group">
                                                         <div className="flex items-center gap-3 min-w-0">
                                                             <div className={cn(
                                                                 "h-10 w-10 rounded-full flex items-center justify-center shrink-0",
@@ -609,7 +609,7 @@ export default function ProfilePage() {
                                                             </div>
                                                             <div className="min-w-0">
                                                                 <div className="flex items-center gap-2">
-                                                                    <p className="text-xs font-black text-white truncate">{adm.name}</p>
+                                                                    <p className="text-xs font-black text-foreground truncate">{adm.name}</p>
                                                                     <span className={cn(
                                                                         "text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded",
                                                                         adm.role === 'admin' ? "bg-blue-500/20 text-blue-400" : "bg-white/5 text-gray-500"
@@ -655,7 +655,7 @@ export default function ProfilePage() {
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                                className="relative w-full max-w-md bg-[#0A0A0A] border border-white/10 rounded-[2.5rem] p-8 space-y-6 shadow-2xl"
+                                className="relative w-full max-w-md rounded-3xl border border-border bg-card p-5 shadow-2xl sm:p-8 space-y-6"
                             >
                                 <div className="text-center space-y-2">
                                     <div className="inline-flex p-3 bg-red-500/10 rounded-2xl mb-2">
@@ -709,16 +709,16 @@ export default function ProfilePage() {
 
                     {/* Sidebar / Danger Zone */}
                     <div className="space-y-8">
-                        <div className="bg-white/5 border border-white/10 rounded-[2.5rem] p-8 backdrop-blur-md">
+                        <div className="bg-card border border-border rounded-3xl p-4 shadow-sm sm:p-6 lg:p-8">
                             <h3 className="text-lg font-black tracking-tight mb-4">Account Stats</h3>
                             <div className="space-y-4">
-                                <div className="flex justify-between items-center py-3 border-b border-white/5">
+                                <div className="flex justify-between items-center py-3 border-b border-border">
                                     <span className="text-gray-500 text-xs font-bold uppercase tracking-widest">Status</span>
                                     <span className="text-[10px] font-black bg-blue-500/10 text-blue-500 px-3 py-1 rounded-full uppercase">Verified</span>
                                 </div>
                                 <div className="flex justify-between items-center py-3">
                                     <span className="text-gray-500 text-xs font-bold uppercase tracking-widest">Member Since</span>
-                                    <span className="text-[10px] font-black text-white uppercase">
+                                    <span className="text-[10px] font-black text-foreground uppercase">
                                         {mounted ? (
                                             (session.user as any).createdAt ?
                                                 new Date((session.user as any).createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) :
@@ -729,7 +729,7 @@ export default function ProfilePage() {
                             </div>
                         </div>
 
-                        <div className="bg-red-500/5 border border-red-500/20 rounded-[2.5rem] p-8 backdrop-blur-md">
+                        <div className="bg-red-500/5 border border-red-500/20 rounded-3xl p-5 sm:p-8">
                             <div className="flex items-center gap-2 text-red-500 font-black uppercase tracking-widest text-[10px] mb-4">
                                 <ShieldAlert className="w-3.5 h-3.5" /> Danger Zone
                             </div>
