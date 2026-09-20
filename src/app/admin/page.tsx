@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
-import { getProducts, deleteProduct, getDeliverySettings, updateDeliverySettings, getAdminAnalytics, updateInventory } from '@/lib/actions/admin';
+import { getProducts, deleteProduct, getDeliverySettings, updateDeliverySettings, getAdminAnalytics, updateInventory, getOrders } from '@/lib/actions/admin';
 import { Plus, Edit, Trash2, ShoppingBag } from 'lucide-react';
 import Image from 'next/image';
 import Search from '@/components/Search';
@@ -15,7 +15,7 @@ export default async function AdminDashboard({
     searchParams: Promise<{ q?: string, condition?: string, category?: string, minPrice?: string, maxPrice?: string }>
 }) {
     const params = await searchParams;
-    const [products, deliverySettings, analytics, dayAnalytics, weekAnalytics, yearAnalytics] = await Promise.all([
+    const [products, deliverySettings, analytics, dayAnalytics, weekAnalytics, yearAnalytics, orders] = await Promise.all([
         getProducts({
         query: params.q,
         condition: params.condition,
@@ -27,11 +27,14 @@ export default async function AdminDashboard({
         getAdminAnalytics('month'),
         getAdminAnalytics('day'),
         getAdminAnalytics('week'),
-        getAdminAnalytics('year')
+        getAdminAnalytics('year'),
+        getOrders()
     ]);
 
     return (
         <div className="min-w-0 space-y-6 sm:space-y-8">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Admin workspace</p><h1 className="mt-1 text-3xl font-black tracking-tight text-foreground">Dashboard & Sales</h1><p className="mt-1 text-sm text-muted-foreground">Manage orders, revenue, products, and inventory from one workspace.</p></div><span className="text-xs font-medium text-muted-foreground">{orders.length} active orders</span></div>
+            <div className="rounded-2xl border border-border bg-card p-5 sm:p-6"><div className="mb-4 flex items-center justify-between"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Sales pipeline</p><h2 className="mt-1 text-lg font-bold text-foreground">Order workflow</h2></div><Link href="/admin/orders" className="text-xs font-semibold text-primary hover:underline">Open full sales view</Link></div><div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">{[['New', 'Processing'], ['Packing', 'Packing'], ['Out for delivery', 'Out for Delivery'], ['Delivered', 'Delivered']].map(([label, status]) => <div key={status} className="rounded-xl border border-border bg-muted/30 p-3"><p className="text-xs font-bold text-muted-foreground">{label}</p><p className="mt-1 text-2xl font-black text-foreground">{orders.filter((order: any) => order.status === status).length}</p></div>)}</div></div>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 {[['Sales today', `$${dayAnalytics.sales.total.toFixed(2)}`], ['Sales this week', `$${weekAnalytics.sales.total.toFixed(2)}`], ['Sales this month', `$${analytics.sales.total.toFixed(2)}`], ['Sales this year', `$${yearAnalytics.sales.total.toFixed(2)}`], ['New visitors', analytics.visitors]].map(([label, value]) => <div key={String(label)} className="rounded-2xl border border-border bg-card p-4"><p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">{label}</p><p className="mt-2 text-2xl font-black text-foreground">{value}</p></div>)}
             </div>
