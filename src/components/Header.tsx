@@ -12,7 +12,7 @@ import Search from '@/components/Search';
 import { useSession, signOut } from 'next-auth/react';
 import { useCart } from '@/lib/context/CartContext';
 import { useAuthModal } from '@/lib/context/AuthModalContext';
-import { ThemeToggle } from '@/components/ThemeProvider';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export default function Header() {
     const { items } = useCart();

@@ -1,7 +1,6 @@
 'use client';
 
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { Moon, Sun } from 'lucide-react';
 
 type Theme = 'dark' | 'light';
 
@@ -41,21 +40,6 @@ export function useTheme() {
   return context;
 }
 
-export function ThemeToggle() {
-  const { theme, toggleTheme } = useTheme();
-  const isLight = theme === 'light';
 
-  return (
-    <button
-      type="button"
-      onClick={toggleTheme}
-      aria-label={`Switch to ${isLight ? 'dark' : 'light'} theme`}
-      className="theme-toggle rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-gray-300 transition hover:border-blue-400 hover:text-white active:scale-95"
-    >
-      {isLight ? <Moon className="size-4" aria-hidden="true" /> : <Sun className="size-4" aria-hidden="true" />}
-      <span className="hidden sm:inline">{isLight ? 'Dark' : 'Light'}</span>
-    </button>
-  );
-}
 
 export default ThemeProvider;
