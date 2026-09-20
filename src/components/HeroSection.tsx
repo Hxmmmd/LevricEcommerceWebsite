@@ -20,7 +20,7 @@ export default function HeroSection() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                     >
-                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-br from-white to-gray-500 leading-[1.1]">
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-br from-foreground via-foreground to-slate-400 leading-[1.1]">
                             Future of <br className="hidden lg:block" /> Computing
                         </h1>
                     </motion.div>
@@ -67,7 +67,7 @@ export default function HeroSection() {
                             </Button>
                         </Link>
                         <Link href="/about" className="w-full sm:w-auto">
-                            <Button size="lg" variant="outline" className="rounded-full px-8 w-full sm:w-auto hover:bg-white/5 transition-colors">
+                            <Button size="lg" variant="outline" className="rounded-full px-8 w-full sm:w-auto hover:bg-accent transition-colors">
                                 Learn More
                             </Button>
                         </Link>

@@ -50,7 +50,7 @@ export function ThemeToggle() {
       type="button"
       onClick={toggleTheme}
       aria-label={`Switch to ${isLight ? 'dark' : 'light'} theme`}
-      className="theme-toggle rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-gray-300 transition hover:border-blue-400 hover:text-white active:scale-95"
+      className="theme-toggle rounded-full border border-border bg-muted/60 px-3 py-2 text-xs font-semibold text-foreground transition hover:border-blue-400 hover:bg-accent active:scale-95"
     >
       {isLight ? <Moon className="size-4" aria-hidden="true" /> : <Sun className="size-4" aria-hidden="true" />}
       <span className="hidden sm:inline">{isLight ? 'Dark' : 'Light'}</span>

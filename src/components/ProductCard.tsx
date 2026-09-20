@@ -54,9 +54,9 @@ const ProductCard = React.memo(({ product }: { product: Product }) => {
             viewport={{ once: true }}
             whileHover={{ y: -5 }}
             whileTap={{ scale: 0.985 }}
-            className="interactive-lift group relative flex h-full flex-col overflow-hidden rounded-xl border border-white/5 bg-white/5 p-3 backdrop-blur-sm"
+            className="interactive-lift group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card p-3 shadow-sm transition-colors hover:bg-accent/40 sm:p-4"
         >
-            <Link href={`/products/${product.slug}`} className="block relative aspect-square overflow-hidden rounded-lg bg-white/5">
+            <Link href={`/products/${product.slug}`} className="relative block aspect-square overflow-hidden rounded-xl bg-muted/70">
                 {/* Badges */}
                 <div className="absolute top-2 left-2 z-10 flex flex-col gap-2">
                     {isDiscountValid ? ( // Only show discount badge if valid
@@ -80,7 +80,7 @@ const ProductCard = React.memo(({ product }: { product: Product }) => {
 
             <div className="mt-3 space-y-1.5 flex-grow flex flex-col">
                 <div className="flex items-start justify-between gap-1 w-full min-w-0">
-                    <h3 className="text-sm font-semibold leading-tight text-white flex items-center gap-1 w-full overflow-hidden">
+                    <h3 className="flex w-full items-center gap-1 overflow-hidden text-sm font-semibold leading-tight text-card-foreground">
                         <span className="truncate">{product.title}</span>
                         <span className="text-[10px] text-gray-400 font-normal lowercase italic shrink-0">
                             ({product.condition || 'new'})

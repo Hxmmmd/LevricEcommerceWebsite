@@ -59,14 +59,14 @@ export default function Header() {
                         variant="ghost"
                         size="icon"
                         onClick={() => router.back()}
-                        className="md:hidden text-gray-400 hover:text-white hover:bg-white/10 -ml-2"
+                        className="md:hidden text-muted-foreground hover:text-foreground hover:bg-muted -ml-2"
                     >
                         <ArrowLeft className="h-5 w-5" />
                     </Button>
 
                     {/* Logo */}
                     <Link href="/" className="flex items-center space-x-2 mr-4">
-                        <span className="text-xl font-bold tracking-tight text-white">LEVRIC</span>
+                        <span className="text-xl font-bold tracking-tight text-foreground">LEVRIC</span>
                     </Link>
 
                     {/* Desktop Nav */}
@@ -76,8 +76,8 @@ export default function Header() {
                                 key={link.href}
                                 href={link.href}
                                 className={cn(
-                                    'group relative text-sm font-medium transition-colors duration-200 hover:text-white',
-                                    pathname === link.href ? 'text-white' : 'text-gray-400'
+                                    'group relative text-sm font-medium transition-colors duration-200 hover:text-foreground',
+                                    pathname === link.href ? 'text-foreground' : 'text-muted-foreground'
                                 )}
                             >
                                 {link.label}
@@ -100,10 +100,10 @@ export default function Header() {
                         {status === 'authenticated' && !isAdmin && (
                             <>
                                 {/* Hidden on mobile, moved to drawer */}
-                                <Link href="/orders" className={cn(buttonVariants('ghost', 'icon'), 'hidden md:flex text-gray-400 hover:text-white')}>
+                                <Link href="/orders" className={cn(buttonVariants('ghost', 'icon'), 'hidden md:flex text-muted-foreground hover:text-foreground')}>
                                     <Package className="h-5 w-5" />
                                 </Link>
-                                <Link href="/cart" className={cn(buttonVariants('ghost', 'icon'), 'hidden md:flex relative text-gray-400 hover:text-white')}>
+                                <Link href="/cart" className={cn(buttonVariants('ghost', 'icon'), 'hidden md:flex relative text-muted-foreground hover:text-foreground')}>
                                     <ShoppingCart className="h-5 w-5" />
                                     {items.length > 0 && (
                                         <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-blue-600 text-[9px] text-white flex items-center justify-center">
@@ -116,7 +116,7 @@ export default function Header() {
 
                         {status === 'authenticated' ? (
                             <>
-                                <Link href="/profile" className={cn(buttonVariants('ghost', 'icon'), 'text-gray-400 hover:text-white')}>
+                                <Link href="/profile" className={cn(buttonVariants('ghost', 'icon'), 'text-muted-foreground hover:text-foreground')}>
                                     <User className="h-5 w-5" />
                                 </Link>
                                 {/* Hidden on mobile, moved to drawer bottom */}
@@ -124,7 +124,7 @@ export default function Header() {
                                     variant="ghost"
                                     size="icon"
                                     onClick={() => signOut({ callbackUrl: '/' })}
-                                    className="hidden md:flex text-gray-400 hover:text-red-500"
+                                    className="hidden md:flex text-muted-foreground hover:text-red-500"
                                 >
                                     <LogOut className="h-5 w-5" />
                                 </Button>
@@ -133,7 +133,7 @@ export default function Header() {
                             <Button
                                 variant="ghost"
                                 onClick={() => openAuthModal('selection')}
-                                className="hidden text-gray-400 hover:text-white px-2 sm:flex sm:px-4"
+                                className="hidden text-muted-foreground hover:text-foreground px-2 sm:flex sm:px-4"
                             >
                                 <User className="h-5 w-5 sm:mr-2" />
                                 <span className="hidden text-sm font-semibold sm:inline">Login</span>
@@ -145,7 +145,7 @@ export default function Header() {
                                 variant="ghost"
                                 size="icon"
                                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                                className={cn("text-gray-400 hover:text-white transition-colors", isSearchOpen && "text-blue-500")}
+                                className={cn("text-muted-foreground hover:text-foreground transition-colors", isSearchOpen && "text-blue-500")}
                             >
                                 <SearchIcon className="h-5 w-5" />
                                 <span className="sr-only">Search</span>
@@ -157,7 +157,7 @@ export default function Header() {
                                 variant="ghost"
                                 size="icon"
                                 onClick={() => setIsOpen(true)}
-                                className="text-gray-400 hover:text-white"
+                                className="text-muted-foreground hover:text-foreground"
                             >
                                 <Menu className="h-5 w-5" />
                             </Button>
@@ -227,8 +227,8 @@ export default function Header() {
                                         className={cn(
                                             'block rounded-lg px-4 py-3 text-base font-medium transition duration-200 active:scale-[0.98]',
                                             pathname === link.href
-                                                ? 'bg-white/10 text-white'
-                                                : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                                                ? 'bg-accent text-accent-foreground'
+                                                : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                                         )}
                                     >
                                         {link.label}
@@ -238,13 +238,13 @@ export default function Header() {
                                 {/* User Specific Mobile Links */}
                                 {status === 'authenticated' && !isAdmin && (
                                     <>
-                                        <div className="my-2 border-t border-white/5"></div>
+                                        <div className="my-2 border-t border-border"></div>
                                         <Link
                                             href="/orders"
                                             onClick={() => setIsOpen(false)}
                                             className={cn(
                                                 'flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition',
-                                                pathname === '/orders' ? 'bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                                                pathname === '/orders' ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                                             )}
                                         >
                                             <Package className="h-5 w-5" /> Orders
@@ -254,14 +254,14 @@ export default function Header() {
                                             onClick={() => setIsOpen(false)}
                                             className={cn(
                                                 'flex items-center justify-between px-4 py-3 rounded-lg text-base font-medium transition',
-                                                pathname === '/cart' ? 'bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                                                pathname === '/cart' ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                                             )}
                                         >
                                             <div className="flex items-center gap-3">
                                                 <ShoppingCart className="h-5 w-5" /> Cart
                                             </div>
                                             {items.length > 0 && (
-                                                <span className="bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                                <span className="bg-blue-600 text-foreground text-[10px] font-bold px-2 py-0.5 rounded-full">
                                                     {items.length}
                                                 </span>
                                             )}
@@ -294,7 +294,7 @@ export default function Header() {
 
                             {status === 'authenticated' && (
                                 <div className="border-t border-border p-4 pb-8">
-                                    <p className="text-sm text-white font-semibold truncate">{session?.user?.name}</p>
+                                    <p className="truncate text-sm font-semibold text-foreground">{session?.user?.name}</p>
                                     <p className="text-xs text-gray-500 truncate">{session?.user?.email}</p>
                                     <Button
                                         variant="ghost"
