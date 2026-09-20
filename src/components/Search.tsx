@@ -24,27 +24,38 @@ export default function Search({ isAdmin = false, className }: SearchProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
 
-    // Debounce search - increased to 400ms to reduce API calls
+    // Debounce suggestions and ignore responses from older queries.
     useEffect(() => {
-        const timeoutId = setTimeout(async () => {
-            if (query.trim().length >= 2) {
-                setIsLoading(true);
-                try {
-                    const data = await searchProducts(query);
-                    setResults(data);
-                    setIsOpen(true);
-                } catch (error) {
-                    console.error('Search error:', error);
-                } finally {
-                    setIsLoading(false);
-                }
-            } else {
-                setResults([]);
-                setIsOpen(false);
-            }
-        }, 400); // Increased from 300ms
+        const trimmedQuery = query.trim();
+        let isCurrentRequest = true;
 
-        return () => clearTimeout(timeoutId);
+        if (trimmedQuery.length < 2) {
+            setResults([]);
+            setIsOpen(false);
+            setIsLoading(false);
+            return;
+        }
+
+        setIsOpen(true);
+        setIsLoading(true);
+        const timeoutId = window.setTimeout(async () => {
+            try {
+                const data = await searchProducts(trimmedQuery);
+                if (isCurrentRequest) setResults(data);
+            } catch (error) {
+                if (isCurrentRequest) {
+                    setResults([]);
+                    console.error('[v0] Search suggestions failed:', error);
+                }
+            } finally {
+                if (isCurrentRequest) setIsLoading(false);
+            }
+        }, 300);
+
+        return () => {
+            isCurrentRequest = false;
+            window.clearTimeout(timeoutId);
+        };
     }, [query]);
 
     // Close on click outside
@@ -116,13 +127,20 @@ export default function Search({ isAdmin = false, className }: SearchProps) {
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
+                        role="listbox"
+                        aria-label="Product search suggestions"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
                         transition={{ duration: 0.2 }}
                         className="absolute top-full left-0 right-0 mt-2 bg-[#09090b] border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50 p-2"
                     >
-                        {results.length > 0 ? (
+                        {isLoading ? (
+                            <div className="flex items-center justify-center gap-2 p-4 text-sm text-gray-500">
+                                <Loader2 className="size-4 animate-spin" aria-hidden="true" />
+                                Searching products...
+                            </div>
+                        ) : results.length > 0 ? (
                             <div className="space-y-1">
                                 {results.map((product) => (
                                     <Link
