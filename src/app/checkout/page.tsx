@@ -13,11 +13,10 @@ import { motion } from 'framer-motion';
 import FullScreenLoader from '@/components/ui/FullScreenLoader';
 
 const PAKISTAN_LOCATIONS = {
-    Punjab: ['Lahore', 'Faisalabad', 'Rawalpindi', 'Multan', 'Gujranwala', 'Sialkot', 'Bahawalpur', 'Sargodha', 'Sheikhupura', 'Jhang', 'Gujrat', 'Rahim Yar Khan', 'Sahiwal', 'Okara', 'Kasur', 'Dera Ghazi Khan', 'Mianwali', 'Attock', 'Chiniot', 'Hafizabad', 'Khanewal', 'Wah Cantonment', 'Murree'],
+    Punjab: ['Lahore', 'Faisalabad', 'Rawalpindi', 'Multan', 'Gujranwala', 'Sialkot', 'Bahawalpur', 'Sargodha', 'Sheikhupura', 'Jhang', 'Gujrat', 'Rahim Yar Khan', 'Sahiwal', 'Okara', 'Kasur', 'Dera Ghazi Khan', 'Mianwali', 'Attock', 'Chiniot', 'Hafizabad', 'Khanewal', 'Wah Cantonment', 'Murree', 'Islamabad'],
     Sindh: ['Karachi', 'Hyderabad', 'Sukkur', 'Larkana', 'Nawabshah', 'Mirpur Khas', 'Thatta', 'Jacobabad', 'Shikarpur', 'Khairpur', 'Dadu', 'Badin', 'Tando Adam', 'Tando Allahyar', 'Mithi', 'Umerkot'],
     'Khyber Pakhtunkhwa': ['Peshawar', 'Mardan', 'Mingora', 'Abbottabad', 'Kohat', 'Dera Ismail Khan', 'Swat', 'Mansehra', 'Nowshera', 'Charsadda', 'Bannu', 'Haripur', 'Karak', 'Chitral', 'Timergara', 'Lakki Marwat'],
     Balochistan: ['Quetta', 'Turbat', 'Khuzdar', 'Chaman', 'Gwadar', 'Sibi', 'Zhob', 'Loralai', 'Kalat', 'Mastung', 'Hub', 'Dera Murad Jamali', 'Nushki'],
-    'Islamabad Capital Territory': ['Islamabad'],
     'Azad Jammu and Kashmir': ['Muzaffarabad', 'Mirpur', 'Rawalakot', 'Kotli', 'Bhimber', 'Bagh', 'Pallandri'],
     'Gilgit-Baltistan': ['Gilgit', 'Skardu', 'Chilas', 'Gahkuch', 'Khaplu', 'Astore', 'Hunza']
 } as const;
