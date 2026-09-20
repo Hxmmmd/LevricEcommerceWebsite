@@ -11,6 +11,7 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 import BuyNowButton from '@/components/BuyNowButton';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import SizeChart from '@/components/SizeChart';
 
 import { Metadata, ResolvingMetadata } from 'next';
 
@@ -104,6 +105,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                                 <p className="text-xl text-gray-500 line-through font-bold">${(product.price / (1 - product.discount / 100)).toFixed(0)}</p>
                             )}
                         </div>
+
+                        <SizeChart />
 
                         <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                             <div className="flex items-center justify-between gap-4">

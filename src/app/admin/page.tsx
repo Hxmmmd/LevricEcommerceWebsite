@@ -57,12 +57,12 @@ export default async function AdminDashboard({
 
                 {/* Products Table Area */}
                 {/* Products Table/Card Area */}
-                <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm">
+                <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm">
                     {/* Desktop Table View */}
                     <div className="hidden md:block overflow-x-auto">
                         <table className="w-full text-left">
                             <thead>
-                                <tr className="bg-white/5 border-b border-white/10">
+                                <tr className="bg-muted/60 border-b border-border">
                                     <th className="p-4 text-sm font-medium text-gray-400">Image</th>
                                     <th className="p-4 text-sm font-medium text-gray-400">Name</th>
                                     <th className="p-4 text-sm font-medium text-gray-400">Cond.</th>
@@ -72,7 +72,7 @@ export default async function AdminDashboard({
                                     <th className="p-4 text-sm font-medium text-gray-400 text-right">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-white/10">
+                            <tbody className="divide-y divide-border">
                                 {products.length === 0 ? (
                                     <tr>
                                         <td colSpan={7} className="p-8 text-center text-gray-500">
@@ -139,7 +139,7 @@ export default async function AdminDashboard({
                     </div>
 
                     {/* Mobile Card View */}
-                    <div className="md:hidden divide-y divide-white/10">
+                    <div className="md:hidden divide-y divide-border">
                         {products.length === 0 ? (
                             <div className="p-8 text-center text-gray-500">
                                 No products found. Start by creating one.

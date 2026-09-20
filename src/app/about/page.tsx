@@ -22,7 +22,7 @@ export default function AboutPage() {
                         transition={{ duration: 0.5 }}
                         className="text-center max-w-3xl mx-auto mb-16"
                     >
-                        <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-linear-to-r from-white to-gray-400 bg-clip-text text-transparent">
+                        <h1 className="mb-6 text-4xl font-bold text-foreground md:text-5xl">
                             Redefining Portable Power
                         </h1>
                         <p className="text-muted-foreground text-lg mb-8">
@@ -81,7 +81,7 @@ export default function AboutPage() {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.5, delay: i * 0.1 }}
-                                    className="p-6 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors"
+                                    className="rounded-2xl border border-border bg-card p-6 shadow-sm transition-colors hover:border-blue-300 hover:bg-accent/40"
                                 >
                                     <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
                                     <p className="text-muted-foreground">{item.desc}</p>
@@ -99,7 +99,7 @@ export default function AboutPage() {
                     >
                         <h2 className="text-2xl font-bold text-white mb-6">Ready to upgrade?</h2>
                         <Link href="/products" className={cn(buttonVariants('default', 'lg'), "rounded-full px-8")}>
-                            Explore Laptops
+                            Explore Products
                         </Link>
                     </motion.div>
                 </div>

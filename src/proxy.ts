@@ -4,6 +4,6 @@ import { authConfig } from '@/lib/auth.config';
 export default NextAuth(authConfig).auth;
 
 export const config = {
-    // Matcher from NextAuth docs: https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
+    // Route matcher for protected application areas.
     matcher: ['/checkout/:path*', '/profile/:path*', '/orders/:path*', '/admin/:path*'],
 };

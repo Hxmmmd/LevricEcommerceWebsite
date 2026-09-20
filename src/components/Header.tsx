@@ -12,6 +12,7 @@ import Search from '@/components/Search';
 import { useSession, signOut } from 'next-auth/react';
 import { useCart } from '@/lib/context/CartContext';
 import { useAuthModal } from '@/lib/context/AuthModalContext';
+import { ThemeToggle } from '@/components/ThemeProvider';
 
 export default function Header() {
     const { items } = useCart();
@@ -33,7 +34,7 @@ export default function Header() {
     const { links, isAdmin } = useMemo(() => {
         const userLinks = [
             { href: '/', label: 'Home' },
-            { href: '/products', label: 'Laptops' },
+            { href: '/products', label: 'Products' },
             { href: '/about', label: 'About' },
             { href: '/contact', label: 'Contact' },
         ];
@@ -50,22 +51,22 @@ export default function Header() {
     }, [session?.user?.isAdmin]);
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-[#09090b]">
-            <div className="container mx-auto px-4 md:px-6">
-                <div className="flex h-16 items-center justify-start gap-8">
+        <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-xl">
+            <div className="container mx-auto px-3 sm:px-4 md:px-6">
+                <div className="flex min-h-16 items-center justify-start gap-2 sm:gap-4 md:gap-8">
                     {/* Back Button */}
                     <Button
                         variant="ghost"
                         size="icon"
                         onClick={() => router.back()}
-                        className="md:hidden text-gray-400 hover:text-white hover:bg-white/10 -ml-2"
+                        className="md:hidden text-muted-foreground hover:text-foreground hover:bg-muted -ml-2"
                     >
                         <ArrowLeft className="h-5 w-5" />
                     </Button>
 
                     {/* Logo */}
                     <Link href="/" className="flex items-center space-x-2 mr-4">
-                        <span className="text-xl font-bold tracking-tight text-white">LEVRIC</span>
+                        <span className="text-xl font-bold tracking-tight text-foreground">LEVRIC</span>
                     </Link>
 
                     {/* Desktop Nav */}
@@ -75,8 +76,8 @@ export default function Header() {
                                 key={link.href}
                                 href={link.href}
                                 className={cn(
-                                    'text-sm font-medium transition-colors hover:text-white relative',
-                                    pathname === link.href ? 'text-white' : 'text-gray-400'
+                                    'group relative text-sm font-medium transition-colors duration-200 hover:text-foreground',
+                                    pathname === link.href ? 'text-foreground' : 'text-muted-foreground'
                                 )}
                             >
                                 {link.label}
@@ -92,14 +93,17 @@ export default function Header() {
                     )}
 
                     {/* Icons */}
-                    <div className="flex items-center ml-auto space-x-1 sm:space-x-2">
+                    <div className="ml-auto flex items-center gap-1 sm:gap-2">
+                        <div className="hidden md:block">
+                            <ThemeToggle />
+                        </div>
                         {status === 'authenticated' && !isAdmin && (
                             <>
                                 {/* Hidden on mobile, moved to drawer */}
-                                <Link href="/orders" className={cn(buttonVariants('ghost', 'icon'), 'hidden md:flex text-gray-400 hover:text-white')}>
+                                <Link href="/orders" className={cn(buttonVariants('ghost', 'icon'), 'hidden md:flex text-muted-foreground hover:text-foreground')}>
                                     <Package className="h-5 w-5" />
                                 </Link>
-                                <Link href="/cart" className={cn(buttonVariants('ghost', 'icon'), 'hidden md:flex relative text-gray-400 hover:text-white')}>
+                                <Link href="/cart" className={cn(buttonVariants('ghost', 'icon'), 'hidden md:flex relative text-muted-foreground hover:text-foreground')}>
                                     <ShoppingCart className="h-5 w-5" />
                                     {items.length > 0 && (
                                         <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-blue-600 text-[9px] text-white flex items-center justify-center">
@@ -112,7 +116,7 @@ export default function Header() {
 
                         {status === 'authenticated' ? (
                             <>
-                                <Link href="/profile" className={cn(buttonVariants('ghost', 'icon'), 'text-gray-400 hover:text-white')}>
+                                <Link href="/profile" className={cn(buttonVariants('ghost', 'icon'), 'text-muted-foreground hover:text-foreground')}>
                                     <User className="h-5 w-5" />
                                 </Link>
                                 {/* Hidden on mobile, moved to drawer bottom */}
@@ -120,7 +124,7 @@ export default function Header() {
                                     variant="ghost"
                                     size="icon"
                                     onClick={() => signOut({ callbackUrl: '/' })}
-                                    className="hidden md:flex text-gray-400 hover:text-red-500"
+                                    className="hidden md:flex text-muted-foreground hover:text-red-500"
                                 >
                                     <LogOut className="h-5 w-5" />
                                 </Button>
@@ -129,10 +133,10 @@ export default function Header() {
                             <Button
                                 variant="ghost"
                                 onClick={() => openAuthModal('selection')}
-                                className="text-gray-400 hover:text-white px-2 sm:px-4"
+                                className="hidden text-muted-foreground hover:text-foreground px-2 sm:flex sm:px-4"
                             >
                                 <User className="h-5 w-5 sm:mr-2" />
-                                <span className="text-sm font-semibold">Login</span>
+                                <span className="hidden text-sm font-semibold sm:inline">Login</span>
                             </Button>
                         )}
 
@@ -141,7 +145,7 @@ export default function Header() {
                                 variant="ghost"
                                 size="icon"
                                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                                className={cn("text-gray-400 hover:text-white transition-colors", isSearchOpen && "text-blue-500")}
+                                className={cn("text-muted-foreground hover:text-foreground transition-colors", isSearchOpen && "text-blue-500")}
                             >
                                 <SearchIcon className="h-5 w-5" />
                                 <span className="sr-only">Search</span>
@@ -153,7 +157,7 @@ export default function Header() {
                                 variant="ghost"
                                 size="icon"
                                 onClick={() => setIsOpen(true)}
-                                className="text-gray-400 hover:text-white"
+                                className="text-muted-foreground hover:text-foreground"
                             >
                                 <Menu className="h-5 w-5" />
                             </Button>
@@ -170,9 +174,9 @@ export default function Header() {
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        className="md:hidden border-t border-white/5 bg-[#09090b] overflow-hidden"
+                        className="md:hidden overflow-visible border-t border-border bg-background"
                     >
-                        <div className="px-4 py-3">
+                        <div className="px-3 py-3 sm:px-4">
                             <Search isAdmin={isAdmin} />
                         </div>
                     </motion.div>
@@ -188,35 +192,43 @@ export default function Header() {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setIsOpen(false)}
-                            className="fixed inset-0 bg-black/60 backdrop-blur-md z-[55]"
+                            className="fixed inset-0 z-[90] bg-black/60 backdrop-blur-md"
                         />
 
                         {/* Drawer */}
                         <motion.div
-                            initial={{ x: '-100%' }}
+                            initial={{ x: '100%' }}
                             animate={{ x: 0 }}
-                            exit={{ x: '-100%' }}
+                            exit={{ x: '100%' }}
                             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                            className="fixed top-0 left-0 h-screen min-h-screen w-[85%] max-w-sm bg-[#09090b] z-[100] border-r border-white/10 shadow-2xl flex flex-col"
+                            className="fixed inset-y-0 right-0 z-[100] flex h-dvh min-h-dvh w-full flex-col overflow-hidden border-l border-border bg-background shadow-2xl sm:w-[85%] sm:max-w-sm"
                         >
-                            <div className="flex items-center justify-between p-6 border-b border-white/5">
-                                <span className="text-xl font-bold text-white">Menu</span>
-                                <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white">
-                                    <X className="h-5 w-5" />
+                            <div className="flex items-center justify-between border-b border-border p-5">
+                                <div>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-blue-400">Levric</p>
+                                    <h2 className="mt-1 text-xl font-bold text-foreground">Menu</h2>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => setIsOpen(false)}
+                                    aria-label="Close menu"
+                                    className="rounded-full border border-border bg-muted/40 p-2 text-muted-foreground transition hover:bg-muted hover:text-foreground active:scale-90"
+                                >
+                                    <X className="size-5" />
                                 </button>
                             </div>
 
-                            <div className="flex-1 overflow-y-auto p-4 space-y-1">
+                            <div className="min-h-0 flex-1 space-y-1 overflow-y-auto overscroll-contain p-4">
                                 {links.map((link) => (
                                     <Link
                                         key={link.href}
                                         href={link.href}
                                         onClick={() => setIsOpen(false)}
                                         className={cn(
-                                            'block px-4 py-3 rounded-lg text-base font-medium transition',
+                                            'block rounded-lg px-4 py-3 text-base font-medium transition duration-200 active:scale-[0.98]',
                                             pathname === link.href
-                                                ? 'bg-white/10 text-white'
-                                                : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                                                ? 'bg-accent text-accent-foreground'
+                                                : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                                         )}
                                     >
                                         {link.label}
@@ -226,13 +238,13 @@ export default function Header() {
                                 {/* User Specific Mobile Links */}
                                 {status === 'authenticated' && !isAdmin && (
                                     <>
-                                        <div className="my-2 border-t border-white/5"></div>
+                                        <div className="my-2 border-t border-border"></div>
                                         <Link
                                             href="/orders"
                                             onClick={() => setIsOpen(false)}
                                             className={cn(
                                                 'flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition',
-                                                pathname === '/orders' ? 'bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                                                pathname === '/orders' ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                                             )}
                                         >
                                             <Package className="h-5 w-5" /> Orders
@@ -242,14 +254,14 @@ export default function Header() {
                                             onClick={() => setIsOpen(false)}
                                             className={cn(
                                                 'flex items-center justify-between px-4 py-3 rounded-lg text-base font-medium transition',
-                                                pathname === '/cart' ? 'bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                                                pathname === '/cart' ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                                             )}
                                         >
                                             <div className="flex items-center gap-3">
                                                 <ShoppingCart className="h-5 w-5" /> Cart
                                             </div>
                                             {items.length > 0 && (
-                                                <span className="bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                                <span className="bg-blue-600 text-foreground text-[10px] font-bold px-2 py-0.5 rounded-full">
                                                     {items.length}
                                                 </span>
                                             )}
@@ -258,9 +270,31 @@ export default function Header() {
                                 )}
                             </div>
 
+                            <div className="border-t border-border p-4">
+                                <div className="mb-3 flex items-center justify-between rounded-xl border border-border bg-muted/30 p-3">
+                                    <div>
+                                        <p className="text-sm font-semibold text-foreground">Appearance</p>
+                                        <p className="text-xs text-muted-foreground">Switch site theme</p>
+                                    </div>
+                                    <ThemeToggle />
+                                </div>
+                                {status !== 'authenticated' && (
+                                    <Button
+                                        variant="outline"
+                                        className="w-full justify-center gap-2 border-border bg-muted/30 text-foreground hover:bg-muted"
+                                        onClick={() => {
+                                            setIsOpen(false);
+                                            openAuthModal('selection');
+                                        }}
+                                    >
+                                        <User className="size-4" /> Login
+                                    </Button>
+                                )}
+                            </div>
+
                             {status === 'authenticated' && (
-                                <div className="border-t border-white/5 p-4 pb-12 sm:pb-8">
-                                    <p className="text-sm text-white font-semibold truncate">{session?.user?.name}</p>
+                                <div className="border-t border-border p-4 pb-8">
+                                    <p className="truncate text-sm font-semibold text-foreground">{session?.user?.name}</p>
                                     <p className="text-xs text-gray-500 truncate">{session?.user?.email}</p>
                                     <Button
                                         variant="ghost"

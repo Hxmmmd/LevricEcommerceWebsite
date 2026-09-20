@@ -106,7 +106,7 @@ export default function Search({ isAdmin = false, className }: SearchProps) {
                         "w-full bg-white/5 border border-white/10 py-2 pl-10 pr-10 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:bg-white/10 transition-all",
                         isAdmin ? "rounded-xl" : "rounded-full"
                     )}
-                    placeholder={isAdmin ? "Search name or category..." : "Search laptops..."}
+                    placeholder={isAdmin ? "Search name or category..." : "Search products..."}
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     onFocus={() => {

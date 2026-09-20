@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import clsx from "clsx";
 import { Providers } from "@/components/Providers";
+import ThemeProvider from "@/components/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -54,13 +55,15 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body className={clsx(inter.className, "min-h-screen flex flex-col")}>
-                <Providers>
-                    <div className="flex-grow">
-                        {children}
-                    </div>
-                </Providers>
+        <html lang="en" suppressHydrationWarning>
+            <body suppressHydrationWarning className={clsx(inter.className, "min-h-screen flex flex-col")}>
+                <ThemeProvider>
+                    <Providers>
+                        <div className="flex-grow">
+                            {children}
+                        </div>
+                    </Providers>
+                </ThemeProvider>
             </body>
         </html>
     );

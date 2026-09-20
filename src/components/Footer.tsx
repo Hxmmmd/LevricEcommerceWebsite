@@ -14,7 +14,7 @@ export default function Footer() {
                     <div className="space-y-4">
                         <h4 className="text-sm font-semibold">Shop</h4>
                         <ul className="space-y-2 text-sm text-muted-foreground">
-                            <li><Link href="/products" className="hover:text-foreground">Laptops</Link></li>
+                            <li><Link href="/products" className="hover:text-foreground">Products</Link></li>
                             <li><Link href="/accessories" className="hover:text-foreground">Accessories</Link></li>
                             <li><Link href="/sale" className="hover:text-foreground">On Sale</Link></li>
                         </ul>

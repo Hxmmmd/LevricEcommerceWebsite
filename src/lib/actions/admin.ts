@@ -79,21 +79,39 @@ async function fileToBase64(file: File): Promise<string> {
     return `data:${file.type};base64,${buffer.toString('base64')}`;
 }
 
+function parseProductFields(formData: FormData) {
+    const title = String(formData.get('title') || formData.get('name') || '').trim();
+    const category = String(formData.get('category') || '').trim();
+    const description = String(formData.get('description') || '').trim();
+    const price = Number(formData.get('price'));
+    const discount = Number(formData.get('discount') || 0);
+    const stock = Number(formData.get('stock') ?? formData.get('countInStock'));
+    const condition = String(formData.get('condition') || 'New');
+    const expiryDate = String(formData.get('discountExpiryDate') || '');
+    const expiryTime = String(formData.get('discountExpiryTime') || '');
+    const discountExpiry = expiryDate && expiryTime ? new Date(`${expiryDate}T${expiryTime}`) : null;
+
+    if (!title || title.length < 2) throw new Error('Product title must be at least 2 characters.');
+    if (!category) throw new Error('Product category is required.');
+    if (!description || description.length < 10) throw new Error('Description must be at least 10 characters.');
+    if (!Number.isFinite(price) || price <= 0) throw new Error('Price must be greater than 0.');
+    if (!Number.isInteger(stock) || stock < 0) throw new Error('Stock must be a whole number of 0 or more.');
+    if (!Number.isFinite(discount) || discount < 0 || discount > 100) throw new Error('Discount must be between 0 and 100%.');
+    if (!['New', 'Used'].includes(condition)) throw new Error('Choose a valid product condition.');
+    if (discount > 0 && !discountExpiry) throw new Error('Discounted products require an expiry date and time.');
+    if (discountExpiry && (Number.isNaN(discountExpiry.getTime()) || discountExpiry <= new Date())) {
+        throw new Error('Discount expiry must be a valid future date and time.');
+    }
+
+    return { title, category, description, price, discount, stock, condition, discountExpiry };
+}
+
 export async function createProduct(formData: FormData) {
     try {
         console.log('Starting product creation...');
         await dbConnect();
 
-        const title = (formData.get('title') || formData.get('name')) as string;
-        const price = Number(formData.get('price'));
-        const discount = Number(formData.get('discount') || 0);
-        const expiryDate = formData.get('discountExpiryDate') as string;
-        const expiryTime = formData.get('discountExpiryTime') as string;
-        const discountExpiry = expiryDate ? new Date(`${expiryDate}T${expiryTime || '00:00'}`) : null;
-        const category = formData.get('category') as string;
-        const description = formData.get('description') as string;
-        const stock = Number(formData.get('stock') || formData.get('countInStock'));
-        const condition = formData.get('condition') as string;
+        const { title, price, discount, discountExpiry, category, description, stock, condition } = parseProductFields(formData);
 
         const mainImageFile = formData.get('imageFile') as File;
         const additionalImageFiles = formData.getAll('imagesFiles') as File[];
@@ -131,6 +149,7 @@ export async function createProduct(formData: FormData) {
 
         // Final deduplication and limit
         finalImages = [...new Set(finalImages)].slice(0, 5);
+        if (finalImages.length === 0) throw new Error('Add a main product image by upload or URL.');
 
         const slug = title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
 
@@ -162,16 +181,7 @@ export async function updateProduct(id: string, formData: FormData) {
     try {
         await dbConnect();
 
-        const title = (formData.get('title') || formData.get('name')) as string;
-        const price = Number(formData.get('price'));
-        const discount = Number(formData.get('discount') || 0);
-        const expiryDate = formData.get('discountExpiryDate') as string;
-        const expiryTime = formData.get('discountExpiryTime') as string;
-        const discountExpiry = expiryDate ? new Date(`${expiryDate}T${expiryTime || '00:00'}`) : null;
-        const category = formData.get('category') as string;
-        const description = formData.get('description') as string;
-        const stock = Number(formData.get('stock') || formData.get('countInStock'));
-        const condition = formData.get('condition') as string;
+        const { title, price, discount, discountExpiry, category, description, stock, condition } = parseProductFields(formData);
 
         const mainImageFile = formData.get('imageFile') as File;
         const additionalImageFiles = formData.getAll('imagesFiles') as File[];

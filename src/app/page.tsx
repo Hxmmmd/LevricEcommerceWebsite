@@ -62,10 +62,10 @@ export default async function Home() {
             <HeroSection />
 
             {/* New Arrivals Section */}
-            <section className="container px-4 md:px-6 py-20 border-b border-white/5">
-                <div className="flex items-center justify-between mb-10">
+            <section className="container border-b border-border px-4 py-14 sm:py-16 md:px-6 md:py-20">
+                <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:mb-10 sm:flex-row sm:items-center">
                     <div>
-                        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white">New Arrivals</h2>
+                        <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">New Arrivals</h2>
                         <p className="text-muted-foreground mt-2">Experience the latest in performance technology.</p>
                     </div>
                     <Link href="/products?condition=New">
@@ -73,7 +73,7 @@ export default async function Home() {
                     </Link>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
                     {newArrivals.length > 0 ? (
                         newArrivals.map((product) => (
                             <ProductCard key={product._id} product={product} />
@@ -88,9 +88,9 @@ export default async function Home() {
 
             {/* Used Deals Section */}
             <section className="container px-4 md:px-6 py-20">
-                <div className="flex items-center justify-between mb-10">
+                <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:mb-10 sm:flex-row sm:items-center">
                     <div>
-                        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white">Premium Pre-Owned</h2>
+                        <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">Premium Pre-Owned</h2>
                         <p className="text-muted-foreground mt-2">Quality tested devices at unbeatable prices.</p>
                     </div>
                     <Link href="/products?condition=Used">
@@ -98,7 +98,7 @@ export default async function Home() {
                     </Link>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
                     {usedDeals.length > 0 ? (
                         usedDeals.map((product) => (
                             <ProductCard key={product._id} product={product} />

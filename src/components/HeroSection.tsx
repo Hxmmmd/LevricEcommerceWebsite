@@ -11,7 +11,7 @@ export default function HeroSection() {
             {/* Background Gradient */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-background to-background" />
 
-            <div className="container px-4 md:px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+            <div className="container relative z-10 grid items-center gap-8 px-4 py-8 sm:gap-12 sm:px-6 md:py-12 lg:grid-cols-2">
                 {/* Text Content - Reordered for mobile */}
                 <div className="space-y-6 text-center lg:text-left order-1 lg:order-1">
                     {/* Heading - Shows first on mobile */}
@@ -20,7 +20,7 @@ export default function HeroSection() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                     >
-                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-br from-white to-gray-500 leading-[1.1]">
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-br from-foreground via-foreground to-slate-400 leading-[1.1]">
                             Future of <br className="hidden lg:block" /> Computing
                         </h1>
                     </motion.div>
@@ -59,7 +59,7 @@ export default function HeroSection() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.4 }}
-                        className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 justify-center lg:justify-start"
+                        className="flex flex-col justify-center gap-3 sm:flex-row lg:justify-start"
                     >
                         <Link href="/products" className="w-full sm:w-auto">
                             <Button size="lg" className="rounded-full px-8 w-full sm:w-auto">
@@ -67,7 +67,7 @@ export default function HeroSection() {
                             </Button>
                         </Link>
                         <Link href="/about" className="w-full sm:w-auto">
-                            <Button size="lg" variant="outline" className="rounded-full px-8 w-full sm:w-auto hover:bg-white/5 transition-colors">
+                            <Button size="lg" variant="outline" className="rounded-full px-8 w-full sm:w-auto hover:bg-accent transition-colors">
                                 Learn More
                             </Button>
                         </Link>

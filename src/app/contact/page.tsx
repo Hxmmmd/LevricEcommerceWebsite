@@ -34,7 +34,7 @@ export default function ContactPage() {
                         transition={{ duration: 0.6 }}
                         className="text-center max-w-2xl mx-auto mb-12"
                     >
-                        <h1 className="text-4xl md:text-5xl font-black mb-4 bg-linear-to-br from-white to-gray-500 bg-clip-text text-transparent tracking-tighter">
+                        <h1 className="mb-4 text-4xl font-black tracking-tighter text-foreground md:text-5xl">
                             Lets Connect
                         </h1>
                         <p className="text-muted-foreground text-base max-w-lg mx-auto leading-relaxed font-medium">
@@ -51,14 +51,14 @@ export default function ContactPage() {
                             transition={{ duration: 0.5, delay: 0.1 }}
                         >
                             <Link href="https://instagram.com/levric.store" target="_blank" className="block h-full cursor-pointer group">
-                                <div className="h-full bg-white/5 border border-white/10 hover:border-pink-500/50 hover:bg-white/10 rounded-2xl p-4 transition-all duration-300 relative overflow-hidden">
+                                <div className="h-full bg-card border-border hover:border-pink-400/60 hover:bg-accent/40 rounded-2xl p-4 transition-all duration-300 relative overflow-hidden">
                                     <div className="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <ExternalLink className="w-3 h-3 text-white/50" />
                                     </div>
                                     <div className="w-9 h-9 rounded-lg bg-linear-to-br from-purple-500 to-pink-500 flex items-center justify-center mb-4 shadow-lg shadow-purple-900/20 group-hover:scale-110 transition-transform duration-300">
                                         <Instagram className="w-5 h-5 text-white" />
                                     </div>
-                                    <h3 className="text-sm font-black mb-0.5 uppercase tracking-tight bg-linear-to-br from-white to-gray-500 bg-clip-text text-transparent">Instagram</h3>
+                                    <h3 className="mb-0.5 text-sm font-black uppercase tracking-tight text-foreground">Instagram</h3>
                                     <p className="text-muted-foreground text-[10px] mb-2 font-medium">Follow us for updates & DM for quick support.</p>
                                     <span className="text-pink-400 text-[9px] font-black group-hover:underline decoration-pink-400/30 underline-offset-4 tracking-wider">@LEVRIC.STORE</span>
                                 </div>
@@ -79,7 +79,7 @@ export default function ContactPage() {
                                     <div className="w-9 h-9 rounded-lg bg-linear-to-br from-gray-900 to-black flex items-center justify-center mb-4 shadow-lg shadow-black/20 group-hover:scale-110 transition-transform duration-300 border border-white/10">
                                         <TikTokIcon className="w-5 h-5 text-white" />
                                     </div>
-                                    <h3 className="text-sm font-black mb-0.5 uppercase tracking-tight bg-linear-to-br from-white to-gray-500 bg-clip-text text-transparent">TikTok</h3>
+                                    <h3 className="mb-0.5 text-sm font-black uppercase tracking-tight text-foreground">TikTok</h3>
                                     <p className="text-muted-foreground text-[10px] mb-2 font-medium">Watch our latest unboxings and tech reviews.</p>
                                     <span className="text-gray-400 text-[9px] font-black group-hover:underline decoration-gray-400/30 underline-offset-4 tracking-wider">@LEVRIC.STORE</span>
                                 </div>
@@ -100,7 +100,7 @@ export default function ContactPage() {
                                     <div className="w-9 h-9 rounded-lg bg-linear-to-br from-blue-600 to-blue-800 flex items-center justify-center mb-4 shadow-lg shadow-blue-900/20 group-hover:scale-110 transition-transform duration-300">
                                         <Facebook className="w-5 h-5 text-white" />
                                     </div>
-                                    <h3 className="text-sm font-black mb-0.5 uppercase tracking-tight bg-linear-to-br from-white to-gray-500 bg-clip-text text-transparent">Facebook</h3>
+                                    <h3 className="mb-0.5 text-sm font-black uppercase tracking-tight text-foreground">Facebook</h3>
                                     <p className="text-muted-foreground text-[10px] mb-2 font-medium">Join our community.</p>
                                     <span className="text-blue-400 text-[9px] font-black group-hover:underline decoration-blue-400/30 underline-offset-4 tracking-wider">@LEVRIC</span>
                                 </div>
@@ -117,7 +117,7 @@ export default function ContactPage() {
                                 <div className="w-9 h-9 rounded-lg bg-linear-to-br from-blue-500 to-cyan-500 flex items-center justify-center mb-4 shadow-lg shadow-blue-900/20 group-hover:scale-110 transition-transform duration-300">
                                     <Mail className="w-5 h-5 text-white" />
                                 </div>
-                                <h3 className="text-sm font-black mb-0.5 uppercase tracking-tight bg-linear-to-br from-white to-gray-500 bg-clip-text text-transparent">Email Us</h3>
+                                <h3 className="mb-0.5 text-sm font-black uppercase tracking-tight text-foreground">Email Us</h3>
                                 <p className="text-muted-foreground text-[10px] mb-2 font-medium">Drop us a line anytime.</p>
                                 <div className="space-y-0.5">
                                     <p className="text-white text-[10px] font-black hover:text-blue-400 transition-colors">SUPPORT@LEVRIC.STORE</p>
@@ -137,7 +137,7 @@ export default function ContactPage() {
                                 <div className="w-9 h-9 rounded-lg bg-linear-to-br from-emerald-500 to-green-500 flex items-center justify-center mb-4 shadow-lg shadow-emerald-900/20 group-hover:scale-110 transition-transform duration-300">
                                     <MapPin className="w-5 h-5 text-white" />
                                 </div>
-                                <h3 className="text-sm font-black mb-0.5 uppercase tracking-tight bg-linear-to-br from-white to-gray-500 bg-clip-text text-transparent">Visit HQ</h3>
+                                <h3 className="mb-0.5 text-sm font-black uppercase tracking-tight text-foreground">Visit HQ</h3>
                                 <p className="text-muted-foreground text-[10px] mb-2 font-medium">Come say hi at our office.</p>
                                 <div className="space-y-2">
                                     <p className="text-white text-[10px] font-black uppercase leading-tight">
