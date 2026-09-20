@@ -170,7 +170,7 @@ export default function Header() {
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        className="md:hidden border-t border-white/5 bg-[#09090b] overflow-hidden"
+                        className="md:hidden border-t border-white/5 bg-[#09090b] overflow-visible"
                     >
                         <div className="px-4 py-3">
                             <Search isAdmin={isAdmin} />
