@@ -46,11 +46,14 @@ const ProductCard = React.memo(({ product }: { product: Product }) => {
         <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
+            transition={{
+                default: { duration: 0.3 },
+                y: { type: 'spring', stiffness: 320, damping: 24 },
+                scale: { type: 'spring', stiffness: 320, damping: 24 },
+            }}
             viewport={{ once: true }}
             whileHover={{ y: -5 }}
             whileTap={{ scale: 0.985 }}
-            transition={{ type: 'spring', stiffness: 320, damping: 24 }}
             className="interactive-lift group relative flex h-full flex-col overflow-hidden rounded-xl border border-white/5 bg-white/5 p-3 backdrop-blur-sm"
         >
             <Link href={`/products/${product.slug}`} className="block relative aspect-square overflow-hidden rounded-lg bg-white/5">
