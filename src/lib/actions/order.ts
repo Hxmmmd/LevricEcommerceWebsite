@@ -79,7 +79,7 @@ export async function createOrder(orderData: any) {
     const shippingAddress = orderData.shippingAddress || {};
     const phonePattern = /^03\d{9}$/;
     if (!phonePattern.test(String(shippingAddress.phone || ''))) throw new Error('A valid Pakistani phone number is required.');
-    if (!shippingAddress.firstName || !shippingAddress.lastName || !shippingAddress.address || !shippingAddress.city) throw new Error('Please complete all required delivery fields.');
+    if (!shippingAddress.firstName || !shippingAddress.lastName || !shippingAddress.address || !shippingAddress.province || !shippingAddress.city) throw new Error('Please complete all required delivery fields.');
     if (shippingAddress.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(shippingAddress.email)) throw new Error('Please enter a valid email address.');
 
     const settings = await DeliverySettings.findOne().sort({ createdAt: 1 }).lean();
@@ -95,6 +95,7 @@ export async function createOrder(orderData: any) {
             fullName: `${shippingAddress.firstName} ${shippingAddress.lastName}`.trim(),
             email: shippingAddress.email || '',
             apartment: shippingAddress.apartment || '',
+            province: shippingAddress.province,
             postalCode: shippingAddress.postalCode || '',
             alternatePhone: shippingAddress.alternatePhone || ''
         },

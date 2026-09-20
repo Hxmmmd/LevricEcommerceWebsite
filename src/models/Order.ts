@@ -31,6 +31,7 @@ const OrderSchema = new mongoose.Schema({
         email: { type: String, default: '' },
         address: { type: String, required: true },
         apartment: { type: String, default: '' },
+        province: { type: String, required: true },
         city: { type: String, required: true },
         postalCode: { type: String, default: '' },
         alternatePhone: { type: String, default: '' },

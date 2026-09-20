@@ -50,7 +50,7 @@ export default async function AdminOrdersPage() {
                                             </div>
                                             <div className="flex items-start gap-2 text-muted-foreground">
                                                 <MapPin className="mt-0.5 h-3.5 w-3.5" />
-                                                <div className="space-y-1"><p className="text-[10px] font-bold uppercase tracking-wider">{order.shippingAddress.address}{order.shippingAddress.apartment ? `, ${order.shippingAddress.apartment}` : ''}</p><p className="text-[10px] font-bold uppercase tracking-wider">{order.shippingAddress.city}{order.shippingAddress.postalCode ? `, ${order.shippingAddress.postalCode}` : ''}, {order.shippingAddress.country}</p>{order.shippingAddress.alternatePhone && <p className="text-[10px] font-bold uppercase tracking-wider">Alt: {order.shippingAddress.alternatePhone}</p>}</div>
+                                                <div className="space-y-1"><p className="text-[10px] font-bold uppercase tracking-wider">{order.shippingAddress.address}{order.shippingAddress.apartment ? `, ${order.shippingAddress.apartment}` : ''}</p><p className="text-[10px] font-bold uppercase tracking-wider">{order.shippingAddress.city}{order.shippingAddress.postalCode ? `, ${order.shippingAddress.postalCode}` : ''}, {order.shippingAddress.province}, {order.shippingAddress.country}</p>{order.shippingAddress.alternatePhone && <p className="text-[10px] font-bold uppercase tracking-wider">Alt: {order.shippingAddress.alternatePhone}</p>}</div>
                                             </div>
                                         </div>
 

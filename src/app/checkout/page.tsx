@@ -12,6 +12,17 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import FullScreenLoader from '@/components/ui/FullScreenLoader';
 
+const PAKISTAN_LOCATIONS = {
+    Punjab: ['Lahore', 'Faisalabad', 'Rawalpindi', 'Multan', 'Gujranwala', 'Sialkot', 'Bahawalpur', 'Sargodha', 'Sheikhupura', 'Jhang', 'Gujrat', 'Rahim Yar Khan', 'Sahiwal', 'Okara', 'Kasur', 'Dera Ghazi Khan', 'Mianwali', 'Attock', 'Chiniot', 'Hafizabad', 'Khanewal', 'Wah Cantonment', 'Murree'],
+    Sindh: ['Karachi', 'Hyderabad', 'Sukkur', 'Larkana', 'Nawabshah', 'Mirpur Khas', 'Thatta', 'Jacobabad', 'Shikarpur', 'Khairpur', 'Dadu', 'Badin', 'Tando Adam', 'Tando Allahyar', 'Mithi', 'Umerkot'],
+    'Khyber Pakhtunkhwa': ['Peshawar', 'Mardan', 'Mingora', 'Abbottabad', 'Kohat', 'Dera Ismail Khan', 'Swat', 'Mansehra', 'Nowshera', 'Charsadda', 'Bannu', 'Haripur', 'Karak', 'Chitral', 'Timergara', 'Lakki Marwat'],
+    Balochistan: ['Quetta', 'Turbat', 'Khuzdar', 'Chaman', 'Gwadar', 'Sibi', 'Zhob', 'Loralai', 'Kalat', 'Mastung', 'Hub', 'Dera Murad Jamali', 'Nushki'],
+    'Islamabad Capital Territory': ['Islamabad'],
+    'Azad Jammu and Kashmir': ['Muzaffarabad', 'Mirpur', 'Rawalakot', 'Kotli', 'Bhimber', 'Bagh', 'Pallandri'],
+    'Gilgit-Baltistan': ['Gilgit', 'Skardu', 'Chilas', 'Gahkuch', 'Khaplu', 'Astore', 'Hunza']
+} as const;
+const PROVINCES = Object.keys(PAKISTAN_LOCATIONS) as Array<keyof typeof PAKISTAN_LOCATIONS>;
+
 export default function CheckoutPage() {
     const { items: cartItems, clearCart } = useCart();
     const router = useRouter();
@@ -25,6 +36,9 @@ export default function CheckoutPage() {
     const [staleError, setStaleError] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState<'Credit Card' | 'Cash on Delivery'>('Credit Card');
     const [deliveryFee, setDeliveryFee] = useState(10);
+    const [province, setProvince] = useState<keyof typeof PAKISTAN_LOCATIONS | ''>('');
+    const [cityQuery, setCityQuery] = useState('');
+    const [cityOpen, setCityOpen] = useState(false);
 
     const [isInitializing, setIsInitializing] = useState(true);
 
@@ -36,6 +50,7 @@ export default function CheckoutPage() {
         email: '',
         address: '',
         apartment: '',
+        province: '',
         city: '',
         postalCode: '',
         alternatePhone: '',
@@ -112,7 +127,8 @@ export default function CheckoutPage() {
         if (!shipping.lastName.trim()) errors.lastName = 'Last name is required.';
         if (shipping.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(shipping.email)) errors.email = 'Enter a valid email address.';
         if (!shipping.address.trim()) errors.address = 'Address is required.';
-        if (!shipping.city.trim()) errors.city = 'Select or enter a city.';
+        if (!province) errors.province = 'Select a province or region.';
+        if (!shipping.city.trim()) errors.city = 'Select a city from the list.';
         if (shipping.alternatePhone && !phonePattern.test(shipping.alternatePhone)) errors.alternatePhone = 'Enter a valid 11-digit mobile number.';
         if (Object.keys(errors).length) {
             setFormErrors(errors);
@@ -126,6 +142,7 @@ export default function CheckoutPage() {
                 orderItems: checkoutItems,
                 shippingAddress: {
                     ...shipping,
+                    province,
                     fullName: `${shipping.firstName.trim()} ${shipping.lastName.trim()}`
                 },
                 paymentMethod,
@@ -305,7 +322,8 @@ export default function CheckoutPage() {
                                         <div><p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Shipping address</p><h3 className="mt-1 text-lg font-bold">Where should we deliver?</h3></div>
                                         <div className="space-y-2"><label className="text-sm font-medium">Address <span className="text-destructive">*</span></label><input name="address" value={shipping.address} onChange={handleInputChange} placeholder="House number, street number, area" className="h-14 w-full rounded-xl border border-input bg-background px-4 text-base text-foreground outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring/40" />{formErrors.address && <p className="text-xs text-destructive">{formErrors.address}</p>}</div>
                                         <div className="space-y-2"><label className="text-sm font-medium">Apt, suite, unit, building <span className="text-muted-foreground">(optional)</span></label><input name="apartment" value={shipping.apartment} onChange={handleInputChange} placeholder="Apartment, suite, unit, building" className="h-14 w-full rounded-xl border border-input bg-background px-4 text-base text-foreground outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring/40" /></div>
-                                        <div className="grid gap-5 sm:grid-cols-[1.2fr_.8fr]"><div className="space-y-2"><label className="text-sm font-medium">City <span className="text-destructive">*</span></label><select name="city" value={shipping.city} onChange={handleInputChange} className="h-14 w-full rounded-xl border border-input bg-background px-4 text-base text-foreground outline-none focus:ring-2 focus:ring-ring/40"><option value="">Select city</option>{['Karachi', 'Lahore', 'Islamabad', 'Rawalpindi', 'Faisalabad', 'Peshawar', 'Quetta'].map((city) => <option key={city} value={city}>{city}</option>)}</select>{formErrors.city && <p className="text-xs text-destructive">{formErrors.city}</p>}</div><div className="space-y-2"><label className="text-sm font-medium">Zip <span className="text-muted-foreground">(optional)</span></label><input name="postalCode" inputMode="numeric" value={shipping.postalCode} onChange={handleInputChange} placeholder="Enter zip" className="h-14 w-full rounded-xl border border-input bg-background px-4 text-base text-foreground outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring/40" /></div></div>
+                                        <div className="grid gap-5 sm:grid-cols-2"><div className="space-y-2"><label className="text-sm font-medium">Province / region <span className="text-destructive">*</span></label><select value={province} onChange={(event) => { const nextProvince = event.target.value as keyof typeof PAKISTAN_LOCATIONS | ''; setProvince(nextProvince); setCityQuery(''); setCityOpen(false); setShipping((current) => ({ ...current, province: nextProvince, city: '' })); }} className="h-14 w-full rounded-xl border border-input bg-background px-4 text-base text-foreground outline-none focus:ring-2 focus:ring-ring/40"><option value="">Select province</option>{PROVINCES.map((item) => <option key={item} value={item}>{item}</option>)}</select>{formErrors.province && <p className="text-xs text-destructive">{formErrors.province}</p>}</div><div className="space-y-2"><label className="text-sm font-medium">Zip <span className="text-muted-foreground">(optional)</span></label><input name="postalCode" inputMode="numeric" value={shipping.postalCode} onChange={handleInputChange} placeholder="Enter zip" className="h-14 w-full rounded-xl border border-input bg-background px-4 text-base text-foreground outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring/40" /></div></div>
+                                        <div className="relative space-y-2"><label className="text-sm font-medium">City <span className="text-destructive">*</span></label><input name="city" autoComplete="off" disabled={!province} value={cityQuery || shipping.city} onFocus={() => province && setCityOpen(true)} onChange={(event) => { setCityQuery(event.target.value); setCityOpen(true); setShipping((current) => ({ ...current, city: '' })); }} placeholder={province ? 'Search your city' : 'Select province first'} className="h-14 w-full rounded-xl border border-input bg-background px-4 text-base text-foreground outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring/40 disabled:cursor-not-allowed disabled:opacity-60" />{cityOpen && province && <div className="absolute z-30 mt-1 max-h-60 w-full overflow-y-auto rounded-xl border border-border bg-popover p-1 shadow-xl">{PAKISTAN_LOCATIONS[province].filter((city) => city.toLowerCase().includes(cityQuery.toLowerCase())).map((city) => <button type="button" key={city} onMouseDown={(event) => event.preventDefault()} onClick={() => { setShipping((current) => ({ ...current, city })); setCityQuery(city); setCityOpen(false); }} className="block w-full rounded-lg px-3 py-3 text-left text-sm text-popover-foreground hover:bg-accent">{city}</button>)}{PAKISTAN_LOCATIONS[province].filter((city) => city.toLowerCase().includes(cityQuery.toLowerCase())).length === 0 && <p className="px-3 py-3 text-sm text-muted-foreground">No city found</p>}</div>}{formErrors.city && <p className="text-xs text-destructive">{formErrors.city}</p>}</div>
                                         <div className="space-y-2"><label className="text-sm font-medium">Alternate phone for delivery <span className="text-muted-foreground">(optional)</span></label><input name="alternatePhone" inputMode="numeric" value={shipping.alternatePhone} onChange={handleInputChange} placeholder="03001234567" className="h-14 w-full rounded-xl border border-input bg-background px-4 text-base text-foreground outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring/40" />{formErrors.alternatePhone && <p className="text-xs text-destructive">{formErrors.alternatePhone}</p>}</div>
                                     </section>
                                     {submitError && <div role="alert" className="rounded-xl border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">{submitError}</div>}
