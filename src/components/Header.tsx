@@ -94,7 +94,9 @@ export default function Header() {
 
                     {/* Icons */}
                     <div className="ml-auto flex items-center gap-1 sm:gap-2">
-                        <ThemeToggle />
+                        <div className="hidden md:block">
+                            <ThemeToggle />
+                        </div>
                         {status === 'authenticated' && !isAdmin && (
                             <>
                                 {/* Hidden on mobile, moved to drawer */}
@@ -131,7 +133,7 @@ export default function Header() {
                             <Button
                                 variant="ghost"
                                 onClick={() => openAuthModal('selection')}
-                                className="text-gray-400 hover:text-white px-2 sm:px-4"
+                                className="hidden text-gray-400 hover:text-white px-2 sm:flex sm:px-4"
                             >
                                 <User className="h-5 w-5 sm:mr-2" />
                                 <span className="hidden text-sm font-semibold sm:inline">Login</span>
@@ -201,10 +203,18 @@ export default function Header() {
                             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                             className="fixed right-0 top-0 z-[100] flex h-screen min-h-screen w-[85%] max-w-sm flex-col border-l border-border bg-background shadow-2xl"
                         >
-                            <div className="flex items-center justify-between p-6 border-b border-white/5">
-                                <span className="text-xl font-bold text-white">Menu</span>
-                                <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white">
-                                    <X className="h-5 w-5" />
+                            <div className="flex items-center justify-between border-b border-border p-5">
+                                <div>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-blue-400">Levric</p>
+                                    <h2 className="mt-1 text-xl font-bold text-foreground">Menu</h2>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => setIsOpen(false)}
+                                    aria-label="Close menu"
+                                    className="rounded-full border border-border bg-muted/40 p-2 text-muted-foreground transition hover:bg-muted hover:text-foreground active:scale-90"
+                                >
+                                    <X className="size-5" />
                                 </button>
                             </div>
 
@@ -260,8 +270,30 @@ export default function Header() {
                                 )}
                             </div>
 
+                            <div className="border-t border-border p-4">
+                                <div className="mb-3 flex items-center justify-between rounded-xl border border-border bg-muted/30 p-3">
+                                    <div>
+                                        <p className="text-sm font-semibold text-foreground">Appearance</p>
+                                        <p className="text-xs text-muted-foreground">Switch site theme</p>
+                                    </div>
+                                    <ThemeToggle />
+                                </div>
+                                {status !== 'authenticated' && (
+                                    <Button
+                                        variant="outline"
+                                        className="w-full justify-center gap-2 border-border bg-muted/30 text-foreground hover:bg-muted"
+                                        onClick={() => {
+                                            setIsOpen(false);
+                                            openAuthModal('selection');
+                                        }}
+                                    >
+                                        <User className="size-4" /> Login
+                                    </Button>
+                                )}
+                            </div>
+
                             {status === 'authenticated' && (
-                                <div className="border-t border-white/5 p-4 pb-12 sm:pb-8">
+                                <div className="border-t border-border p-4 pb-8">
                                     <p className="text-sm text-white font-semibold truncate">{session?.user?.name}</p>
                                     <p className="text-xs text-gray-500 truncate">{session?.user?.email}</p>
                                     <Button
