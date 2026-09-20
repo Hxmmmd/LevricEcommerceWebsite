@@ -99,7 +99,7 @@ export default function AboutPage() {
                     >
                         <h2 className="text-2xl font-bold text-white mb-6">Ready to upgrade?</h2>
                         <Link href="/products" className={cn(buttonVariants('default', 'lg'), "rounded-full px-8")}>
-                            Explore Laptops
+                            Explore Products
                         </Link>
                     </motion.div>
                 </div>

@@ -34,7 +34,7 @@ export default function Header() {
     const { links, isAdmin } = useMemo(() => {
         const userLinks = [
             { href: '/', label: 'Home' },
-            { href: '/products', label: 'Laptops' },
+            { href: '/products', label: 'Products' },
             { href: '/about', label: 'About' },
             { href: '/contact', label: 'Contact' },
         ];

@@ -120,7 +120,7 @@ export default async function ProductsPage({
                     {/* Header Section */}
                     <div className="mb-12">
                         <h1 className="mb-2 text-4xl font-bold tracking-tight text-foreground md:text-5xl">
-                            Shop Laptops
+                            Shop Products
                         </h1>
                         <p className="text-muted-foreground text-lg">
                             Discover {products.length} premium devices curated for precision and power.
