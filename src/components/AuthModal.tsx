@@ -64,7 +64,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
             if (mode === 'login') {
                 const res = await signIn('credentials', {
                     redirect: false,
-                    email,
+                    email: email.trim().toLowerCase(),
                     password,
                 });
 
