@@ -119,7 +119,7 @@ export default async function ProductsPage({
                 <div className="container px-4 md:px-6">
                     {/* Header Section */}
                     <div className="mb-12">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-2 tracking-tight bg-gradient-to-br from-white to-gray-500 bg-clip-text text-transparent">
+                        <h1 className="mb-2 text-4xl font-bold tracking-tight text-foreground md:text-5xl">
                             Shop Laptops
                         </h1>
                         <p className="text-muted-foreground text-lg">

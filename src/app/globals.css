@@ -141,8 +141,19 @@ html.light {
   }
 
   /* Keep legacy dark utility classes readable when light mode is active. */
-  html.light [class*="text-white"]:not([class*="bg-"]) {
+  html.light [class*="text-white"] {
     color: var(--foreground) !important;
+  }
+
+  html.light [class*="bg-clip-text"] {
+    color: var(--foreground) !important;
+    background-image: none !important;
+    -webkit-text-fill-color: currentColor !important;
+  }
+
+  html.light [class*="text-transparent"] {
+    color: var(--foreground) !important;
+    -webkit-text-fill-color: currentColor !important;
   }
 
   html.light [class*="text-gray-400"],
