@@ -13,9 +13,15 @@ async function getProducts(params: { q?: string, condition?: string, category?: 
     const query: any = {};
 
     // Build query object for better index usage
-    if (params.q) {
-        // Use text search index
-        query.$text = { $search: params.q };
+    if (params.q?.trim()) {
+        // Use a case-insensitive partial match so searches like "mac" find "MacBook".
+        const sanitizedQuery = params.q.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(sanitizedQuery, 'i');
+        query.$or = [
+            { title: { $regex: regex } },
+            { category: { $regex: regex } },
+            { description: { $regex: regex } },
+        ];
     }
     if (params.condition) query.condition = params.condition;
     if (params.category) query.category = params.category;
