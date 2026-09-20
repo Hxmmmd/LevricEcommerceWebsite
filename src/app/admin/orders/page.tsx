@@ -30,9 +30,22 @@ export default async function AdminOrdersPage() {
                             <h2 className="text-xl font-medium text-gray-400">No orders found yet.</h2>
                         </div>
                     ) : (
-                        <div className="grid gap-6">
-                            {orders.map((order: any) => (
-                                <div key={order._id} className={`overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition-all hover:border-blue-400/50 group ${(order.isCancelled || order.isRejected) ? 'opacity-60 grayscale-[0.5]' : ''}`}>
+                        <div className="space-y-10">
+                            {['Processing', 'Packing', 'Shipped', 'Out for Delivery', 'Delivered', 'Returned', 'Archived'].map((category) => {
+                                const categoryOrders = orders.filter((order: any) => order.status === category);
+                                if (!categoryOrders.length) return null;
+                                const categoryMeta: Record<string, { label: string; description: string; tone: string }> = {
+                                    Processing: { label: 'New orders', description: 'Recently placed orders waiting for review.', tone: 'text-blue-500' },
+                                    Packing: { label: 'Confirmed & packing', description: 'Orders you have reviewed and are preparing.', tone: 'text-violet-500' },
+                                    Shipped: { label: 'Shipped', description: 'Orders handed over to the courier.', tone: 'text-amber-500' },
+                                    'Out for Delivery': { label: 'Out for delivery', description: 'Orders currently on the way to customers.', tone: 'text-orange-500' },
+                                    Delivered: { label: 'Delivered', description: 'Successfully completed deliveries.', tone: 'text-emerald-500' },
+                                    Returned: { label: 'Returned', description: 'Orders returned within the return policy.', tone: 'text-rose-500' },
+                                    Archived: { label: 'History / archived', description: 'Completed orders past the return policy window.', tone: 'text-muted-foreground' }
+                                };
+                                const meta = categoryMeta[category];
+                                return <section key={category} className="space-y-4"><div className="flex flex-col gap-1 border-b border-border pb-3 sm:flex-row sm:items-end sm:justify-between"><div><h2 className={`text-lg font-black tracking-tight ${meta.tone}`}>{meta.label}</h2><p className="text-xs text-muted-foreground">{meta.description}</p></div><span className="rounded-full border border-border bg-muted/40 px-3 py-1 text-xs font-bold text-muted-foreground">{categoryOrders.length} order{categoryOrders.length === 1 ? '' : 's'}</span></div><div className="grid gap-6">{categoryOrders.map((order: any) => (
+                                <div key={order._id} className={`group overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition-all hover:border-blue-400/50 ${(order.isCancelled || order.isRejected) ? 'opacity-60 grayscale-[0.5]' : ''}`}>
                                     <div className="grid items-start gap-6 p-4 sm:p-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(180px,.55fr)_minmax(260px,.9fr)] lg:items-center lg:gap-8 lg:p-7">
                                         {/* Order Info */}
                                         <div className="min-w-0 space-y-4">
@@ -106,7 +119,8 @@ export default async function AdminOrdersPage() {
                                         </div>
                                     </div>
                                 </div>
-                            ))}
+                            ))}</div></section>;
+                            })}
                         </div>
                     )}
                 </div>
