@@ -4,7 +4,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/Button';
 import { Star } from 'lucide-react';
 
 
@@ -54,9 +53,10 @@ const ProductCard = React.memo(({ product }: { product: Product }) => {
             viewport={{ once: true }}
             whileHover={{ y: -5 }}
             whileTap={{ scale: 0.985 }}
-            className="interactive-lift group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card p-3 shadow-sm transition-colors hover:bg-accent/40 sm:p-4"
+            className="interactive-lift group relative h-full rounded-2xl"
         >
-            <Link href={`/products/${product.slug}`} className="relative block aspect-square overflow-hidden rounded-xl bg-muted/70">
+            <Link href={`/products/${product.slug}`} className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card p-3 shadow-sm transition-colors hover:bg-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:p-4">
+                <div className="relative block aspect-square overflow-hidden rounded-xl bg-muted/70">
                 {/* Badges */}
                 <div className="absolute top-2 left-2 z-10 flex flex-col gap-2">
                     {isDiscountValid ? ( // Only show discount badge if valid
@@ -76,9 +76,9 @@ const ProductCard = React.memo(({ product }: { product: Product }) => {
                         loading="lazy"
                     />
                 </div>
-            </Link>
+                </div>
 
-            <div className="mt-3 space-y-1.5 flex-grow flex flex-col">
+            <div className="mt-3 flex flex-grow flex-col space-y-1.5">
                 <div className="flex items-start justify-between gap-1 w-full min-w-0">
                     <h3 className="flex w-full items-center gap-1 overflow-hidden text-sm font-semibold leading-tight text-card-foreground">
                         <span className="truncate">{product.title}</span>
@@ -104,11 +104,12 @@ const ProductCard = React.memo(({ product }: { product: Product }) => {
                             <span className="text-base font-bold text-white">${product.price.toFixed(2)}</span>
                         )}
                     </div>
-                    <Button size="sm" variant="secondary" className="rounded-full px-4 h-8 text-xs">
+                    <span className="rounded-full bg-secondary px-4 py-2 text-xs font-medium text-secondary-foreground">
                         View
-                    </Button>
+                    </span>
                 </div>
             </div>
+            </Link>
         </motion.div>
     );
 });
