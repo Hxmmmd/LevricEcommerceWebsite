@@ -250,7 +250,7 @@ export default function ProfilePage() {
     };
 
     return (
-        <main className="min-h-screen bg-background text-foreground flex flex-col">
+        <main className="min-h-screen w-full min-w-0 overflow-x-hidden bg-background text-foreground flex flex-col">
             <Header />
 
             <div className="mx-auto flex w-full max-w-6xl flex-grow flex-col px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
@@ -262,13 +262,13 @@ export default function ProfilePage() {
                     <p className="text-muted-foreground">Manage your private information and security.</p>
                 </header>
 
-                <div className="grid min-w-0 gap-6 xl:grid-cols-[minmax(0,1fr)_320px] xl:gap-10 items-start">
+                <div className="grid w-full min-w-0 grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-8">
                     {/* Main Settings Area */}
-                    <div className="space-y-12">
+                    <div className="min-w-0 space-y-10 sm:space-y-12">
 
                         <form onSubmit={handlePreValidation} className="space-y-8">
                             <div className="bg-card border border-border rounded-3xl p-4 shadow-sm sm:p-6 lg:p-8 space-y-6">
-                                <div className="grid md:grid-cols-2 gap-6">
+                                <div className="grid min-w-0 grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
                                     <div className="space-y-3">
                                         <div className="flex items-center justify-between pl-1">
                                             <label htmlFor="fullName" className="text-[10px] font-black uppercase text-gray-500 tracking-widest">Full Name</label>
@@ -501,7 +501,7 @@ export default function ProfilePage() {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 }}
-                                className="space-y-10 pt-4"
+                                className="w-full min-w-0 space-y-8 pt-2 sm:space-y-10 sm:pt-4"
                             >
                                 <header className="space-y-2">
                                     <div className="flex items-center gap-3 text-purple-500 font-black uppercase tracking-[0.3em] text-[10px] mb-2">
@@ -511,14 +511,14 @@ export default function ProfilePage() {
                                     <p className="text-muted-foreground text-sm">Create admins and manage all users in the system.</p>
                                 </header>
 
-                                <div className="grid w-full min-w-0 grid-cols-1 gap-5 xl:grid-cols-[minmax(300px,380px)_minmax(0,1fr)] xl:gap-6">
+                                <div className="grid w-full min-w-0 grid-cols-1 gap-5 lg:grid-cols-[minmax(18rem,24rem)_minmax(0,1fr)] lg:gap-6">
                                     {/* Create New Admin Form */}
                                     <div className="min-w-0 rounded-3xl border border-border bg-card p-4 shadow-sm space-y-6 sm:p-6 lg:p-8">
                                         <div className="flex items-center gap-3 mb-2">
                                             <div className="p-2 bg-blue-500/10 rounded-xl">
                                                 <UserPlus className="w-4 h-4 text-blue-500" />
                                             </div>
-                                            <h3 className="font-black uppercase tracking-widest text-xs text-white">Create New Admin</h3>
+                                            <h3 className="min-w-0 text-sm font-black uppercase tracking-[0.14em] text-foreground">Create New Admin</h3>
                                         </div>
 
                                         <form onSubmit={handleCreateAdmin} className="space-y-4">
