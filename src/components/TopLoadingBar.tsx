@@ -39,7 +39,7 @@ export default function TopLoadingBar() {
             aria-hidden="true"
             className={`pointer-events-none fixed inset-x-0 top-0 z-[100] h-0.5 origin-left overflow-hidden bg-transparent transition-opacity duration-200 ${loading ? 'opacity-100' : 'opacity-0'}`}
         >
-            <div className="h-full w-1/3 animate-[top-loading_1s_ease-in-out_infinite] rounded-full bg-primary shadow-[0_0_12px_hsl(var(--primary)/0.8)]" />
+            <div className="top-loading-shimmer h-full w-1/3 rounded-full bg-primary shadow-[0_0_12px_hsl(var(--primary)/0.8)]" />
         </div>
     );
 }

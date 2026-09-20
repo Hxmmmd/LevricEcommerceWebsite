@@ -127,6 +127,11 @@ html.light {
   100% { transform: translateX(420%); }
 }
 
+.top-loading-shimmer {
+  animation: top-loading 900ms cubic-bezier(0.4, 0, 0.2, 1) infinite !important;
+  will-change: transform;
+}
+
 @layer base {
   * {
     border-color: var(--border);
