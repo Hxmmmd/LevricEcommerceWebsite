@@ -25,8 +25,21 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const toggleTheme = () => {
     setTheme((currentTheme) => {
       const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      document.documentElement.classList.toggle('light', nextTheme === 'light');
-      window.localStorage.setItem('levric-theme', nextTheme);
+      const applyTheme = () => {
+        document.documentElement.classList.toggle('light', nextTheme === 'light');
+        window.localStorage.setItem('levric-theme', nextTheme);
+      };
+
+      const viewTransitionDocument = document as Document & {
+        startViewTransition?: (update: () => void) => unknown;
+      };
+
+      if (viewTransitionDocument.startViewTransition) {
+        viewTransitionDocument.startViewTransition(applyTheme);
+      } else {
+        applyTheme();
+      }
+
       return nextTheme;
     });
   };
