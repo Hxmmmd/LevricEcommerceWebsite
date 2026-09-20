@@ -1,7 +1,6 @@
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import Header from '@/components/Header';
-import { CartProvider } from '@/lib/context/CartContext';
 
 export default async function AdminLayout({
     children,
@@ -16,13 +15,11 @@ export default async function AdminLayout({
     }
 
     return (
-        <CartProvider>
-            <div className="min-h-screen bg-background flex flex-col">
-                <Header />
-                <main className="flex-1 container mx-auto px-4 py-8">
-                    {children}
-                </main>
-            </div>
-        </CartProvider>
+        <div className="min-h-screen bg-background flex flex-col">
+            <Header />
+            <main className="flex-1 container mx-auto px-4 py-8">
+                {children}
+            </main>
+        </div>
     );
 }
