@@ -16,6 +16,7 @@ const ProductSchema = new mongoose.Schema({
     discount: { type: Number, default: 0 },
     discountExpiry: { type: Date },
     images: { type: [String], default: [] }, // Array of image URLs
+    availableColors: { type: [String], default: ['Midnight', 'Silver', 'Space Gray'] },
     isNewProduct: { type: Boolean, default: true },
     reviews: [
         {

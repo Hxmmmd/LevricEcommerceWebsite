@@ -105,6 +105,29 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                             )}
                         </div>
 
+                        <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                            <div className="flex items-center justify-between gap-4">
+                                <div>
+                                    <p className="text-sm font-bold text-white">This color is available</p>
+                                    <p className="mt-1 text-xs text-muted-foreground">Choose a finish before adding to your bag.</p>
+                                </div>
+                                <span className="rounded-full bg-green-500/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-green-400">Available</span>
+                            </div>
+                            <div className="mt-4 flex flex-wrap gap-2">
+                                {(product.availableColors?.length ? product.availableColors : ['Midnight', 'Silver', 'Space Gray']).map((color: string, index: number) => (
+                                    <button
+                                        key={color}
+                                        type="button"
+                                        aria-label={`Select ${color} color`}
+                                        className="flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-3 py-2 text-xs font-semibold text-gray-300 transition-colors hover:border-blue-400 hover:text-white"
+                                    >
+                                        <span className={`size-3 rounded-full border border-white/20 ${index % 3 === 0 ? 'bg-zinc-950' : index % 3 === 1 ? 'bg-zinc-300' : 'bg-zinc-500'}`} aria-hidden="true" />
+                                        {color}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
                         <div>
                             {product.stock > 0 ? (
                                 <div className="flex items-center space-x-2 text-green-500 mb-4">
